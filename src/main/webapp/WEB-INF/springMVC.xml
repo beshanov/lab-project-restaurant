@@ -13,4 +13,11 @@
 
     </bean>
 
+    <bean id="orderStatusDao" class="com.labproject.restaurant.dao.impl.OrderStatusDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="orderDao" class="com.labproject.restaurant.dao.impl.OrderDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 </beans>
