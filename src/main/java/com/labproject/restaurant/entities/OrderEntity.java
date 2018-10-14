@@ -1,14 +1,14 @@
 package com.labproject.restaurant.entities;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class OrderEntity {
     private long id;
-    private Date orderDate;
+    private Timestamp orderDate;
     private long userId;
     private long statusId;
 
-    public OrderEntity(long id, Date orderDate, long userId, long statusId) {
+    public OrderEntity(long id, Timestamp orderDate, long userId, long statusId) {
         this.id = id;
         this.orderDate = orderDate;
         this.userId = userId;
@@ -24,11 +24,11 @@ public class OrderEntity {
     }
 
 
-    public Date getOrderDate() {
+    public Timestamp getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderdate) {
+    public void setOrderDate(Timestamp orderdate) {
         this.orderDate = orderdate;
     }
 

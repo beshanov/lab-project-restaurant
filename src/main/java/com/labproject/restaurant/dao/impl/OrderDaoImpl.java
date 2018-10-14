@@ -4,10 +4,10 @@ import com.labproject.restaurant.dao.OrderDao;
 import com.labproject.restaurant.entities.OrderEntity;
 
 import javax.sql.DataSource;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +25,7 @@ public class OrderDaoImpl implements OrderDao {
 
         try {
             ps = dataSource.getConnection().prepareStatement(request);
-            ps.setDate(1, orderEntity.getOrderDate());
+            ps.setTimestamp(1, orderEntity.getOrderDate());
             ps.setLong(2, orderEntity.getUserId());
             ps.setLong(3, orderEntity.getStatusId());
             ps.executeUpdate();
@@ -37,7 +37,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public OrderEntity getById(long orderId) {
-        OrderEntity result = new OrderEntity(0, new Date(0L), 0, 0);
+        OrderEntity result = new OrderEntity(0, new Timestamp(0L), 0, 0);
 
         if (orderId < 1) {
             return result;
@@ -53,7 +53,7 @@ public class OrderDaoImpl implements OrderDao {
             if (rs.next()) {
                 result = new OrderEntity(
                         rs.getLong(1),
-                        rs.getDate(2),
+                        rs.getTimestamp(2),
                         rs.getLong(3),
                         rs.getLong(4));
             }
@@ -79,7 +79,7 @@ public class OrderDaoImpl implements OrderDao {
             while (rs.next()) {
                 tmpOrderEntity = new OrderEntity(
                         rs.getLong(1),
-                        rs.getDate(2),
+                        rs.getTimestamp(2),
                         rs.getLong(3),
                         rs.getLong(4));
                 result.add(tmpOrderEntity);
@@ -104,7 +104,7 @@ public class OrderDaoImpl implements OrderDao {
 
         try {
             ps = dataSource.getConnection().prepareStatement(request);
-            ps.setDate(1, orderEntity.getOrderDate());
+            ps.setTimestamp(1, orderEntity.getOrderDate());
             ps.setLong(2, orderEntity.getUserId());
             ps.setLong(3, orderEntity.getStatusId());
             ps.setLong(4, orderEntity.getId());
