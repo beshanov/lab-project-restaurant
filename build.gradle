@@ -16,7 +16,6 @@ dependencies {
     compile("org.springframework:spring-webmvc:4.0.0.RELEASE")
     compile("org.springframework:spring-jdbc:4.0.0.RELEASE")
 
-
     compile ("mysql:mysql-connector-java:8.0.12")
 
     compile("javax.inject:javax.inject:1")
@@ -24,6 +23,8 @@ dependencies {
     compile("javax.servlet:jstl:1.2")
     compile("javax.servlet.jsp:javax.servlet.jsp-api:2.3.3")
     compile ('log4j:log4j:1.2.16')
+
+    compile("org.projectlombok:lombok:1.18.2")
 
     testCompile("junit:junit:4.7")
 }
