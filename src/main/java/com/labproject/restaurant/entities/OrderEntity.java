@@ -4,15 +4,15 @@ import java.sql.Date;
 
 public class OrderEntity {
     private long id;
-    private Date orderdate;
-    private long userid;
-    private long statusid;
+    private Date orderDate;
+    private long userId;
+    private long statusId;
 
-    public OrderEntity(long id, Date orderdate, long userid, long statusid) {
+    public OrderEntity(long id, Date orderDate, long userId, long statusId) {
         this.id = id;
-        this.orderdate = orderdate;
-        this.userid = userid;
-        this.statusid = statusid;
+        this.orderDate = orderDate;
+        this.userId = userId;
+        this.statusId = statusId;
     }
 
     public long getId() {
@@ -25,28 +25,28 @@ public class OrderEntity {
 
 
     public Date getOrderDate() {
-        return orderdate;
+        return orderDate;
     }
 
     public void setOrderDate(Date orderdate) {
-        this.orderdate = orderdate;
+        this.orderDate = orderdate;
     }
 
 
     public long getUserId() {
-        return userid;
+        return userId;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
 
     public long getStatusId() {
-        return statusid;
+        return statusId;
     }
 
-    public void setStatusid(long statusid) {
-        this.statusid = statusid;
+    public void setStatusId(long statusId) {
+        this.statusId = statusId;
     }
 }
