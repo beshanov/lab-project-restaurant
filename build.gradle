@@ -26,4 +26,5 @@ dependencies {
     compile ('log4j:log4j:1.2.16')
 
     testCompile("junit:junit:4.7")
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 }
