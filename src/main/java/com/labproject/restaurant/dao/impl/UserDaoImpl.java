@@ -1,4 +1,4 @@
-package com.labproject.restaurant.dao.Impl;
+package com.labproject.restaurant.dao.impl;
 
 import com.labproject.restaurant.dao.UserDao;
 import com.labproject.restaurant.entities.Role;
@@ -21,21 +21,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getById(long id) {
-        String query = "SELECT * FROM user LEFT JOIN role ON user.roleid = role.id WHERE user.id = ?";
+        String query = "SELECT * FROM user WHERE user.id = ?";
         User user = new User();
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                user.setId(result.getLong("user.id"));
+                user.setId(result.getLong("id"));
                 user.setLastname(result.getString("lastname"));
                 user.setFirstname(result.getString("firstname"));
                 user.setLogin(result.getString("login"));
-                user.setPassword(result.getString("pwd"));
+                user.setPassword(result.getString("password"));
                 Role role = new Role();
-                role.setId(result.getLong("role.id"));
-                role.setName(result.getString("name"));
+                role.setId(result.getLong("roleid"));
                 user.setRole(role);
             }
         } catch (SQLException e) {
@@ -46,7 +45,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void insert(User user) {
-        String query = "INSERT INTO user (lastname, firstname, login, pwd, roleid) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO user (lastname, firstname, login, password, roleid) VALUES (?,?,?,?,?)";
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getLastname());
@@ -66,7 +65,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(User user) {
-        String query = "UPDATE user SET lastname = ?, firstname = ?, login = ?, pwd = ?, roleid = ? WHERE id = ?";
+        String query = "UPDATE user SET lastname = ?, firstname = ?, login = ?, password = ?, roleid = ? WHERE id = ?";
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, user.getLastname());

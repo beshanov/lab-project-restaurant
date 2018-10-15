@@ -1,4 +1,4 @@
-package com.labproject.restaurant.dao.Impl;
+package com.labproject.restaurant.dao.impl;
 
 import com.labproject.restaurant.dao.RoleDao;
 import com.labproject.restaurant.entities.Role;
