@@ -1,6 +1,6 @@
 package com.labproject.restaurant.entities;
 
-public class RoleEntity {
+public class Role {
 
     private long id;
     private String name;

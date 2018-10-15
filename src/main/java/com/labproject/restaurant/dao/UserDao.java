@@ -1,14 +1,14 @@
 package com.labproject.restaurant.dao;
 
-import com.labproject.restaurant.entities.UserEntity;
+import com.labproject.restaurant.entities.User;
 
 public interface UserDao {
 
-    public UserEntity getById(long id);
+    public User getById(long id);
 
-    public void insert(UserEntity user);
+    public void insert(User user);
 
-    public void update(UserEntity user);
+    public void update(User user);
 
-    public void delete(UserEntity user);
+    public void delete(User user);
 }

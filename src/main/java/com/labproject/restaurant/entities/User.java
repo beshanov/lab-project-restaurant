@@ -1,12 +1,12 @@
 package com.labproject.restaurant.entities;
 
-public class UserEntity {
+public class User {
     private long id;
     private String lastname;
     private String firstname;
     private String login;
-    private String pwd;
-    private RoleEntity role;
+    private String password;
+    private Role role;
 
     public long getId() {
         return id;
@@ -41,19 +41,19 @@ public class UserEntity {
         this.login = login;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public RoleEntity getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(RoleEntity role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
