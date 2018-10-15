@@ -5,10 +5,7 @@ import com.labproject.restaurant.entities.RoleEntity;
 import com.labproject.restaurant.entities.UserEntity;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserDaoImpl implements UserDao {
 
@@ -46,16 +43,19 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void insert(UserEntity user) {
-        String query = "INSERT INTO user (id, lastname, firstname, login, pwd, roleid) VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO user (lastname, firstname, login, pwd, roleid) VALUES (?,?,?,?,?)";
         try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement statement = conn.prepareStatement(query);
-            statement.setLong(1, user.getId());
-            statement.setString(2, user.getLastname());
-            statement.setString(3, user.getFirstname());
-            statement.setString(4, user.getLogin());
-            statement.setString(5, user.getPwd());
-            statement.setLong(6, user.getRole().getId());
+            PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, user.getLastname());
+            statement.setString(2, user.getFirstname());
+            statement.setString(3, user.getLogin());
+            statement.setString(4, user.getPwd());
+            statement.setLong(5, user.getRole().getId());
             statement.executeUpdate();
+            ResultSet result = statement.getGeneratedKeys();
+            if (result.next()) {
+                user.setId(result.getLong(1));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(UserEntity user) {
-        String query = "UPDATE user, role SET lastname = ?, firstname = ?, login = ?, pwd = ?, roleid = ? WHERE id = ?";
+        String query = "UPDATE user SET lastname = ?, firstname = ?, login = ?, pwd = ?, roleid = ? WHERE id = ?";
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, user.getLastname());
@@ -80,10 +80,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void delete(UserEntity user) {
-        String query = "DELETE FROM user where id = ?";
+        String query = "DELETE FROM user WHERE id = ?";
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setLong(1, user.getId());
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
