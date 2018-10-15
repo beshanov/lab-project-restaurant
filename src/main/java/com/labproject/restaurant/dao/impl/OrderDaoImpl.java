@@ -1,15 +1,16 @@
 package com.labproject.restaurant.dao.impl;
 
 import com.labproject.restaurant.dao.OrderDao;
-import com.labproject.restaurant.entities.OrderEntity;
+import com.labproject.restaurant.entities.Order;
+import com.labproject.restaurant.entities.OrderStatus;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
     private DataSource dataSource;
@@ -19,15 +20,15 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public void add(OrderEntity orderEntity) {
-        String request = "INSERT INTO `ORDER` (ORDERDATE, USERID, STATUSID) VALUES (?, ?, ?);";
+    public void insert(Order order) {
+        String query = "INSERT INTO `ORDER` (ORDERDATE, USERID, STATUSID) VALUES (?, ?, ?);";
         PreparedStatement ps;
 
-        try {
-            ps = dataSource.getConnection().prepareStatement(request);
-            ps.setTimestamp(1, orderEntity.getOrderDate());
-            ps.setLong(2, orderEntity.getUserId());
-            ps.setLong(3, orderEntity.getStatusId());
+        try (Connection connection = dataSource.getConnection()) {
+            ps = connection.prepareStatement(query);
+            ps.setTimestamp(1, order.getOrderDate());
+            ps.setLong(2, order.getUser().getId());
+            ps.setLong(3, order.getStatus().getId());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -36,78 +37,74 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public OrderEntity getById(long orderId) {
-        OrderEntity result = new OrderEntity(0, new Timestamp(0L), 0, 0);
-
-        if (orderId < 1) {
-            return result;
-        }
-
-        String request = "SELECT * FROM `ORDER` WHERE ID = ?;";
+    public Order getById(long orderId) {
+        Order result = new Order();
+        String query = "SELECT * FROM `ORDER` WHERE ID = ?;";
         PreparedStatement ps;
 
-        try {
-            ps = dataSource.getConnection().prepareStatement(request);
+        try (Connection connection = dataSource.getConnection()) {
+            ps = connection.prepareStatement(query);
             ps.setLong(1, orderId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                result = new OrderEntity(
-                        rs.getLong(1),
-                        rs.getTimestamp(2),
-                        rs.getLong(3),
-                        rs.getLong(4));
+                result.setId(rs.getLong("ID"));
+                result.setOrderDate(rs.getTimestamp("ORDERDATE"));
+                result.setUser(new User());
+                result.getUser().setId(rs.getLong("USERID"))
+                result.setStatus(new OrderStatus());
+                result.getStatus().setId(rs.getLong("STATUSID"));
             }
             rs.close();
             ps.close();
         } catch (SQLException e) {
             // TODO: exception handling
+            return new Order();
         }
 
         return result;
     }
 
     @Override
-    public Set<OrderEntity> getAll() {
-        String request = "SELECT * FROM `ORDER`;";
-        Set<OrderEntity> result = new HashSet<>();
-        OrderEntity tmpOrderEntity;
+    public List<Order> getAll() {
+        List<Order> result = new ArrayList<>();
+        String query = "SELECT * FROM `ORDER`;";
+        Order tmpOrder;
         PreparedStatement ps;
 
-        try {
-            ps = dataSource.getConnection().prepareStatement(request);
+        try (Connection connection = dataSource.getConnection()) {
+            ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                tmpOrderEntity = new OrderEntity(
-                        rs.getLong(1),
-                        rs.getTimestamp(2),
-                        rs.getLong(3),
-                        rs.getLong(4));
-                result.add(tmpOrderEntity);
+                tmpOrder = new Order();
+                tmpOrder.setId(rs.getLong("ID"));
+                tmpOrder.setOrderDate(rs.getTimestamp("ORDERDATE"));
+                tmpOrder.setUser(new User());
+                tmpOrder.getUser().setId(rs.getLong("USERID"));
+                tmpOrder.setStatus(new OrderStatus());
+                tmpOrder.getStatus().setId(rs.getLong("STATUSID"));
+                result.add(tmpOrder);
             }
             rs.close();
             ps.close();
         } catch (SQLException e) {
             // TODO: exception handling
+            return new ArrayList<>();
         }
 
         return result;
     }
 
     @Override
-    public void set(OrderEntity orderEntity) {
-        if (orderEntity == null) {
-            return;
-        }
-
-        String request = "UPDATE `ORDER` SET ORDERDATE = ?, USERID = ?, STATUSID = ? WHERE ID = ?;";
+    public void update(Order order) {
+        String query = "UPDATE `ORDER` SET ORDERDATE = ?, USERID = ?, STATUSID = ? WHERE ID = ?;";
         PreparedStatement ps;
 
-        try {
-            ps = dataSource.getConnection().prepareStatement(request);
-            ps.setTimestamp(1, orderEntity.getOrderDate());
-            ps.setLong(2, orderEntity.getUserId());
-            ps.setLong(3, orderEntity.getStatusId());
-            ps.setLong(4, orderEntity.getId());
+        try (Connection connection = dataSource.getConnection()) {
+            ps = connection.prepareStatement(query);
+            ps.setTimestamp(1, order.getOrderDate());
+            ps.setLong(2, order.getUser().getId());
+            ps.setLong(3, order.getStatus().getId());
+            ps.setLong(4, order.getId());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -117,15 +114,11 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void deleteById(long orderId) {
-        if (orderId < 1) {
-            return;
-        }
-
-        String request = "DELETE FROM `ORDER` WHERE ID = ?";
+        String query = "DELETE FROM `ORDER` WHERE ID = ?";
         PreparedStatement ps;
 
-        try {
-            ps = dataSource.getConnection().prepareStatement(request);
+        try (Connection connection = dataSource.getConnection()) {
+            ps = connection.prepareStatement(query);
             ps.setLong(1, orderId);
             ps.close();
         } catch (SQLException e) {

@@ -1,12 +1,12 @@
 package com.labproject.restaurant.dao;
 
-import com.labproject.restaurant.entities.OrderStatusEntity;
+import com.labproject.restaurant.entities.OrderStatus;
 
-import java.util.Set;
+import java.util.List;
 
 public interface OrderStatusDao {
 
-    public OrderStatusEntity getById(long orderStatusId);
+    public OrderStatus getById(long orderStatusId);
 
-    public Set<OrderStatusEntity> getAll();
+    public List<OrderStatus> getAll();
 }

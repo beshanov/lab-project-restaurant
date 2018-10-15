@@ -1,18 +1,18 @@
 package com.labproject.restaurant.dao;
 
-import com.labproject.restaurant.entities.OrderEntity;
+import com.labproject.restaurant.entities.Order;
 
-import java.util.Set;
+import java.util.List;
 
 public interface OrderDao {
 
-    public void add(OrderEntity orderEntity);
+    public void insert(Order order);
 
-    public OrderEntity getById(long orderId);
+    public Order getById(long orderId);
 
-    public Set<OrderEntity> getAll();
+    public List<Order> getAll();
 
-    public void set(OrderEntity orderEntity);
+    public void update(Order order);
 
     public void deleteById(long orderId);
 }

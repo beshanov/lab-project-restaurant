@@ -1,14 +1,15 @@
 package com.labproject.restaurant.dao.impl;
 
 import com.labproject.restaurant.dao.OrderStatusDao;
-import com.labproject.restaurant.entities.OrderStatusEntity;
+import com.labproject.restaurant.entities.OrderStatus;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderStatusDaoImpl implements OrderStatusDao {
     private DataSource dataSource;
@@ -18,52 +19,50 @@ public class OrderStatusDaoImpl implements OrderStatusDao {
     }
 
     @Override
-    public OrderStatusEntity getById(long orderStatusId) {
-        OrderStatusEntity result = new OrderStatusEntity(0, "");
-
-        if (orderStatusId < 1) {
-            return result;
-        }
-
-        String request = "SELECT * FROM ORDER_STATUS WHERE ID = ?;";
+    public OrderStatus getById(long orderStatusId) {
+        OrderStatus result = new OrderStatus();
+        String query = "SELECT * FROM ORDER_STATUS WHERE ID = ?;";
         PreparedStatement ps;
 
-        try {
-            ps = dataSource.getConnection().prepareStatement(request);
+        try (Connection connection = dataSource.getConnection()) {
+            ps = connection.prepareStatement(query);
             ps.setLong(1, orderStatusId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                result = new OrderStatusEntity(
-                        rs.getLong(1),
-                        rs.getString(2));
+                result.setId(rs.getLong("ID"));
+                result.setName(rs.getString("NAME"));
             }
             rs.close();
             ps.close();
         } catch (SQLException e) {
             // TODO: exception handling
+            return new OrderStatus();
         }
 
         return result;
     }
 
     @Override
-    public Set<OrderStatusEntity> getAll() {
-        String request = "SELECT * FROM ORDER_STATUS;";
-        Set<OrderStatusEntity> result = new HashSet<>();
+    public List<OrderStatus> getAll() {
+        List<OrderStatus> result = new ArrayList<>();
+        String query = "SELECT * FROM ORDER_STATUS;";
         PreparedStatement ps;
+        OrderStatus tmpOrderStatus;
 
-        try {
-            ps = dataSource.getConnection().prepareStatement(request);
+        try (Connection connection = dataSource.getConnection() {
+            ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                result.add(new OrderStatusEntity(
-                        rs.getLong(1),
-                        rs.getString(2)));
+                tmpOrderStatus = new OrderStatus();
+                tmpOrderStatus.setId(rs.getLong("ID"));
+                tmpOrderStatus.setName(rs.getString("NAME"));
+                result.add(tmpOrderStatus);
             }
             rs.close();
             ps.close();
         } catch (SQLException e) {
             // TODO: exception handling
+            return new ArrayList<>();
         }
 
         return result;

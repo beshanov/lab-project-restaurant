@@ -1,13 +1,8 @@
 package com.labproject.restaurant.entities;
 
-public class OrderStatusEntity {
+public class OrderStatus {
     private long id;
     private String name;
-
-    public OrderStatusEntity(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public long getId() {
         return id;
@@ -16,7 +11,6 @@ public class OrderStatusEntity {
     public void setId(long id) {
         this.id = id;
     }
-
 
     public String getName() {
         return name;
