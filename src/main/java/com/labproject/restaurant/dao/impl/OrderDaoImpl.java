@@ -3,6 +3,7 @@ package com.labproject.restaurant.dao.impl;
 import com.labproject.restaurant.dao.OrderDao;
 import com.labproject.restaurant.entities.Order;
 import com.labproject.restaurant.entities.OrderStatus;
+import com.labproject.restaurant.entities.User;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.log4j.Logger;
 

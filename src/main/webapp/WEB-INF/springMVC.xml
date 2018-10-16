@@ -16,6 +16,10 @@
         <property name="password" value="password"/>
     </bean>
 
+    <bean id="dishDao" class="com.labproject.restaurant.dao.impl.DishDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean id="userDao" class="com.labproject.restaurant.dao.impl.UserDaoImpl">
         <property name="dataSource" ref="dataSource"/>
     </bean>
