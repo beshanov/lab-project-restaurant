@@ -9,9 +9,7 @@ import org.apache.log4j.Logger;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class OrderDishDaoImpl implements OrderDishDao {
 
@@ -59,15 +57,5 @@ public class OrderDishDaoImpl implements OrderDishDao {
             DbUtils.closeQuietly(statement);
             DbUtils.closeQuietly(conn);
         }
-    }
-
-    @Override
-    public List<DishEntity> getAllDishFromOrder(Order order) {
-        final String GET_ALL_DISH_FROM_ORDER = "";;
-        Connection conn = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-
-        return null;
     }
 }
