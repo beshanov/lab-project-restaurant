@@ -5,8 +5,8 @@ import java.sql.Timestamp;
 
 public class Bill {
     private long id;
-    private long orderId;
-    private long adminId;
+    private Order order;
+    private User admin;
     private BigDecimal amount;
     private Timestamp date;
     private boolean status;
@@ -19,20 +19,20 @@ public class Bill {
         this.id = id;
     }
 
-    public long getOrderId() {
-        return orderId;
+    public Order getOrderId() {
+        return order;
     }
 
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
+    public void setOrderId(Order order) {
+        this.order = order;
     }
 
-    public long getAdminId() {
-        return adminId;
+    public User getAdminId() {
+        return admin;
     }
 
-    public void setAdminId(long adminId) {
-        this.adminId = adminId;
+    public void setAdminId(User admin) {
+        this.admin = admin;
     }
 
     public BigDecimal getAmount() {
