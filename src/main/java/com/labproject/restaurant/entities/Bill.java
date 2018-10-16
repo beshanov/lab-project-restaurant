@@ -19,19 +19,19 @@ public class Bill {
         this.id = id;
     }
 
-    public Order getOrderId() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrderId(Order order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
-    public User getAdminId() {
+    public User getAdmin() {
         return admin;
     }
 
-    public void setAdminId(User admin) {
+    public void setAdmin(User admin) {
         this.admin = admin;
     }
 
