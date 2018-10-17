@@ -12,10 +12,6 @@ public interface OrderDao {
 
     List<Order> getAll();
 
-    List<Order> getAllByUserId(long userId);
-
-    List<Order> getAllByStatusId(long statusId);
-
     void update(Order order);
 
     void deleteById(long orderId);

@@ -9,7 +9,6 @@ import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.OrderService;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
@@ -59,26 +58,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllOrders() {
         return orderDao.getAll();
-    }
-
-    @Override
-    public List<Order> getOrdersByUserId(long userId) {
-        if (userId < 1) {
-            logger.error("Error while getting order by userId: userId < 1");
-            return new ArrayList<>();
-        }
-
-        return orderDao.getAllByUserId(userId);
-    }
-
-    @Override
-    public List<Order> getOrdersByStatusId(long statusId) {
-        if (statusId < 1) {
-            logger.error("Error while getting order by statusId: statusId < 1");
-            return new ArrayList<>();
-        }
-
-        return orderDao.getAllByStatusId(statusId);
     }
 
     @Override

@@ -12,10 +12,6 @@ public interface OrderService {
 
     List<Order> getAllOrders();
 
-    List<Order> getOrdersByUserId(long userId);
-
-    List<Order> getOrdersByStatusId(long statusId);
-
     void setOrder(Order order);
 
     void deleteOrderById(long orderId);
