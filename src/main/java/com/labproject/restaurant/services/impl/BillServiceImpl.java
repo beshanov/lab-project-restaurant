@@ -5,6 +5,7 @@ import com.labproject.restaurant.entities.Bill;
 import com.labproject.restaurant.services.BillService;
 
 public class BillServiceImpl implements BillService {
+
     private BillDao billDao;
 
     public void setBillDao(BillDao billDao) {
