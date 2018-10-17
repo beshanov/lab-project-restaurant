@@ -1,18 +1,26 @@
-package com.labproject.restaurant.dao.Impl;
+package com.labproject.restaurant.dao.impl;
 
 import com.labproject.restaurant.dao.BillDao;
 import com.labproject.restaurant.entities.Bill;
+import com.labproject.restaurant.entities.Order;
+import com.labproject.restaurant.entities.User;
+import org.apache.commons.dbutils.DbUtils;
+import org.apache.log4j.Logger;
+import org.springframework.util.Assert;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class BillDaoImpl implements BillDao {
+
     private DataSource dataSource;
+
+    private final Logger logger = Logger.getLogger(UserDaoImpl.class);
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -20,74 +28,110 @@ public class BillDaoImpl implements BillDao {
 
     @Override
     public Bill getById(long id) {
-        Bill result = new Bill();
-
-        if (id < 1) {
-            return result;
-        }
-
         String request = "SELECT ID, ORDERID, ADMINID, AMOUNT, `DATE`, " +
                 "`STATUS` FROM bill where id=?;";
-        PreparedStatement ps;
+        Bill result = new Bill();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection connection = null;
+
         try {
-            ps = dataSource.getConnection().prepareStatement(request);
+            connection = dataSource.getConnection();
+            ps = connection.prepareStatement(request);
             ps.setLong(1, id);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             if (rs.next()) {
                 result.setId(rs.getLong("id"));
-                result.setOrderId(rs.getLong("OrderId"));
-                result.setAdminId(rs.getLong("AdminId"));
+                Order order = new Order();
+                order.setId(rs.getLong("OrderId"));
+                result.setOrder(order);
+                User admin = new User();
+                admin.setId(rs.getLong("AdminId"));
+                result.setAdmin(admin);
                 result.setAmount(rs.getBigDecimal("Amount"));
                 result.setDate(rs.getTimestamp("Date"));
                 result.setStatus(rs.getBoolean("Status"));
             }
-            rs.close();
-            ps.close();
         } catch (SQLException e) {
-            // TODO: exception handling
+            logger.error(e.getMessage(), e);
+        } finally {
+            DbUtils.closeQuietly(connection, ps, rs);
         }
-
         return result;
     }
 
     @Override
-    public List<Bill> getByAll() {
-        return null;
+    public List<Bill> getAll() {
+        String request = "SELECT ID, ORDERID, ADMINID, AMOUNT, `DATE`, " +
+                "`STATUS` FROM bill;";
+
+        List<Bill> result = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection connection = null;
+
+        try {
+            connection = dataSource.getConnection();
+            ps = connection.prepareStatement(request);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Bill bill = new Bill();
+                bill.setId(rs.getLong("id"));
+                Order order = new Order();
+                order.setId(rs.getLong("OrderId"));
+                bill.setOrder(order);
+                User admin = new User();
+                admin.setId(rs.getLong("AdminId"));
+                bill.setAdmin(admin);
+                bill.setAmount(rs.getBigDecimal("Amount"));
+                bill.setDate(rs.getTimestamp("Date"));
+                bill.setStatus(rs.getBoolean("Status"));
+                result.add(bill);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        } finally {
+            DbUtils.closeQuietly(connection, ps, rs);
+        }
+        return result;
     }
 
     @Override
     public void insert(Bill bill) {
+        Assert.notNull(bill);
         String request = "INSERT INTO Bill (ID, ORDERID, ADMINID, AMOUNT, `DATE`, `STATUS`) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps;
-
+        PreparedStatement ps = null;
+        Connection connection = null;
         try {
-            ps = dataSource.getConnection().prepareStatement(request);
+            connection = dataSource.getConnection();
+            ps = connection.prepareStatement(request);
             ps.setLong(1, bill.getId());
-            ps.setLong(2, bill.getOrderId());
-            ps.setLong(3, bill.getAdminId());
+            ps.setLong(2, bill.getOrder().getId());
+            ps.setLong(3, bill.getAdmin().getId());
             ps.setBigDecimal(4, bill.getAmount());
             ps.setTimestamp(5, bill.getDate());
             ps.setBoolean(6, bill.getStatus());
         } catch (SQLException e) {
-            // TODO: exception handling
+            logger.error(e.getMessage(), e);
+        } finally {
+            DbUtils.closeQuietly(connection);
+            DbUtils.closeQuietly(ps);
         }
     }
 
     @Override
     public void update(Bill bill) {
-        if (bill == null) {
-            return;
-        }
-
         String request = "UPDATE Bill SET `ORDERID`=?, `ADMINID`=?, `AMOUNT`=?, `DATE`=?," +
                 " `STATUS`=? WHERE id=?;";
-        PreparedStatement ps;
+        PreparedStatement ps = null;
+        Connection connection = null;
 
         try {
-            ps = dataSource.getConnection().prepareStatement(request);
-            ps.setLong(1, bill.getOrderId());
-            ps.setLong(2, bill.getAdminId());
+            connection = dataSource.getConnection();
+            ps = connection.prepareStatement(request);
+            ps.setLong(1, bill.getOrder().getId());
+            ps.setLong(2, bill.getAdmin().getId());
             ps.setBigDecimal(3, bill.getAmount());
             ps.setTimestamp(4, bill.getDate());
             ps.setBoolean(5, bill.getStatus());
@@ -95,24 +139,29 @@ public class BillDaoImpl implements BillDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            // TODO: exception handling
+            logger.error(e.getMessage(), e);
+        } finally {
+            DbUtils.closeQuietly(connection);
+            DbUtils.closeQuietly(ps);
         }
     }
 
     @Override
     public void deleteById(Long id) {
-        if (id < 1) {
-            return;
-        }
         String request = "DELETE FROM `BILL` WHERE ID = ?;";
-        PreparedStatement ps;
+        PreparedStatement ps = null;
+        Connection connection = null;
 
         try {
-            ps = dataSource.getConnection().prepareStatement(request);
+            connection = dataSource.getConnection();
+            ps = connection.prepareStatement(request);
             ps.setLong(1, id);
             ps.close();
         } catch (SQLException e) {
-            // TODO: exception handling
+            logger.error(e.getMessage(), e);
+        } finally {
+            DbUtils.closeQuietly(connection);
+            DbUtils.closeQuietly(ps);
         }
     }
 }

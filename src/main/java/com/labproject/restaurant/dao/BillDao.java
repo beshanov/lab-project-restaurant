@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 public interface BillDao {
-    public Bill getById(long id);
+    Bill getById(long id);
 
-    public List<Bill> getByAll();
+    List<Bill> getAll();
 
-    public void insert(Bill bill);
+    void insert(Bill bill);
 
-    public void update(Bill bill);
+    void update(Bill bill);
 
-    public void deleteById(Long id);
+    void deleteById(Long id);
 }
