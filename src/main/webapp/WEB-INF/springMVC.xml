@@ -39,4 +39,10 @@
     <bean id="orderDao" class="com.labproject.restaurant.dao.impl.OrderDaoImpl">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+    <bean id="orderService" class="com.labproject.restaurant.services.impl.OrderServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="orderDao" ref="orderDao"/>
+        <property name="orderStatusDao" ref="orderStatusDao"/>
+    </bean>
 </beans>

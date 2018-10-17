@@ -6,13 +6,17 @@ import java.util.List;
 
 public interface OrderDao {
 
-    public void insert(Order order);
+    void insert(Order order);
 
-    public Order getById(long orderId);
+    Order getById(long orderId);
 
-    public List<Order> getAll();
+    List<Order> getAll();
 
-    public void update(Order order);
+    List<Order> getAllByUserId(long userId);
 
-    public void deleteById(long orderId);
+    List<Order> getAllByStatusId(long statusId);
+
+    void update(Order order);
+
+    void deleteById(long orderId);
 }

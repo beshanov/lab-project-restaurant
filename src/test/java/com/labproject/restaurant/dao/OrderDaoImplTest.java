@@ -1,10 +1,7 @@
 package com.labproject.restaurant.dao;
 
 import com.labproject.restaurant.dao.impl.OrderDaoImpl;
-import com.labproject.restaurant.entities.Order;
 import org.junit.Ignore;
-
-import java.util.List;
 
 public class OrderDaoImplTest extends OrderDaoImpl {
 
@@ -20,8 +17,7 @@ public class OrderDaoImplTest extends OrderDaoImpl {
 
     @Ignore
     @org.junit.Test
-    public List<Order> testGetAll() {
-        return null;
+    public void testGetAll() {
     }
 
     @Ignore

@@ -3,6 +3,7 @@ package com.labproject.restaurant.dao.impl;
 import com.labproject.restaurant.dao.OrderDao;
 import com.labproject.restaurant.entities.Order;
 import com.labproject.restaurant.entities.OrderStatus;
+import com.labproject.restaurant.entities.User;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.log4j.Logger;
 
@@ -86,6 +87,74 @@ public class OrderDaoImpl implements OrderDao {
         try {
             connection = dataSource.getConnection();
             ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                tmpOrder = new Order();
+                tmpOrder.setId(rs.getLong("ID"));
+                tmpOrder.setOrderDate(rs.getTimestamp("ORDERDATE"));
+                tmpOrder.setUser(new User());
+                tmpOrder.getUser().setId(rs.getLong("USERID"));
+                tmpOrder.setStatus(new OrderStatus());
+                tmpOrder.getStatus().setId(rs.getLong("STATUSID"));
+                result.add(tmpOrder);
+            }
+        } catch (SQLException e) {
+            logger.error("Error: " + e.getMessage(), e);
+            return new ArrayList<>();
+        } finally {
+            DbUtils.closeQuietly(connection, ps, rs);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Order> getAllByUserId(long userId) {
+        List<Order> result = new ArrayList<>();
+        String query = "SELECT * FROM `ORDER` WHERE USERID = ?";
+        Order tmpOrder;
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = dataSource.getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setLong(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                tmpOrder = new Order();
+                tmpOrder.setId(rs.getLong("ID"));
+                tmpOrder.setOrderDate(rs.getTimestamp("ORDERDATE"));
+                tmpOrder.setUser(new User());
+                tmpOrder.getUser().setId(rs.getLong("USERID"));
+                tmpOrder.setStatus(new OrderStatus());
+                tmpOrder.getStatus().setId(rs.getLong("STATUSID"));
+                result.add(tmpOrder);
+            }
+        } catch (SQLException e) {
+            logger.error("Error: " + e.getMessage(), e);
+            return new ArrayList<>();
+        } finally {
+            DbUtils.closeQuietly(connection, ps, rs);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Order> getAllByStatusId(long statusId) {
+        List<Order> result = new ArrayList<>();
+        String query = "SELECT * FROM `ORDER` WHERE STATUSID = ?";
+        Order tmpOrder;
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = dataSource.getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setLong(1, statusId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 tmpOrder = new Order();

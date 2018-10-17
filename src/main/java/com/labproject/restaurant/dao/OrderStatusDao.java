@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OrderStatusDao {
 
-    public OrderStatus getById(long orderStatusId);
+    OrderStatus getById(long orderStatusId);
 
-    public List<OrderStatus> getAll();
+    List<OrderStatus> getAll();
 }
