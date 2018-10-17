@@ -57,7 +57,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAllOrders() {
-        return orderDao.getAll();
+        List<Order> result = orderDao.getAll();
+
+        for (Order o : result) {
+            o.setStatus(orderStatusDao.getById(o.getStatus().getId()));
+            o.setUser(userDao.getById(o.getUser().getId()));
+        }
+
+        return result;
     }
 
     @Override
