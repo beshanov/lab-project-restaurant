@@ -27,5 +27,4 @@ dependencies {
 
     testCompile("junit:junit:4.7")
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
-    compile ("commons-dbutils:commons-dbutils:1.6")
 }
