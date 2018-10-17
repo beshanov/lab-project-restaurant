@@ -11,33 +11,33 @@ import static org.mockito.Mockito.verify;
 
 public class BillServiceImplTest {
     private BillDao billDao;
-    private BillServiceImpl service;
+    private BillServiceImpl billService;
 
     @Before
     public void setUp() {
         billDao = mock(BillDaoImpl.class);
-        service = new BillServiceImpl();
-        service.setBillDao(billDao);
+        billService = new BillServiceImpl();
+        billService.setBillDao(billDao);
     }
 
     @Test
     public void getById() {
         long id = 1;
-        service.getById(id);
+        billService.getById(id);
         verify(billDao).getById(id);
     }
 
     @Test
     public void insert() {
         Bill bill = new Bill();
-        service.insert(bill);
+        billService.insert(bill);
         verify(billDao).insert(bill);
     }
 
     @Test
     public void update() {
         Bill bill = new Bill();
-        service.update(bill);
+        billService.update(bill);
         verify(billDao).update(bill);
     }
 
@@ -45,7 +45,7 @@ public class BillServiceImplTest {
     public void delete() {
         Bill bill = new Bill();
         bill.setId(1);
-        service.delete(bill);
+        billService.delete(bill);
         verify(billDao).deleteById(bill.getId());
     }
 }

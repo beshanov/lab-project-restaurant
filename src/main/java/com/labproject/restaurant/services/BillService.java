@@ -6,9 +6,9 @@ public interface BillService {
 
     Bill getById(long id);
 
-    void insert(Bill role);
+    void insert(Bill bill);
 
-    void update(Bill role);
+    void update(Bill bill);
 
-    void delete(Bill role);
+    void delete(Bill bill);
 }
