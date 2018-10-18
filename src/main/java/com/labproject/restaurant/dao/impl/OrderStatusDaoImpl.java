@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderStatusDaoImpl implements OrderStatusDao {
-    private final Logger logger = Logger.getLogger(OrderStatusDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(OrderStatusDaoImpl.class);
     private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) {
@@ -35,7 +35,7 @@ public class OrderStatusDaoImpl implements OrderStatusDao {
                 result.setName(rs.getString("NAME"));
             }
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
             return new OrderStatus();
         }
 
@@ -58,7 +58,7 @@ public class OrderStatusDaoImpl implements OrderStatusDao {
                 result.add(tmpOrderStatus);
             }
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
             return new ArrayList<>();
         }
 

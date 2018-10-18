@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
-    private final Logger logger = Logger.getLogger(OrderDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
     private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) {
@@ -33,7 +33,7 @@ public class OrderDaoImpl implements OrderDao {
             ps.setLong(3, order.getStatus().getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 
@@ -55,7 +55,7 @@ public class OrderDaoImpl implements OrderDao {
                 result.getStatus().setId(rs.getLong("STATUSID"));
             }
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
             return new Order();
         }
 
@@ -82,7 +82,7 @@ public class OrderDaoImpl implements OrderDao {
                 result.add(tmpOrder);
             }
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
             return new ArrayList<>();
         }
 
@@ -101,7 +101,7 @@ public class OrderDaoImpl implements OrderDao {
             ps.setLong(4, order.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 
@@ -114,7 +114,7 @@ public class OrderDaoImpl implements OrderDao {
             ps.setLong(1, orderId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 }

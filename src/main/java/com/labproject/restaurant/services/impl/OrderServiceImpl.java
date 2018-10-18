@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
-    private final Logger logger = Logger.getLogger(OrderServiceImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
     private UserDao userDao;
     private OrderDao orderDao;
     private OrderStatusDao orderStatusDao;
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void createNewOrder(Order order) {
         if (order == null) {
-            logger.error("Error while creating order: null argument");
+            LOGGER.error("Error while creating order: null argument");
             return;
         }
 
@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order getOrderById(long orderId) {
         if (orderId < 1) {
-            logger.error("Error while getting order: orderId < 1");
+            LOGGER.error("Error while getting order: orderId < 1");
             return new Order();
         }
 
@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void setOrder(Order order) {
         if (order == null) {
-            logger.error("Error while modifying order: null argument");
+            LOGGER.error("Error while modifying order: null argument");
             return;
         }
 
@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteOrderById(long orderId) {
         if (orderId < 1) {
-            logger.error("Error while deleting order: orderId < 1");
+            LOGGER.error("Error while deleting order: orderId < 1");
         }
 
         orderDao.deleteById(orderId);
