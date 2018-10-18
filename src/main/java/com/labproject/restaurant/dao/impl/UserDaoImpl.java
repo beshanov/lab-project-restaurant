@@ -47,6 +47,34 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getByLogin(String login) {
+        String query = "SELECT * FROM user WHERE user.login = ?";
+        User user = new User();
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        try (Connection conn = dataSource.getConnection()) {
+            statement = conn.prepareStatement(query);
+            statement.setString(1, login);
+            result = statement.executeQuery();
+            if (result.next()) {
+                user.setId(result.getLong("id"));
+                user.setLastname(result.getString("lastname"));
+                user.setFirstname(result.getString("firstname"));
+                user.setLogin(result.getString("login"));
+                user.setPassword(result.getString("password"));
+                Role role = new Role();
+                role.setId(result.getLong("roleid"));
+                user.setRole(role);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage(),e);
+        } finally {
+            closeResources(result,statement);
+        }
+        return user;
+    }
+
+    @Override
     public void insert(User user) {
         String query = "INSERT INTO user (lastname, firstname, login, `password`, roleid) VALUES (?,?,?,?,?)";
         PreparedStatement statement = null;
