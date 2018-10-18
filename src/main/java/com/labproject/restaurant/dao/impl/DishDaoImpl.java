@@ -15,7 +15,7 @@ import java.util.List;
 public class DishDaoImpl implements DishDao {
 
     private DataSource dataSource;
-    private final Logger logger = Logger.getLogger(RoleDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(DishDaoImpl.class);
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -30,7 +30,7 @@ public class DishDaoImpl implements DishDao {
             statement.setDouble(3, dishEntity.getPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 
@@ -45,7 +45,7 @@ public class DishDaoImpl implements DishDao {
             statement.setLong(4, dishEntity.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 
@@ -56,7 +56,7 @@ public class DishDaoImpl implements DishDao {
             statement.setLong(1, dishEntity.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 
@@ -77,7 +77,7 @@ public class DishDaoImpl implements DishDao {
                 dishEntities.add(dishEntity);
             }
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
         return dishEntities;
     }
@@ -98,7 +98,7 @@ public class DishDaoImpl implements DishDao {
                 dishEntity.setPrice(rs.getDouble("price"));
             }
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
         return dishEntity;
     }

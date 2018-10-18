@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class OrderDishDaoImpl implements OrderDishDao {
 
     private DataSource dataSource;
-    private final Logger logger = Logger.getLogger(RoleDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(OrderDishDaoImpl.class);
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -28,7 +28,7 @@ public class OrderDishDaoImpl implements OrderDishDao {
             statement.setDouble(3, count);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 
@@ -40,7 +40,7 @@ public class OrderDishDaoImpl implements OrderDishDao {
             statement.setLong(2, order.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 }
