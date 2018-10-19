@@ -2,7 +2,6 @@ package com.labproject.restaurant.dao.impl;
 
 import com.labproject.restaurant.dao.OrderStatusDao;
 import com.labproject.restaurant.entities.OrderStatus;
-import org.apache.commons.dbutils.DbUtils;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderStatusDaoImpl implements OrderStatusDao {
-    private final Logger logger = Logger.getLogger(OrderStatusDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(OrderStatusDaoImpl.class);
     private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) {
@@ -25,24 +24,19 @@ public class OrderStatusDaoImpl implements OrderStatusDao {
     public OrderStatus getById(long orderStatusId) {
         OrderStatus result = new OrderStatus();
         String query = "SELECT * FROM ORDER_STATUS WHERE ID = ?";
-        PreparedStatement ps = null;
-        Connection connection = null;
-        ResultSet rs = null;
 
-        try {
-            connection = dataSource.getConnection();
-            ps = connection.prepareStatement(query);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
             ps.setLong(1, orderStatusId);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 result.setId(rs.getLong("ID"));
                 result.setName(rs.getString("NAME"));
             }
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
             return new OrderStatus();
-        } finally {
-            DbUtils.closeQuietly(connection, ps, rs);
         }
 
         return result;
@@ -53,14 +47,10 @@ public class OrderStatusDaoImpl implements OrderStatusDao {
         List<OrderStatus> result = new ArrayList<>();
         String query = "SELECT * FROM ORDER_STATUS";
         OrderStatus tmpOrderStatus;
-        PreparedStatement ps = null;
-        Connection connection = null;
-        ResultSet rs = null;
 
-        try {
-            connection = dataSource.getConnection();
-            ps = connection.prepareStatement(query);
-            rs = ps.executeQuery();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 tmpOrderStatus = new OrderStatus();
                 tmpOrderStatus.setId(rs.getLong("ID"));
@@ -68,10 +58,8 @@ public class OrderStatusDaoImpl implements OrderStatusDao {
                 result.add(tmpOrderStatus);
             }
         } catch (SQLException e) {
-            logger.error("Error: " + e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
             return new ArrayList<>();
-        } finally {
-            DbUtils.closeQuietly(connection, ps, rs);
         }
 
         return result;

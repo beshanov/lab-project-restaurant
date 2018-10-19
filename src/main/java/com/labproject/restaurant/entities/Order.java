@@ -1,7 +1,5 @@
 package com.labproject.restaurant.entities;
 
-import com.labproject.restaurant.entities.User;
-
 import java.sql.Timestamp;
 
 public class Order {
