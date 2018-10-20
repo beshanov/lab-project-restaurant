@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class RegistrationController {
 
-    @Autowired
     private RegistrationService registrationService;
 
     public void setRegistrationService(RegistrationService registrationService) {
