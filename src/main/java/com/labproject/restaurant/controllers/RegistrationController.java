@@ -1,7 +1,8 @@
 package com.labproject.restaurant.controllers;
 
 import com.labproject.restaurant.entities.User;
-import com.labproject.restaurant.services.RegistrationService;
+import com.labproject.restaurant.services.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class RegistrationController {
 
-    private RegistrationService registrationService;
+    private AccountService accountService;
 
-    public void setRegistrationService(RegistrationService registrationService) {
-        this.registrationService = registrationService;
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -32,7 +33,7 @@ public class RegistrationController {
                                 @ModelAttribute("user") User user) {
         System.out.println(user.getFirstname());
         try {
-            registrationService.doRegister(user);
+            accountService.doRegister(user);
             return new ModelAndView("index");
         } catch (IllegalArgumentException e) {
             ModelAndView mav = new ModelAndView("register");
@@ -40,5 +41,4 @@ public class RegistrationController {
             return mav;
         }
     }
-
 }
