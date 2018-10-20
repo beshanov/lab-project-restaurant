@@ -53,7 +53,7 @@
     </bean>
 
     <bean id="registrationController" class="com.labproject.restaurant.controllers.RegistrationController">
-        <property name="registrationService" ref="registrationService"/>
+        <property name="accountService" ref="accountService"/>
     </bean>
 
 </beans>
