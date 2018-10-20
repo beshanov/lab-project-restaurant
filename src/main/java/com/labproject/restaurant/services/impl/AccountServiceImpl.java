@@ -1,11 +1,11 @@
 package com.labproject.restaurant.services.impl;
 
 import com.labproject.restaurant.entities.User;
-import com.labproject.restaurant.services.RegistrationService;
+import com.labproject.restaurant.services.AccountService;
 import com.labproject.restaurant.services.RoleService;
 import com.labproject.restaurant.services.UserService;
 
-public class RegistrationServiceImpl implements RegistrationService {
+public class AccountServiceImpl implements AccountService {
 
     private UserService userService;
     private RoleService roleService;

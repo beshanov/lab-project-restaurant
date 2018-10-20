@@ -50,7 +50,7 @@
         <property name="roleDao" ref="roleDao"/>
     </bean>
 
-    <bean id="registrationService" class="com.labproject.restaurant.services.impl.RegistrationServiceImpl">
+    <bean id="accountService" class="com.labproject.restaurant.services.impl.AccountServiceImpl">
         <property name="userService" ref="userService"/>
         <property name="roleService" ref="roleService"/>
     </bean>
