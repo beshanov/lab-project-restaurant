@@ -10,9 +10,8 @@ import java.sql.*;
 
 public class UserDaoImpl implements UserDao {
 
-    private DataSource dataSource;
-
     private final Logger logger = Logger.getLogger(UserDaoImpl.class);
+    private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -39,9 +38,9 @@ public class UserDaoImpl implements UserDao {
                 user.setRole(role);
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         } finally {
-            closeResources(result,statement);
+            closeResources(result, statement);
         }
         return user;
     }
@@ -67,9 +66,9 @@ public class UserDaoImpl implements UserDao {
                 user.setRole(role);
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         } finally {
-            closeResources(result,statement);
+            closeResources(result, statement);
         }
         return user;
     }
@@ -92,9 +91,9 @@ public class UserDaoImpl implements UserDao {
                 user.setId(result.getLong(1));
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         } finally {
-            closeResources(result,statement);
+            closeResources(result, statement);
         }
     }
 
@@ -112,7 +111,7 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(6, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         } finally {
             closeResources(null, statement);
         }
@@ -126,7 +125,7 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(1, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         }
     }
 
