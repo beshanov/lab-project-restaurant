@@ -10,7 +10,7 @@ import java.sql.*;
 
 public class UserDaoImpl implements UserDao {
 
-    private final Logger logger = Logger.getLogger(UserDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
     private DataSource dataSource;
 
     public void setDataSource(DataSource dataSource) {
@@ -21,12 +21,11 @@ public class UserDaoImpl implements UserDao {
     public User getById(long id) {
         String query = "SELECT * FROM user WHERE user.id = ?";
         User user = new User();
-        PreparedStatement statement = null;
-        ResultSet result = null;
-        try (Connection conn = dataSource.getConnection()) {
-            statement = conn.prepareStatement(query);
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setLong(1, id);
-            result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();
             if (result.next()) {
                 user.setId(result.getLong("id"));
                 user.setLastname(result.getString("lastname"));
@@ -38,10 +37,9 @@ public class UserDaoImpl implements UserDao {
                 user.setRole(role);
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            closeResources(result, statement);
+            LOGGER.error(e.getMessage(), e);
         }
+
         return user;
     }
 
@@ -49,12 +47,11 @@ public class UserDaoImpl implements UserDao {
     public User getByLogin(String login) {
         String query = "SELECT * FROM user WHERE user.login = ?";
         User user = new User();
-        PreparedStatement statement = null;
-        ResultSet result = null;
-        try (Connection conn = dataSource.getConnection()) {
-            statement = conn.prepareStatement(query);
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, login);
-            result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();
             if (result.next()) {
                 user.setId(result.getLong("id"));
                 user.setLastname(result.getString("lastname"));
@@ -66,43 +63,39 @@ public class UserDaoImpl implements UserDao {
                 user.setRole(role);
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            closeResources(result, statement);
+            LOGGER.error(e.getMessage(), e);
         }
+
         return user;
     }
 
     @Override
     public void insert(User user) {
         String query = "INSERT INTO user (lastname, firstname, login, `password`, roleid) VALUES (?,?,?,?,?)";
-        PreparedStatement statement = null;
-        ResultSet result = null;
-        try (Connection conn = dataSource.getConnection()) {
-            statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getLastname());
             statement.setString(2, user.getFirstname());
             statement.setString(3, user.getLogin());
             statement.setString(4, user.getPassword());
             statement.setLong(5, user.getRole().getId());
             statement.executeUpdate();
-            result = statement.getGeneratedKeys();
+            ResultSet result = statement.getGeneratedKeys();
             if (result.next()) {
                 user.setId(result.getLong(1));
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            closeResources(result, statement);
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
     @Override
     public void update(User user) {
         String query = "UPDATE user SET lastname = ?, firstname = ?, login = ?, `password` = ?, roleid = ? WHERE id = ?";
-        PreparedStatement statement = null;
-        try (Connection conn = dataSource.getConnection()) {
-            statement = conn.prepareStatement(query);
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setString(1, user.getLastname());
             statement.setString(2, user.getFirstname());
             statement.setString(3, user.getLogin());
@@ -111,34 +104,19 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(6, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            closeResources(null, statement);
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
     @Override
     public void delete(User user) {
         String query = "DELETE FROM user WHERE id = ?";
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement statement = conn.prepareStatement(query);
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setLong(1, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    private void closeResources(ResultSet resultSet, PreparedStatement statement) {
-        try {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (statement != null) {
-                statement.close();
-            }
-        } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }
