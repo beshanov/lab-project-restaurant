@@ -2,9 +2,7 @@ package com.labproject.restaurant.controllers;
 
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.RegistrationService;
-import com.labproject.restaurant.services.impl.RegistrationServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,8 +20,8 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
 
-    @RequestMapping(value = "/register", method=RequestMethod.GET)
-    public ModelAndView showRegister(HttpServletRequest req, HttpServletResponse resp){
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public ModelAndView showRegister(HttpServletRequest req, HttpServletResponse resp) {
         ModelAndView mav = new ModelAndView("register");
         mav.addObject("user", new User());
         return mav;
@@ -33,14 +31,14 @@ public class RegistrationController {
     public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response,
                                 @ModelAttribute("user") User user) {
         System.out.println(user.getFirstname());
-        try{
+        try {
             registrationService.doRegister(user);
             return new ModelAndView("index");
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             ModelAndView mav = new ModelAndView("register");
             mav.addObject("message", e.getMessage());
             return mav;
         }
-
     }
+
 }
