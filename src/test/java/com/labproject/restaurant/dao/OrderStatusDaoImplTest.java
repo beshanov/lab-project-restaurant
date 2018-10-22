@@ -34,7 +34,7 @@ public class OrderStatusDaoImplTest extends OrderStatusDaoImpl {
         when(mockedDataSource.getConnection()).thenReturn(mockedConnection);
         when(mockedConnection.prepareStatement(anyString())).thenReturn(mockedPreparedStatement);
         when(mockedPreparedStatement.executeQuery()).thenReturn(mockedResultSet);
-        when(mockedResultSet.next()).thenReturn(true);
+        when(mockedResultSet.next()).thenReturn(true).thenReturn(false);
 
         orderStatusDao = new OrderStatusDaoImpl();
         orderStatusDao.setDataSource(mockedDataSource);

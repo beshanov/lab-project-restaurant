@@ -19,7 +19,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getById(long id) {
-        String query = "SELECT * FROM user WHERE user.id = ?";
+        String query = "SELECT * FROM USER WHERE ID = ?";
         User user = new User();
 
         try (Connection conn = dataSource.getConnection();
@@ -27,17 +27,17 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(1, id);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                user.setId(result.getLong("id"));
-                user.setLastname(result.getString("lastname"));
-                user.setFirstname(result.getString("firstname"));
-                user.setLogin(result.getString("login"));
-                user.setPassword(result.getString("password"));
+                user.setId(result.getLong("ID"));
+                user.setLastname(result.getString("LASTNAME"));
+                user.setFirstname(result.getString("FIRSTNAME"));
+                user.setLogin(result.getString("LOGIN"));
+                user.setPassword(result.getString("PASSWORD"));
                 Role role = new Role();
-                role.setId(result.getLong("roleid"));
+                role.setId(result.getLong("ROLE_ID"));
                 user.setRole(role);
             }
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
 
         return user;
@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getByLogin(String login) {
-        String query = "SELECT * FROM user WHERE user.login = ?";
+        String query = "SELECT * FROM USER WHERE LOGIN = ?";
         User user = new User();
 
         try (Connection conn = dataSource.getConnection();
@@ -53,17 +53,17 @@ public class UserDaoImpl implements UserDao {
             statement.setString(1, login);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                user.setId(result.getLong("id"));
-                user.setLastname(result.getString("lastname"));
-                user.setFirstname(result.getString("firstname"));
-                user.setLogin(result.getString("login"));
-                user.setPassword(result.getString("password"));
+                user.setId(result.getLong("ID"));
+                user.setLastname(result.getString("LASTNAME"));
+                user.setFirstname(result.getString("FIRSTNAME"));
+                user.setLogin(result.getString("LOGIN"));
+                user.setPassword(result.getString("PASSWORD"));
                 Role role = new Role();
-                role.setId(result.getLong("roleid"));
+                role.setId(result.getLong("ROLE_ID"));
                 user.setRole(role);
             }
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
 
         return user;
@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void insert(User user) {
-        String query = "INSERT INTO user (lastname, firstname, login, `password`, roleid) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO USER (LASTNAME, FIRSTNAME, LOGIN, `PASSWORD`, ROLEID) VALUES (?,?,?,?,?)";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -86,13 +86,13 @@ public class UserDaoImpl implements UserDao {
                 user.setId(result.getLong(1));
             }
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 
     @Override
     public void update(User user) {
-        String query = "UPDATE user SET lastname = ?, firstname = ?, login = ?, `password` = ?, roleid = ? WHERE id = ?";
+        String query = "UPDATE USER SET LASTNAME = ?, FIRSTNAME = ?, LOGIN = ?, `PASSWORD` = ?, ROLEID = ? WHERE ID = ?";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
@@ -104,19 +104,19 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(6, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 
     @Override
     public void delete(User user) {
-        String query = "DELETE FROM user WHERE id = ?";
+        String query = "DELETE FROM USER WHERE ID = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
             statement.setLong(1, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("Error: " + e.getMessage(), e);
         }
     }
 }
