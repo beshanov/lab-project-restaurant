@@ -21,7 +21,7 @@ public class OrderDishDaoImpl implements OrderDishDao {
 
     @Override
     public void addDishToOrder(DishEntity dishEntity, Order order, int count) {
-        final String ADD_DISH_TO_ORDER = "INSERT INTO order_dish(dishid, orderid, count) VALUES(?, ?, ?);";
+        final String ADD_DISH_TO_ORDER = "INSERT INTO ORDER_DISH(DISHID, ORDERID, COUNT) VALUES(?, ?, ?)";
         try (Connection conn = dataSource.getConnection(); PreparedStatement statement = conn.prepareStatement(ADD_DISH_TO_ORDER)) {
             statement.setLong(1, dishEntity.getId());
             statement.setLong(2, order.getId());
@@ -34,7 +34,7 @@ public class OrderDishDaoImpl implements OrderDishDao {
 
     @Override
     public void deleteDishFromOrder(DishEntity dishEntity, Order order) {
-        final String DELETE_DISH_FROM_ORDER = "DELETE FROM order_dish WHERE dishid = ? AND orderid = ?;";
+        final String DELETE_DISH_FROM_ORDER = "DELETE FROM ORDER_DISH WHERE DISHID = ? AND ORDERID = ?";
         try (Connection conn = dataSource.getConnection(); PreparedStatement statement = conn.prepareStatement(DELETE_DISH_FROM_ORDER)) {
             statement.setLong(1, dishEntity.getId());
             statement.setLong(2, order.getId());

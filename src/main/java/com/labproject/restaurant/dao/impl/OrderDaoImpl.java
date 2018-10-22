@@ -24,7 +24,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void insert(Order order) {
-        String query = "INSERT INTO `ORDER` (ORDERDATE, USERID, STATUSID) VALUES (?, ?, ?)";
+        String query = "INSERT INTO `ORDER` (ORDERDATE, USER_ID, STATUS_ID) VALUES (?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -50,9 +50,9 @@ public class OrderDaoImpl implements OrderDao {
                 result.setId(rs.getLong("ID"));
                 result.setOrderDate(rs.getTimestamp("ORDERDATE"));
                 result.setUser(new User());
-                result.getUser().setId(rs.getLong("USERID"));
+                result.getUser().setId(rs.getLong("USER_ID"));
                 result.setStatus(new OrderStatus());
-                result.getStatus().setId(rs.getLong("STATUSID"));
+                result.getStatus().setId(rs.getLong("STATUS_ID"));
             }
         } catch (SQLException e) {
             LOGGER.error("Error: " + e.getMessage(), e);
@@ -76,9 +76,9 @@ public class OrderDaoImpl implements OrderDao {
                 tmpOrder.setId(rs.getLong("ID"));
                 tmpOrder.setOrderDate(rs.getTimestamp("ORDERDATE"));
                 tmpOrder.setUser(new User());
-                tmpOrder.getUser().setId(rs.getLong("USERID"));
+                tmpOrder.getUser().setId(rs.getLong("USER_ID"));
                 tmpOrder.setStatus(new OrderStatus());
-                tmpOrder.getStatus().setId(rs.getLong("STATUSID"));
+                tmpOrder.getStatus().setId(rs.getLong("STATUS_ID"));
                 result.add(tmpOrder);
             }
         } catch (SQLException e) {
@@ -91,7 +91,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void update(Order order) {
-        String query = "UPDATE `ORDER` SET ORDERDATE = ?, USERID = ?, STATUSID = ? WHERE ID = ?";
+        String query = "UPDATE `ORDER` SET ORDERDATE = ?, USER_ID = ?, STATUS_ID = ? WHERE ID = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {

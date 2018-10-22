@@ -33,23 +33,23 @@ public class BillDaoImpl implements BillDao {
     @Override
     public Bill getById(long id) {
         String query = "SELECT ID, ORDERID, ADMINID, AMOUNT, `DATE`, " +
-                "`STATUS` FROM bill where id=?;";
+                "`STATUS` FROM BILL WHERE ID = ?";
         Bill bill = new Bill();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                bill.setId(rs.getLong("id"));
+                bill.setId(rs.getLong("ID"));
                 Order order = new Order();
-                order.setId(rs.getLong("OrderId"));
+                order.setId(rs.getLong("ORDER_ID"));
                 bill.setOrder(order);
                 User admin = new User();
-                admin.setId(rs.getLong("AdminId"));
+                admin.setId(rs.getLong("ADMIN_ID"));
                 bill.setAdmin(admin);
-                bill.setAmount(rs.getBigDecimal("Amount"));
-                bill.setDate(rs.getTimestamp("Date"));
-                bill.setStatus(rs.getBoolean("Status"));
+                bill.setAmount(rs.getBigDecimal("AMOUNT"));
+                bill.setDate(rs.getTimestamp("DATE"));
+                bill.setStatus(rs.getBoolean("STATUS"));
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
@@ -60,7 +60,7 @@ public class BillDaoImpl implements BillDao {
     @Override
     public List<Bill> getAll() {
         String query = "SELECT ID, ORDERID, ADMINID, AMOUNT, `DATE`, " +
-                "`STATUS` FROM bill;";
+                "`STATUS` FROM BILL;";
 
         List<Bill> bills = new ArrayList<>();
 
@@ -69,16 +69,16 @@ public class BillDaoImpl implements BillDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Bill bill = new Bill();
-                bill.setId(rs.getLong("id"));
+                bill.setId(rs.getLong("ID"));
                 Order order = new Order();
-                order.setId(rs.getLong("OrderId"));
+                order.setId(rs.getLong("ORDER_ID"));
                 bill.setOrder(order);
                 User admin = new User();
-                admin.setId(rs.getLong("AdminId"));
+                admin.setId(rs.getLong("ADMIN_ID"));
                 bill.setAdmin(admin);
-                bill.setAmount(rs.getBigDecimal("Amount"));
-                bill.setDate(rs.getTimestamp("Date"));
-                bill.setStatus(rs.getBoolean("Status"));
+                bill.setAmount(rs.getBigDecimal("AMOUNT"));
+                bill.setDate(rs.getTimestamp("DATE"));
+                bill.setStatus(rs.getBoolean("STATUS"));
                 bills.add(bill);
             }
         } catch (SQLException e) {
