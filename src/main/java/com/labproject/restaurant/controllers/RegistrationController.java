@@ -31,7 +31,6 @@ public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response,
                                 @ModelAttribute("user") User user) {
-        System.out.println(user.getFirstname());
         try {
             accountService.doRegister(user);
             return new ModelAndView("index");
