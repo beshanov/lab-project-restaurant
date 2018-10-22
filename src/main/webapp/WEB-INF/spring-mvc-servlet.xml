@@ -61,6 +61,10 @@
         <property name="roleDao" ref="roleDao"/>
     </bean>
 
+    <bean id="dishService" class="com.labproject.restaurant.services.impl.DishServiceImpl">
+        <property name="dishDao" ref="dishDao"/>
+    </bean>
+
     <bean id="accountService" class="com.labproject.restaurant.services.impl.AccountServiceImpl">
         <property name="userService" ref="userService"/>
         <property name="roleService" ref="roleService"/>
@@ -69,5 +73,9 @@
     <bean id="registrationController" class="com.labproject.restaurant.controllers.RegistrationController">
         <property name="accountService" ref="accountService"/>
     </bean>
+
+    <!--<bean id="MenuController" class="com.labproject.restaurant.controllers.MenuController">-->
+        <!--<property name="dishService" ref="dishService"/>-->
+    <!--</bean>-->
 
 </beans>
