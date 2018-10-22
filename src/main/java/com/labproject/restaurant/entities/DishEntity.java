@@ -1,5 +1,7 @@
 package com.labproject.restaurant.entities;
 
+import java.util.Objects;
+
 public class DishEntity {
     private long id;
     private String name;
@@ -36,5 +38,16 @@ public class DishEntity {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DishEntity)) return false;
+        return((DishEntity)obj).id == id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int)id;
     }
 }
