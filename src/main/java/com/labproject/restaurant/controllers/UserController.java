@@ -4,18 +4,14 @@ import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
-@SessionAttributes("user")
 public class UserController {
     private static final Logger LOGGER = Logger.getLogger(UserController.class);
     private UserService userService;
@@ -25,26 +21,29 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user-settings", method = RequestMethod.GET)
-    public ModelAndView showSettings(@ModelAttribute User user) {
-        try {
-            Assert.notNull(user);
-        } catch (IllegalArgumentException e) {
-            LOGGER.error(e.getMessage(), e);
+    public ModelAndView showSettings(HttpSession session) {
+        Object user = session.getAttribute("user");
+        if (user == null) {
+            ModelAndView mav = new ModelAndView("register");
+            mav.addObject("user", new User());
+            return mav;
+        } else {
+            ModelAndView mav = new ModelAndView("user-settings");
+            User user1 = userService.getById(((User) user).getId());
+            mav.addObject("user", (User) user1);
+            return mav;
         }
-        ModelAndView mav = new ModelAndView("user-settings");
-        mav.addObject("user", user);
-        return mav;
     }
 
     @RequestMapping(value = "/user-settings", method = RequestMethod.POST)
-    public ModelAndView updateUser(HttpServletRequest req, HttpServletResponse resp,
-                                   @ModelAttribute("user") User user) {
-        try {
-        userService.update(user);
-
-        }catch (NullPointerException e){
-            LOGGER.error(e.getMessage(), e);
+    public ModelAndView updateUser(HttpSession session, @ModelAttribute("user") User user) {
+        ModelAndView mav = new ModelAndView("user-settings");
+        if (userService.isLoginExists(user.getLogin())) {
+            mav.addObject("message", "This login is already exists!");
+        } else {
+            userService.update(user);
+            session.setAttribute("user", user);
         }
-        return new ModelAndView("user-settings");
+        return mav;
     }
 }
