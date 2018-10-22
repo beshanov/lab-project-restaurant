@@ -74,8 +74,4 @@
         <property name="accountService" ref="accountService"/>
     </bean>
 
-    <!--<bean id="MenuController" class="com.labproject.restaurant.controllers.MenuController">-->
-        <!--<property name="dishService" ref="dishService"/>-->
-    <!--</bean>-->
-
 </beans>

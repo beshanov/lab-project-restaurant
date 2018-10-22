@@ -40,14 +40,4 @@ public class DishEntity {
         this.price = price;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof DishEntity)) return false;
-        return((DishEntity)obj).id == id;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int)id;
-    }
 }
