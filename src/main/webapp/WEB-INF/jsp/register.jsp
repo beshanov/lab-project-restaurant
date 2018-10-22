@@ -55,5 +55,6 @@
                 </tr>
             </table>
         </form:form>
+    <p>${message}</p>
     </body>
 </html>
