@@ -18,4 +18,11 @@
         <servlet-name>spring-mvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <session-config>
+        <session-timeout>31536000</session-timeout>
+        <cookie-config>
+            <max-age>31536000</max-age>
+        </cookie-config>
+    </session-config>
 </web-app>
