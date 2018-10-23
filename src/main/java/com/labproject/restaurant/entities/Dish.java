@@ -1,8 +1,6 @@
 package com.labproject.restaurant.entities;
 
-import java.util.Objects;
-
-public class DishEntity {
+public class Dish {
     private long id;
     private String name;
     private String description;
