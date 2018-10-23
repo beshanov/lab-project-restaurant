@@ -1,13 +1,13 @@
 package com.labproject.restaurant.dao;
 
-import com.labproject.restaurant.entities.DishEntity;
+import com.labproject.restaurant.entities.Dish;
 
 import java.util.List;
 
 public interface DishDao {
-    void insert(DishEntity dishEntity);
-    void update(DishEntity dishEntity);
-    void delete(DishEntity dishEntity);
-    List<DishEntity> getAll();
-    DishEntity getById(long id);
+    void insert(Dish dish);
+    void update(Dish dish);
+    void delete(Dish dish);
+    List<Dish> getAll();
+    Dish getById(long id);
 }

@@ -15,30 +15,30 @@
 <body>
 <div style="width: 900px; margin:auto;">
     <c:forEach var="dish" items="${dishesList}">
-        <div class="dish" id="${dish.id}">
-            <div class="dish_name">${dish.name}</div>
-            <div class="dish_desc">${dish.description}</div>
-            <div class="dish_price">${dish.price}</div>
-            <input type="number" min="1" value="1" style="width: 50px;"> pieces</input>
-            <button>Add to Cart</button>
+        <div class="dish" id="dish_${dish.id}">
+            <div class="dish_name"><a href="dish/${dish.id}">${dish.name}</a></div>
+                <div class="dish_price">${dish.price}</div>
+            <form id="dishForm_${dish.id}">
+                <input type="number" min="1" value="1" style="width: 50px;" name="pieces_${dish.id}"> pieces</input>
+            </form>
+            <button onclick="addToCart('${dish.id}')">Add to Cart</button>
         </div>
     </c:forEach>
 
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script>
-    $('button').click(function () {
+    function addToCart(dishId) {
         $.ajax({
-            url: "dishes",
+            url: "cart",
             type: "POST",
             data: {
-                id: $(this).parent().attr("id"),
-                count: $(this).parent().children('input[type="number"]').val()
+                id: dishId,
+                count: $('[name = pieces_' + dishId + ']').val()
             }
         });
 
-    });
-
+    }
 </script>
 </body>
 </html>

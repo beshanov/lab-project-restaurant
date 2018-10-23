@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void insert(User user) {
-        String query = "INSERT INTO USER (LASTNAME, FIRSTNAME, LOGIN, `PASSWORD`, ROLEID) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO USER (LASTNAME, FIRSTNAME, LOGIN, `PASSWORD`, ROLE_ID) VALUES (?,?,?,?,?)";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -92,7 +92,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(User user) {
-        String query = "UPDATE USER SET LASTNAME = ?, FIRSTNAME = ?, LOGIN = ?, `PASSWORD` = ?, ROLEID = ? WHERE ID = ?";
+        String query = "UPDATE USER SET LASTNAME = ?, FIRSTNAME = ?, LOGIN = ?, `PASSWORD` = ?, ROLE_ID = ? WHERE ID = ?";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
