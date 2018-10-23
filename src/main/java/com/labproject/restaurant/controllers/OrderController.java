@@ -2,48 +2,48 @@ package com.labproject.restaurant.controllers;
 
 import com.labproject.restaurant.entities.Order;
 import com.labproject.restaurant.services.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
-@Controller
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+    OrderService orderService;
+    //DishService dishService;
+
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    /*public void setDishService(DishService dishService) {
+        this.dishService = dishService;
+    }*/
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public ModelAndView getAllOrders() {
-        ModelAndView mav = new ModelAndView("profile");
+    public String displayOrder() {
 
-        mav.addObject("orderList", orderService.getAllOrders());
 
-        return mav;
+        return "orderDetails";
     }
 
-    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
-    public ModelAndView getOrder(@PathVariable long orderId) {
-        ModelAndView mav = new ModelAndView("profile");
-        Order order = orderService.getOrderById(orderId);
+    @RequestMapping(value = "/newOrder", method = RequestMethod.POST)
+    public String createNewOrder() {
 
-        mav.addObject("order", order);
 
-        return mav;
+        return "orderDetails";
     }
 
-    @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public ModelAndView createNewOrder(@ModelAttribute("order") Order order) {
+    @RequestMapping(value = "/modifyOrder", method = RequestMethod.POST)
+    public String modifyOrder() {
+
+
+        return "orderDetails";
+    }
+
+    @RequestMapping(value = "/submitOrder", method = RequestMethod.POST)
+    public String submitOrder(@ModelAttribute("order") Order order) {
         orderService.createNewOrder(order);
 
-        return new ModelAndView("profile");
-    }
-
-    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)
-    public void deleteOrder(@PathVariable long orderId) {
-        orderService.deleteOrderById(orderId);
+        return "orderDetails";
     }
 }
