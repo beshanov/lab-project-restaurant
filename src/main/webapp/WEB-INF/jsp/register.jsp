@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
-
+<!DOCTYPE HTML>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,7 +14,10 @@
                         <form:label path="login">Login: </form:label>
                     </td>
                     <td>
-                        <form:input path="login" name="login" id="username"/>
+                        <form:input path="login" pattern="[\w\d]{3,8}" required = "required"/>
+                    </td>
+                    <td>
+                    <form:errors path="login"/>
                     </td>
                 </tr>
                 <tr>
@@ -22,7 +25,10 @@
                         <form:label path="password">Password</form:label>
                     </td>
                     <td>
-                        <form:password path="password" name="password" id="password"/>
+                        <form:password path="password"  pattern="[\w\d]{3,8}" required = "required"/>
+                    </td>
+                    <td>
+                        <form:errors path="password"/>
                     </td>
                 </tr>
                 <tr>
@@ -30,7 +36,10 @@
                         <form:label path="firstname">FirstName</form:label>
                     </td>
                     <td>
-                        <form:input path="firstname" name="firstname" id="firstname"/>
+                        <form:input path="firstname"  pattern="[\w\d]{3,8}" required = "required"/>
+                    </td>
+                    <td>
+                        <form:errors path="firstname"/>
                     </td>
                 </tr>
                 <tr>
@@ -38,7 +47,10 @@
                         <form:label path="lastname">LastName</form:label>
                     </td>
                     <td>
-                        <form:input path="lastname" name="lastname" id="lastname"/>
+                        <form:input path="lastname"  pattern="[\w\d]{3,8}" required = "required"/>
+                    </td>
+                    <td>
+                        <form:errors path="lastname"/>
                     </td>
                 </tr>
                 <tr>

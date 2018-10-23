@@ -3,7 +3,11 @@ package com.labproject.restaurant.controllers;
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +25,10 @@ public class RegistrationController {
         this.accountService = accountService;
     }
 
+    @Autowired
+    @Qualifier("userValidatorForRegister") // spring validator
+    private Validator userValidator;
+
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView showRegister(HttpServletRequest req, HttpServletResponse resp) {
         ModelAndView mav = new ModelAndView("register");
@@ -30,7 +38,12 @@ public class RegistrationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response,
-                                @ModelAttribute("user") User user) {
+                               @ModelAttribute("user") User user, BindingResult bindingResult) {
+        userValidator.validate(user,bindingResult);
+        if (bindingResult.hasErrors()) {
+          return new ModelAndView("register");
+        }
+
         System.out.println(user.getFirstname());
         try {
             accountService.doRegister(user);
