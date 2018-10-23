@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
         if (userService.getByLogin(user.getLogin()).getId() != 0) {
             throw new IllegalArgumentException("This login already exists!");
         } else {
-            user.setRole(roleService.getById(1));
+            user.setRole(roleService.getById(2));
             userService.insert(user);
         }
     }

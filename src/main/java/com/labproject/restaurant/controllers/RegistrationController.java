@@ -30,10 +30,10 @@ public class RegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response,
                                 @ModelAttribute("user") User user) {
-        System.out.println(user.getFirstname());
         try {
             accountService.doRegister(user);
-            return new ModelAndView("index");
+            request.getSession().setAttribute("user", user);
+            return new ModelAndView("redirect:/user-settings");
         } catch (IllegalArgumentException e) {
             ModelAndView mav = new ModelAndView("register");
             mav.addObject("message", e.getMessage());
