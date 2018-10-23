@@ -8,7 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Service
-public class UserValidatorForRegister implements Validator {
+public class UserRegistrationValidator implements Validator {
 
     @Autowired
     private UserService userService;
@@ -31,9 +31,9 @@ public class UserValidatorForRegister implements Validator {
                     "This login already exists!");
         }
 
-        if (firstName.length() < 3 || firstName.length() > 10) {
+        if (firstName.length() < 2 || firstName.length() > 10) {
             errors.rejectValue("firstname", "firstName.failLength",
-                    "First name must be between 3 and 10 symbols!");
+                    "First name must be between 2 and 10 symbols!");
         }
         if (!firstName.matches("[\\w\\d]*")) {
             errors.rejectValue("firstname", "firstName.failPattern",
@@ -41,9 +41,9 @@ public class UserValidatorForRegister implements Validator {
         }
 
 
-        if (lastName.length() < 3 || lastName.length() > 10) {
+        if (lastName.length() < 3 || lastName.length() > 20) {
             errors.rejectValue("lastname", "lastName.failLength",
-                    "Last name must be between 3 and 10 symbols!");
+                    "Last name must be between 3 and 20 symbols!");
         }
         if (!lastName.matches("[\\w\\d]*")) {
             errors.rejectValue("lastname", "lastName.failPattern",
@@ -59,7 +59,7 @@ public class UserValidatorForRegister implements Validator {
                     "Login mustn't contains any spaces or non latin characters!");
         }
 
-        if (password.length() < 3 || password.length() > 10) {
+        if (password.length() < 3 || password.length() > 8) {
             errors.rejectValue("password", "password.failLength",
                     "Password must be between 3 and 8 symbols!");
         }
