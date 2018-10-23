@@ -39,7 +39,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isLoginExists(String login) {
+    public boolean isLoginExist(String login) {
         return userDao.getByLogin(login).getId() != 0;
     }
+
 }
