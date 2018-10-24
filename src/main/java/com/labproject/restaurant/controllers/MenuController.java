@@ -43,12 +43,14 @@ public class MenuController {
 
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.POST)
     public ModelAndView updateDish(@PathVariable long dishId, @ModelAttribute Dish dish) {
+        dish.setId(dishId);
         dishService.update(dish);
         return new ModelAndView("redirect:/dish");
     }
 
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.DELETE)
     public ModelAndView deleteDish(@PathVariable long dishId, @ModelAttribute Dish dish) {
+        dish.setId(dishId);
         dishService.delete(dish);
         return new ModelAndView("redirect:/dish");
     }
