@@ -69,13 +69,4 @@
         <property name="userService" ref="userService"/>
         <property name="roleService" ref="roleService"/>
     </bean>
-
-    <bean id="registrationController" class="com.labproject.restaurant.controllers.RegistrationController">
-        <property name="accountService" ref="accountService"/>
-    </bean>
-
-    <bean id="userController" class="com.labproject.restaurant.controllers.UserController">
-        <property name="userService" ref="userService"/>
-    </bean>
-
 </beans>
