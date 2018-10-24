@@ -1,7 +1,7 @@
 package com.labproject.restaurant.services.impl;
 
 import com.labproject.restaurant.dao.DishDao;
-import com.labproject.restaurant.entities.DishEntity;
+import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.services.DishService;
 
 import java.util.List;
@@ -13,17 +13,17 @@ public class DishServiceImpl implements DishService {
     public void setDishDao(DishDao dishDao) { this.dishDao = dishDao; }
 
     @Override
-    public DishEntity getById(long id) { return dishDao.getById(id); }
+    public Dish getById(long id) { return dishDao.getById(id); }
 
     @Override
-    public List<DishEntity> getAll() { return dishDao.getAll(); }
+    public List<Dish> getAll() { return dishDao.getAll(); }
 
     @Override
-    public void insert(DishEntity dishEntity) { dishDao.insert(dishEntity); }
+    public void insert(Dish dish) { dishDao.insert(dish); }
 
     @Override
-    public void update(DishEntity dishEntity) { dishDao.update(dishEntity); }
+    public void update(Dish dish) { dishDao.update(dish); }
 
     @Override
-    public void delete(DishEntity dishEntity) { dishDao.delete(dishEntity); }
+    public void delete(Dish dish) { dishDao.delete(dish); }
 }
