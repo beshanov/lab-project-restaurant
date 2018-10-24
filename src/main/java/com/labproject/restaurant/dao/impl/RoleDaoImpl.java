@@ -14,7 +14,7 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role getRoleByLogin(String login) {
-        String query = "SELECT ROLE.ID,ROLE.NAME FROM ROLE, USER WHERE ROLEID = ROLE.ID AND LOGIN = ?";
+        String query = "SELECT ROLE.ID,ROLE.NAME FROM ROLE, USER WHERE ROLE_ID = ROLE.ID AND LOGIN = ?";
         Role role = new Role();
         try (Connection conn = dataSource.getConnection();
              PreparedStatement statement = conn.prepareStatement(query)) {
