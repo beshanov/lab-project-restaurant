@@ -20,7 +20,15 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void doRegister(User user) {
-            user.setRole(roleService.getById(1));
+        if (user.getPassword().length() < 3) {
+            throw new IllegalArgumentException("Password length must be more than 3!");
+        }
+
+        if (userService.getByLogin(user.getLogin()).getId() != 0) {
+            throw new IllegalArgumentException("This login already exists!");
+        } else {
+            user.setRole(roleService.getById(2));
             userService.insert(user);
         }
+    }
 }
