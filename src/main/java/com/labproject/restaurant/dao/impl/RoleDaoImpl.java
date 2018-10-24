@@ -1,83 +1,53 @@
 package com.labproject.restaurant.dao.impl;
 
 import com.labproject.restaurant.dao.RoleDao;
+import com.labproject.restaurant.dao.mapping.RoleMapper;
 import com.labproject.restaurant.entities.Role;
 import org.apache.log4j.Logger;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
-import java.sql.*;
 
 public class RoleDaoImpl implements RoleDao {
 
-    private DataSource dataSource;
     private static final Logger LOGGER = Logger.getLogger(RoleDaoImpl.class);
+    private JdbcTemplate jdbcTemplate;
+    private SimpleJdbcInsert simpleJdbcInsert;
 
     public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("ROLE").usingGeneratedKeyColumns("id");
     }
 
     @Override
     public Role getById(long id) {
         String query = "SELECT * FROM ROLE WHERE ID = ?";
         Role role = new Role();
-
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setLong(1, id);
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                role.setId(result.getLong("ID"));
-                role.setName(result.getString("NAME"));
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Error: " + e.getMessage(), e);
+        try {
+            role = jdbcTemplate.queryForObject(query, new RoleMapper(), id);
+        } catch (EmptyResultDataAccessException e) {
         }
-
         return role;
     }
 
     @Override
     public void insert(Role role) {
-        String query = "INSERT INTO ROLE (NAME) VALUES (?)";
-
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, role.getName());
-            statement.executeUpdate();
-            ResultSet result = statement.getGeneratedKeys();
-            if (result.next()) {
-                role.setId(result.getLong(1));
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Error: " + e.getMessage(), e);
-        }
+        role.setId(simpleJdbcInsert.executeAndReturnKey(new BeanPropertySqlParameterSource(role)).longValue());
     }
 
     @Override
     public void update(Role role) {
         String query = "UPDATE ROLE SET NAME = ? WHERE ID = ?";
-
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, role.getName());
-            statement.setLong(2, role.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Error: " + e.getMessage(), e);
-        }
+        jdbcTemplate.update(query, role.getName(), role.getId());
     }
 
     @Override
     public void delete(Role role) {
         String query = "DELETE FROM ROLE WHERE ID = ?";
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement statement = conn.prepareStatement(query);
-            statement.setLong(1, role.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Error: " + e.getMessage(), e);
-        }
-
+        jdbcTemplate.update(query, role.getId());
     }
 }
 
