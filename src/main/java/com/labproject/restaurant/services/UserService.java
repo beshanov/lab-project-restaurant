@@ -4,15 +4,17 @@ import com.labproject.restaurant.entities.User;
 
 public interface UserService {
 
-    public User getById(long id);
+    User getById(long id);
 
-    public void insert(User user);
+    void insert(User user);
 
-    public void update(User user);
+    void update(User user);
 
-    public void delete(User user);
+    void delete(User user);
 
-    public User getByLogin(String login);
+    User getByLogin(String login);
 
+    boolean isLoginExist(String login);
 
+    User userSettingsValidation(User userFromSession, User user);
 }

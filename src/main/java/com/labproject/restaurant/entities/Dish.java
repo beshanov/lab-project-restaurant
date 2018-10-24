@@ -1,6 +1,6 @@
 package com.labproject.restaurant.entities;
 
-public class DishEntity {
+public class Dish {
     private long id;
     private String name;
     private String description;
@@ -37,4 +37,5 @@ public class DishEntity {
     public void setPrice(double price) {
         this.price = price;
     }
+
 }
