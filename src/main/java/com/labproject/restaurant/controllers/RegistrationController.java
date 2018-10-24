@@ -13,13 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RegistrationController {
-
+    @Autowired
     private AccountService accountService;
-
-    public void setAccountService(AccountService accountService) {
-        this.accountService = accountService;
-    }
-
     @Autowired
     private UserRegistrationValidator userValidator;
 

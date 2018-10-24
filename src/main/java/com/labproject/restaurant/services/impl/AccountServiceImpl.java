@@ -20,7 +20,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void doRegister(User user) {
-            user.setRole(roleService.getById(1));
-            userService.insert(user);
-        }
+        user.setRole(roleService.getById(1));
+        userService.insert(user);
+    }
 }
