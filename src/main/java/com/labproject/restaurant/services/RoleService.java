@@ -11,4 +11,6 @@ public interface RoleService {
     public void update(Role role);
 
     public void delete(Role role);
+
+    Role getRoleByLogin(String login);
 }

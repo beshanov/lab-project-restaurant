@@ -7,7 +7,7 @@
     </head>
     <body>
         <h1 align="center">Settings</h1>
-        <form:form id="settingsForm" modelAttribute="user" action="user-settings" method="post">
+        <form:form id="settingsForm" modelAttribute="user" action="profile" method="post">
             <table align="center">
                 <tr>
                     <td>
