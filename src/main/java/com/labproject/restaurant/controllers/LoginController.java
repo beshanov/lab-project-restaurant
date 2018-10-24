@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 @Controller
 public class LoginController {
@@ -28,14 +27,12 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView loginProcess(HttpSession session,
-                                     @ModelAttribute("user") User user) throws IOException {
+                                     @ModelAttribute("user") User user) {
         ModelAndView mav = null;
         try {
             User user1 = accountService.validateUser(user);
-            if (null != user1) {
                 session.setAttribute("user", user1);
                 mav = new ModelAndView("redirect:/profile");
-            }
         } catch (IllegalArgumentException e) {
             mav = new ModelAndView("login");
             mav.addObject("message", e.getMessage());
