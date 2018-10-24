@@ -43,4 +43,15 @@ public class UserServiceImpl implements UserService {
         return userDao.getByLogin(login).getId() != 0;
     }
 
+    @Override
+    public User userSettingsValidation(User userFromSession, User user) {
+        if (!user.getLogin().equals(userFromSession.getLogin())) {
+            if (isLoginExist(user.getLogin())) {
+                throw new IllegalArgumentException("This login is already exists!");
+            }
+        }
+        user.setRole(((User) userFromSession).getRole());
+        return user;
+    }
+
 }

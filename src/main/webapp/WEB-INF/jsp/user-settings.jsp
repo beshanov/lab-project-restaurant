@@ -14,7 +14,7 @@
                         <form:label path="login">Login: </form:label>
                     </td>
                     <td>
-                        <form:input path="login" pattern="[\w\d]{3,8}" required = "required" value="${user.login}"/>
+                        <form:input path="login" pattern="[\w\d]{3,10}" required = "required" value="${user.login}"/>
                     </td>
                 </tr>
                 <tr>
@@ -22,7 +22,7 @@
                         <form:label path="password">Password</form:label>
                     </td>
                     <td>
-                        <form:password path="password" pattern="[\w\d]{3,8}" required = "required" value="${user.password}"/>
+                        <form:password path="password" pattern="[\w\d]{3,10}" required = "required" value="${user.password}"/>
                     </td>
                 </tr>
                 <tr>

@@ -44,17 +44,14 @@ public class UserController {
             return new ModelAndView("redirect:/register");
         }
 
-        user.setRole(((User) userFromSession).getRole());
-
-        if (!user.getLogin().equals(((User) userFromSession).getLogin())) {
-            if (userService.isLoginExist(user.getLogin())) {
-                LOGGER.error("This login is already exists!");
-                ModelAndView mav = new ModelAndView("user-settings");
-                mav.addObject("message", "This login is already exists!");
-                return mav;
-            }
+        try {
+            user = userService.userSettingsValidation((User) userFromSession, user);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error(e.getMessage(), e);
+            ModelAndView mav = new ModelAndView("user-settings");
+            mav.addObject("message", e.getMessage());
+            return mav;
         }
-
         userService.update(user);
         session.setAttribute("user", user);
         return new ModelAndView("user-settings");

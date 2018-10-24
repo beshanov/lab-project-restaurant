@@ -15,4 +15,6 @@ public interface UserService {
     User getByLogin(String login);
 
     boolean isLoginExist(String login);
+
+    User userSettingsValidation(User userFromSession, User user);
 }
