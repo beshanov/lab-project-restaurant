@@ -7,7 +7,7 @@
     </head>
     <body>
         <h1 align="center">Settings</h1>
-        <form:form id="settingsForm" modelAttribute="user" action="user-settings" method="post">
+        <form:form id="settingsForm" modelAttribute="user" action="profile" method="post">
             <table align="center">
                 <tr>
                     <td>
@@ -15,6 +15,9 @@
                     </td>
                     <td>
                         <form:input path="login" pattern="[\w\d]{3,10}" required = "required" value="${user.login}"/>
+                    </td>
+                    <td>
+                        <form:errors path="login"/>
                     </td>
                 </tr>
                 <tr>
@@ -24,6 +27,9 @@
                     <td>
                         <form:password path="password" pattern="[\w\d]{3,10}" required = "required" value="${user.password}"/>
                     </td>
+                    <td>
+                        <form:errors path="password"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -32,6 +38,9 @@
                     <td>
                         <form:input path="firstname" pattern="[\w\d]{3,20}" required = "required" value="${user.firstname}"/>
                     </td>
+                    <td>
+                        <form:errors path="firstname"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -39,6 +48,9 @@
                     </td>
                     <td>
                         <form:input path="lastname" pattern="[\w\d]{3,20}" required = "required" value="${user.lastname}"/>
+                    </td>
+                    <td>
+                        <form:errors path="lastname"/>
                     </td>
                 </tr>
                 <tr>
@@ -50,16 +62,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
                     <td>
                         <form:button id="apply">Apply</form:button>
                     </td>
                 </tr>
                 <tr>
-                    <td><a href="/index">Home</a></td>
+                    <td><a href="/dish">Home</a></td>
                 </tr>
             </table>
         </form:form>
-        <p>${message}</p>
     </body>
 </html>

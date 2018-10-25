@@ -7,14 +7,14 @@
         <title>Login</title>
     </head>
     <body>
-        <form:form id="loginForm" modelAttribute="user" action="loginProcess" method="post">
+        <form:form id="loginForm" modelAttribute="user" action="login" method="post">
             <table align="center">
                 <tr>
                     <td>
                         <form:label path="login">Login: </form:label>
                     </td>
                     <td>
-                        <form:input path="login" name="login" id="username"/>
+                        <form:input path="login" name="login" id="login" pattern="[\w\d]{3,8}" required = "required"/>
                     </td>
                 </tr>
                 <tr>
@@ -22,13 +22,13 @@
                         <form:label path="password">Password:</form:label>
                     </td>
                     <td>
-                        <form:password path="password" name="password" id="password"/>
+                        <form:password path="password" name="password" id="password" pattern="[\w\d]{3,8}" required = "required"/>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td align="left">
-                        <form:button id="login" name="login">Login</form:button>
+                        <form:button id="loginProcess" name="loginProcess">Login</form:button>
                     </td>
                 </tr>
                 <tr></tr>
