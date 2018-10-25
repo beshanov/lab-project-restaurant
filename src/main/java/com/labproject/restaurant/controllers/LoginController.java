@@ -30,8 +30,8 @@ public class LoginController {
                                      @ModelAttribute("user") User user) {
         ModelAndView mav = null;
         try {
-            User user1 = accountService.validateUser(user);
-                session.setAttribute("user", user1);
+            User existingUser = accountService.validateUser(user);
+                session.setAttribute("user", existingUser);
                 mav = new ModelAndView("redirect:/profile");
         } catch (IllegalArgumentException e) {
             mav = new ModelAndView("login");
