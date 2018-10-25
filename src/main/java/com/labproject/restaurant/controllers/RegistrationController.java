@@ -32,6 +32,6 @@ public class RegistrationController {
             return new ModelAndView("register");
         }
         accountService.doRegister(user);
-        return new ModelAndView("index");
+        return new ModelAndView("redirect:/login");
     }
 }
