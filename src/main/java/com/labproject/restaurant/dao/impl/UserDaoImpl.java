@@ -4,24 +4,25 @@ import com.labproject.restaurant.dao.UserDao;
 import com.labproject.restaurant.dao.mapping.UserMapper;
 import com.labproject.restaurant.entities.User;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserDaoImpl implements UserDao {
 
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
+    @Autowired
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcInsert simpleJdbcInsert;
 
-
-    public void setDataSource(DataSource dataSource) {
-        jdbcTemplate = new JdbcTemplate(dataSource);
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("USER").usingGeneratedKeyColumns("id");
+    @Autowired
+    public UserDaoImpl(DataSource dataSource) {
+        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("USER").usingGeneratedKeyColumns("ID");
     }
 
     @Override
@@ -48,12 +49,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void insert(User user) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("LASTNAME", user.getLastname());
-        parameters.put("FIRSTNAME", user.getFirstname());
-        parameters.put("LOGIN", user.getLogin());
-        parameters.put("PASSWORD", user.getPassword());
-        parameters.put("ROLE_ID", user.getRole().getId());
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("LASTNAME", user.getLastname())
+                .addValue("FIRSTNAME", user.getFirstname())
+                .addValue("LOGIN", user.getLogin())
+                .addValue("PASSWORD", user.getPassword())
+                .addValue("ROLE_ID", user.getRole().getId());
         user.setId(simpleJdbcInsert.executeAndReturnKey(parameters).longValue());
     }
 
