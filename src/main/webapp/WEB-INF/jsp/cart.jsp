@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
@@ -9,10 +9,11 @@
         function deleteFromCart(dishId) {
             $.ajax({
                 url: "cart",
-                type: "DELETE",
+                type: "POST",
                 data: {
-                    id: dishId
-                }
+                    deleteId: dishId
+                },
+                success: window.location.replace(window.location)
             });
         }
     </script>
@@ -42,16 +43,20 @@
                     <td>
                         <p align="center">${entry.key.price * entry.value}</p>
                     </td>
-                    <td align="center">
+                    <td>
                         <input type="button" onclick="deleteFromCart('${entry.key.id}')" value="Remove">
                     </td>
                 </tr>
             </c:forEach>
+        </table>
+        <table align="center" width="40%" cellpadding="1" bgcolor="#DDDDDD" border="1">
             <tr>
-                <td width="10%">Total:</td>
-                <td width="90%" align="right">${totalPrice}</td>
+                <td>
+                    <span><p align="left">Total: </p><p align="right">${totalPrice}</p></span>
+                </td>
             </tr>
         </table>
+        <br/>
         <div align="center">
             <form action="order" method="post">
                 <input type="submit" value="Submit"/>

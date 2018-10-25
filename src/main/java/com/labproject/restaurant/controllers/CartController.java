@@ -25,6 +25,12 @@ public class CartController {
 
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
     public void addToCart(HttpServletRequest request) {
+        if (request.getParameter("deleteId") != null) {
+            long deleteId = Long.valueOf(request.getParameter("deleteId"));
+            deleteFromCart(request, deleteId);
+            return;
+        }
+
         long dishId = Long.valueOf(request.getParameter("id"));
         int count = Integer.valueOf(request.getParameter("count"));
         Dish dish = dishService.getById(dishId);
@@ -46,15 +52,12 @@ public class CartController {
         request.getSession().setAttribute("dishMap", dm);
     }
 
-    @RequestMapping(value = "/cart", method = RequestMethod.DELETE)
-    public ModelAndView deleteFromCart(HttpServletRequest request) {
-        long dishId = Long.valueOf(request.getParameter("id"));
-
+    private void deleteFromCart(HttpServletRequest request, long deleteId) {
         Map<Dish, Integer> dm = (Map<Dish, Integer>) request.getSession().getAttribute("dishMap");
 
         if (dm != null) {
             for (Map.Entry<Dish, Integer> e : dm.entrySet()) {
-                if (e.getKey().getId() == dishId) {
+                if (e.getKey().getId() == deleteId) {
                     dm.remove(e.getKey());
                     break;
                 }
@@ -62,7 +65,5 @@ public class CartController {
         }
 
         request.getSession().setAttribute("dishMap", dm);
-
-        return new ModelAndView("redirect:/cart");
     }
 }
