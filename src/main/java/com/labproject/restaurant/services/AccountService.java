@@ -6,5 +6,5 @@ public interface AccountService {
 
     void doRegister(User user);
 
-    User existingUser(User user);
+    User validateUser(User user);
 }

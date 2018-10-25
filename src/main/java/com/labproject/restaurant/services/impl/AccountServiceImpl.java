@@ -26,12 +26,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public User existingUser(User user) {
-        User user1 = userService.getByLogin(user.getLogin());
-        Role role = roleService.getRoleByLogin(user1.getLogin());
-        user1.setRole(role);
-        if (user1 == null || !(user1.getPassword().equals(user.getPassword()))) {
+    public User validateUser(User user) {
+        User existingUser = userService.getByLogin(user.getLogin());
+        Role role = roleService.getRoleByLogin(existingUser.getLogin());
+        existingUser.setRole(role);
+        if (existingUser == null || !(existingUser.getPassword().equals(user.getPassword()))) {
             throw new IllegalArgumentException("Login or password is incorrect");
-        } else return user1;
+        } else return existingUser;
     }
 }
