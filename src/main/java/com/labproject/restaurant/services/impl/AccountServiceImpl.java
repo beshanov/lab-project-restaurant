@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public User validateUser(User user) {
+    public User existingUser(User user) {
         User user1 = userService.getByLogin(user.getLogin());
         Role role = roleService.getRoleByLogin(user1.getLogin());
         user1.setRole(role);
