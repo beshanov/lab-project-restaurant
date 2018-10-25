@@ -23,7 +23,7 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="simpleJdbcInsert" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert;">
+    <bean id="simpleJdbcInsert" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
         <constructor-arg ref="dataSource"/>
     </bean>
 
