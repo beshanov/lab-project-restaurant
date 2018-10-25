@@ -39,7 +39,7 @@ public class OrderController {
     public ModelAndView createNewOrder(@ModelAttribute("order") Order order) {
         orderService.createNewOrder(order);
 
-        return new ModelAndView("profile");
+        return new ModelAndView("redirect:/dish");
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)
