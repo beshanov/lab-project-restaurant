@@ -55,6 +55,7 @@
         <property name="userDao" ref="userDao"/>
         <property name="orderDao" ref="orderDao"/>
         <property name="orderStatusDao" ref="orderStatusDao"/>
+        <property name="orderDishDao" ref="orderDishDao"/>
     </bean>
 
     <bean id="billDao" class="com.labproject.restaurant.dao.impl.BillDaoImpl">
