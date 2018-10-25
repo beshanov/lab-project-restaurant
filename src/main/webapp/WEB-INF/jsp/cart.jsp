@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Cart contents</title>
+    <title>Title</title>
 </head>
 <body>
 <div id="contents">
@@ -30,7 +30,7 @@
                         <p align="center">${entry.key.price * entry.value}</p>
                     </td>
                     <td>
-                        <input/>
+
                     </td>
                 </tr>
             </c:forEach>
@@ -38,12 +38,8 @@
                 <td>Total:</td>
                 <td></td>
                 <td></td>
-                <td></td>
             </tr>
         </table>
-        <form align="center" action="/order" method="post">
-            <input type="submit" value="Submit"/>
-        </form>
     </div>
 </div>
 </body>
