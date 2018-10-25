@@ -76,6 +76,7 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(orderStatusDao.getById(1));
         order.setUser(userDao.getById(userId));
         order.setOrderDate(Timestamp.from(Instant.now()));
+        orderDao.insert(order);
 
         for (Map.Entry<Dish, Integer> entry : dishMap.entrySet()) {
             orderDishDao.addDishToOrder(entry.getKey(), order, entry.getValue());

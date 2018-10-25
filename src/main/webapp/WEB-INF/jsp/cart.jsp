@@ -41,8 +41,8 @@
                 <td></td>
             </tr>
         </table>
-        <form action="/order" method="post">
-            <input type="button"/>
+        <form align="center" action="/order" method="post">
+            <input type="submit" value="Submit"/>
         </form>
     </div>
 </div>

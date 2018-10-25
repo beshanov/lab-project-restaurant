@@ -44,7 +44,7 @@ public class OrderController {
         orderService.createOrderWithDishes(((User) session.getAttribute("user")).getId(),
                 (Map<Dish, Integer>) session.getAttribute("dishMap"));
 
-        return new ModelAndView("profile");
+        return new ModelAndView("redirect:/dish");
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)
