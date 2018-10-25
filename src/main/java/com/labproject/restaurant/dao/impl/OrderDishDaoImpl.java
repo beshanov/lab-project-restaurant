@@ -3,44 +3,30 @@ package com.labproject.restaurant.dao.impl;
 import com.labproject.restaurant.dao.OrderDishDao;
 import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.entities.Order;
-import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class OrderDishDaoImpl implements OrderDishDao {
 
-    private DataSource dataSource;
-    private static final Logger LOGGER = Logger.getLogger(OrderDishDaoImpl.class);
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
     public void addDishToOrder(Dish dish, Order order, int count) {
         final String ADD_DISH_TO_ORDER = "INSERT INTO ORDER_DISH(DISHID, ORDERID, COUNT) VALUES(?, ?, ?)";
-        try (Connection conn = dataSource.getConnection(); PreparedStatement statement = conn.prepareStatement(ADD_DISH_TO_ORDER)) {
-            statement.setLong(1, dish.getId());
-            statement.setLong(2, order.getId());
-            statement.setDouble(3, count);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Error: " + e.getMessage(), e);
-        }
+        jdbcTemplate.update(ADD_DISH_TO_ORDER, dish.getId(), order.getId(), count);
     }
 
     @Override
     public void deleteDishFromOrder(Dish dish, Order order) {
         final String DELETE_DISH_FROM_ORDER = "DELETE FROM ORDER_DISH WHERE DISHID = ? AND ORDERID = ?";
-        try (Connection conn = dataSource.getConnection(); PreparedStatement statement = conn.prepareStatement(DELETE_DISH_FROM_ORDER)) {
-            statement.setLong(1, dish.getId());
-            statement.setLong(2, order.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Error: " + e.getMessage(), e);
-        }
+        jdbcTemplate.update(DELETE_DISH_FROM_ORDER, dish.getId(), order.getId());
     }
 }
