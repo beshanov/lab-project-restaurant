@@ -4,20 +4,33 @@
 <html>
 <head>
     <title>Cart contents</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script>
+        function deleteFromCart(dishId) {
+            $.ajax({
+                url: "cart",
+                type: "DELETE",
+                data: {
+                    id: dishId
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <div id="contents">
     <h1 align="center">Composing new order</h1>
     <div id="orderSettings">
-        <p align="center">Ordered dishes: </p>
-        <table align="center" width="60%" cellpadding="2" bgcolor="#DDDDDD" border="1">
+        <c:set var="totalPrice" value="${0}"/>
+        <table align="center" width="40%" cellpadding="1" bgcolor="#DDDDDD" border="1">
             <tr>
-                <th align="center" width="50%">Dish</th>
+                <th align="center" width="70%">Dish</th>
                 <th align="center" width="10%">Amount</th>
-                <th align="center" width="20%">Price</th>
-                <th align="center" width="20%">Action</th>
+                <th align="center" width="10%">Price</th>
+                <th align="center" width="10%">Action</th>
             </tr>
             <c:forEach items="${sessionScope.dishMap}" var="entry">
+                <c:set var="totalPrice" value="${totalPrice + entry.key.price * entry.value}"/>
                 <tr>
                     <td>
                         <h3 align="left">${entry.key.name}</h3>
@@ -29,21 +42,21 @@
                     <td>
                         <p align="center">${entry.key.price * entry.value}</p>
                     </td>
-                    <td>
-                        <input/>
+                    <td align="center">
+                        <input type="button" onclick="deleteFromCart('${entry.key.id}')" value="Remove">
                     </td>
                 </tr>
             </c:forEach>
             <tr>
-                <td>Total:</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td width="10%">Total:</td>
+                <td width="90%" align="right">${totalPrice}</td>
             </tr>
         </table>
-        <form align="center" action="/order" method="post">
-            <input type="submit" value="Submit"/>
-        </form>
+        <div align="center">
+            <form action="order" method="post">
+                <input type="submit" value="Submit"/>
+            </form>
+        </div>
     </div>
 </div>
 </body>

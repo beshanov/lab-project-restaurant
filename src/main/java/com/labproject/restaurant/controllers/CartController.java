@@ -2,7 +2,6 @@ package com.labproject.restaurant.controllers;
 
 import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.services.DishService;
-import com.labproject.restaurant.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +17,6 @@ public class CartController {
 
     @Autowired
     private DishService dishService;
-
-    @Autowired
-    private OrderService orderService;
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public ModelAndView displayCart() {
