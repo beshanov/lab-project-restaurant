@@ -36,9 +36,6 @@ public class LoginController {
         } catch (IllegalArgumentException e) {
             mav = new ModelAndView("login");
             mav.addObject("message", e.getMessage());
-        } catch (NullPointerException e) {
-            mav = new ModelAndView("login");
-            mav.addObject("message", "can not get info from form");
         }
         return mav;
     }
