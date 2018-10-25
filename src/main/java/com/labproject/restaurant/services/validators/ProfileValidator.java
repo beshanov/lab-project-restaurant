@@ -36,44 +36,24 @@ public class ProfileValidator implements Validator {
             }
         }
 
-        if (user.getFirstname().length() < 2 || user.getFirstname().length() > 20) {
-            errors.rejectValue("firstname", "firstName.failLength",
-                    "First name must be between 2 and 10 symbols!");
-        }
-
-        if (!user.getFirstname().matches("[\\w\\d]*")) {
+        if (!user.getFirstname().matches("[\\w\\d]{2,20}")) {
             errors.rejectValue("firstname", "firstName.failPattern",
-                    "First name mustn't contains any spaces or non latin characters!");
+                    "Firstname has wrong format!");
         }
 
-        if (user.getLastname().length() < 3 || user.getLastname().length() > 20) {
-            errors.rejectValue("lastname", "lastName.failLength",
-                    "Last name must be between 3 and 20 symbols!");
-        }
-
-        if (!user.getLastname().matches("[\\w\\d]*")) {
+        if (!user.getLastname().matches("[\\w\\d]{3,20}")) {
             errors.rejectValue("lastname", "lastName.failPattern",
-                    "Last name mustn't contains any spaces or non latin characters!");
+                    "Lastname has wrong format!");
         }
 
-        if (user.getLogin().length() < 3 || user.getLogin().length() > 10) {
-            errors.rejectValue("login", "login.failLength",
-                    "Login must be between 3 and 10 symbols!");
-        }
-
-        if (!user.getLogin().matches("[\\w\\d]*")) {
+        if (!user.getLogin().matches("[\\w\\d]{3,10}")) {
             errors.rejectValue("login", "login.failPattern",
-                    "Login mustn't contains any spaces or non latin characters!");
+                    "Login has wrong format!");
         }
 
-        if (user.getPassword().length() < 3 || user.getPassword().length() > 8) {
-            errors.rejectValue("password", "password.failLength",
-                    "Password must be between 3 and 8 symbols!");
-        }
-
-        if (!user.getPassword().matches("[\\w\\d]*")) {
+        if (!user.getPassword().matches("[\\w\\d]{3,8}")) {
             errors.rejectValue("password", "password.failPattern",
-                    "Password name mustn't contains any spaces or non latin characters!");
+                    "Password has wrong format!");
         }
     }
 }

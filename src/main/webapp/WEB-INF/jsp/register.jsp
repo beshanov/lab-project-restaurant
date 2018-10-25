@@ -62,7 +62,7 @@
         <tr></tr>
         <tr>
             <td></td>
-            <td><a href="/index">Home</a>
+            <td><a href="/dish">Home</a>
             </td>
         </tr>
     </table>

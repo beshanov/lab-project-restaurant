@@ -47,6 +47,7 @@ public class ProfileController {
             return new ModelAndView("redirect:/login");
         }
 
+        user.setId(((User) userFromSession).getId());
         user.setRole(((User) userFromSession).getRole());
 
         profileValidator.validate(user, bindingResult);

@@ -67,7 +67,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><a href="/dishes">Home</a></td>
+                    <td><a href="/dish">Home</a></td>
                 </tr>
             </table>
         </form:form>
