@@ -4,9 +4,9 @@ import com.labproject.restaurant.dao.DishDao;
 import com.labproject.restaurant.entities.Dish;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -14,13 +14,13 @@ import java.util.List;
 public class DishDaoImpl implements DishDao {
 
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    private SimpleJdbcInsert simpleJdbcInsert;
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    public DishDaoImpl(DataSource dataSource) {
+        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("USER").usingGeneratedKeyColumns("ID");
     }
 
     @Override
@@ -52,24 +52,15 @@ public class DishDaoImpl implements DishDao {
     @Override
     public List<Dish> getAll() {
         final String FIND_ALL = "SELECT * FROM DISH";
-        try {
             return jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Dish.class));
-        } catch (EmptyResultDataAccessException e) {
-            LOGGER.error(e.getMessage());
-            return null;
-        }
     }
 
     @Override
     public Dish getById(long id) {
         final String FIND_BY_ID = "SELECT * FROM DISH WHERE ID = ?";
-        try {
-            return jdbcTemplate.queryForObject(FIND_BY_ID,
-                    new BeanPropertyRowMapper<>(Dish.class),
-                    id);
-        } catch (EmptyResultDataAccessException e) {
-            LOGGER.error(e.getMessage());
-            return null;
-        }
+        List<Dish> dishList = jdbcTemplate.query(FIND_BY_ID,
+                new BeanPropertyRowMapper<>(Dish.class),
+                id);
+            return dishList.isEmpty() ? new Dish() : dishList.get(0);
     }
 }
