@@ -4,19 +4,9 @@
 <html>
 <head>
     <title>Cart contents</title>
+    <spring:url value="/resources/js/cart.js" var="cartJS"/>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script>
-        function deleteFromCart(dishId) {
-            $.ajax({
-                url: "cart",
-                type: "POST",
-                data: {
-                    deleteId: dishId
-                },
-                success: window.location.replace(window.location)
-            });
-        }
-    </script>
+    <script type="text/javascript" src="${cartJS}"></script>
 </head>
 <body>
 <div id="contents">

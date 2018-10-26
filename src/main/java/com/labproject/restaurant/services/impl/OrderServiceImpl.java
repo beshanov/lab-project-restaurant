@@ -10,6 +10,7 @@ import com.labproject.restaurant.entities.OrderStatus;
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.OrderService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -18,26 +19,18 @@ import java.util.Map;
 
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
+
+    @Autowired
     private UserDao userDao;
+
+    @Autowired
     private OrderDao orderDao;
+
+    @Autowired
     private OrderStatusDao orderStatusDao;
+
+    @Autowired
     private OrderDishDao orderDishDao;
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setOrderDao(OrderDao orderDao) {
-        this.orderDao = orderDao;
-    }
-
-    public void setOrderStatusDao(OrderStatusDao orderStatusDao) {
-        this.orderStatusDao = orderStatusDao;
-    }
-
-    public void setOrderDishDao(OrderDishDao orderDishDao) {
-        this.orderDishDao = orderDishDao;
-    }
 
     @Override
     public void createNewOrder(Order order) {
