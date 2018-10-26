@@ -5,7 +5,6 @@ import com.labproject.restaurant.dao.mapping.BillMapper;
 import com.labproject.restaurant.entities.Bill;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -35,33 +34,17 @@ public class BillDaoImpl implements BillDao {
 
     @Override
     public Bill getById(long id) {
-        String query = "SELECT ID, `ORDER_ID`, `ADMIN_ID`, `AMOUNT`, `DATE`, " +
+        final String query = "SELECT ID, `ORDER_ID`, `ADMIN_ID`, `AMOUNT`, `DATE`, " +
                 "`STATUS` FROM BILL WHERE ID = ?";
-        Bill bill;
-        try {
-
-            bill = jdbcTemplate.queryForObject(query, new BillMapper(), id);
-        } catch (EmptyResultDataAccessException e) {
-            LOGGER.error(e.getMessage());
-            return null;
-        }
-        return bill;
+        List<Bill> bills = jdbcTemplate.query(query, new BillMapper(), id);
+        return bills.isEmpty() ? new Bill() : bills.get(0);
     }
 
     @Override
-    public List<Bill> getByAdminId(Long adminId) {
-        String query = "SELECT ID, `ORDER_ID`, `ADMIN_ID`, `AMOUNT`, `DATE`, " +
+    public List<Bill> getByAdminId(long adminId) {
+        final String query = "SELECT ID, `ORDER_ID`, `ADMIN_ID`, `AMOUNT`, `DATE`, " +
                 "`STATUS` FROM BILL WHERE `ADMIN_ID`=?;";
-
-        List<Bill> bills;
-        try {
-            bills = jdbcTemplate.query(query, new BillMapper(), adminId);
-        } catch (EmptyResultDataAccessException e) {
-            LOGGER.error(e.getMessage());
-            return null;
-        }
-
-        return bills;
+        return jdbcTemplate.query(query, new BillMapper(), adminId);
     }
 
     @Override
@@ -77,7 +60,7 @@ public class BillDaoImpl implements BillDao {
 
     @Override
     public void update(Bill bill) {
-        String query = "UPDATE BILL SET `ORDER_ID`=?, `ADMIN_ID`=?, `AMOUNT`=?, `DATE`=?, " +
+        final String query = "UPDATE BILL SET `ORDER_ID`=?, `ADMIN_ID`=?, `AMOUNT`=?, `DATE`=?, " +
                 "`STATUS`=? WHERE ID=?;";
 
         jdbcTemplate.update(query, bill.getOrder().getId(), bill.getAdmin().getId(),
@@ -86,7 +69,7 @@ public class BillDaoImpl implements BillDao {
 
     @Override
     public void deleteById(long id) {
-        String query = "DELETE FROM BILL WHERE ID = ?;";
+        final String query = "DELETE FROM BILL WHERE ID = ?;";
         jdbcTemplate.update(query, id);
     }
 }

@@ -29,7 +29,7 @@ public interface BillDao {
      * @return the list of Bill objects
      * @see Bill
      */
-    List<Bill> getByAdminId(Long adminId);
+    List<Bill> getByAdminId(long adminId);
 
     /**
      * Inserts the {@link Bill} object into a data storage
