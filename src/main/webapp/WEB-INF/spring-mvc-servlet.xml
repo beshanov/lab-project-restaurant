@@ -57,9 +57,7 @@
         <property name="orderStatusDao" ref="orderStatusDao"/>
     </bean>
 
-    <bean id="billDao" class="com.labproject.restaurant.dao.impl.BillDaoImpl">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+    <bean id="billDao" class="com.labproject.restaurant.dao.impl.BillDaoImpl"/>
 
     <bean id="userService" class="com.labproject.restaurant.services.impl.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
