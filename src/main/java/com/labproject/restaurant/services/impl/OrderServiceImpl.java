@@ -1,33 +1,36 @@
 package com.labproject.restaurant.services.impl;
 
 import com.labproject.restaurant.dao.OrderDao;
+import com.labproject.restaurant.dao.OrderDishDao;
 import com.labproject.restaurant.dao.OrderStatusDao;
 import com.labproject.restaurant.dao.UserDao;
+import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.entities.Order;
 import com.labproject.restaurant.entities.OrderStatus;
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.OrderService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
+
+    @Autowired
     private UserDao userDao;
+
+    @Autowired
     private OrderDao orderDao;
+
+    @Autowired
     private OrderStatusDao orderStatusDao;
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setOrderDao(OrderDao orderDao) {
-        this.orderDao = orderDao;
-    }
-
-    public void setOrderStatusDao(OrderStatusDao orderStatusDao) {
-        this.orderStatusDao = orderStatusDao;
-    }
+    @Autowired
+    private OrderDishDao orderDishDao;
 
     @Override
     public void createNewOrder(Order order) {
@@ -53,6 +56,24 @@ public class OrderServiceImpl implements OrderService {
         result.setUser(user);
 
         return result;
+    }
+
+    @Override
+    public void createOrderWithDishes(long userId, Map<Dish, Integer> dishMap) {
+        if (dishMap == null || userId < 1) {
+            LOGGER.error("Error while getting order: orderId < 1");
+            return;
+        }
+
+        Order order = new Order();
+        order.setStatus(orderStatusDao.getById(1));
+        order.setUser(userDao.getById(userId));
+        order.setOrderDate(Timestamp.from(Instant.now()));
+        orderDao.insert(order);
+
+        for (Map.Entry<Dish, Integer> entry : dishMap.entrySet()) {
+            orderDishDao.addDishToOrder(entry.getKey(), order, entry.getValue());
+        }
     }
 
     @Override
