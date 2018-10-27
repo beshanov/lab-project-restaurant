@@ -1,12 +1,11 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <html>
 <head>
     <title>Cart contents</title>
-    <spring:url value="/resources/js/cart.js" var="cartJS"/>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script type="text/javascript" src="${cartJS}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/cart.js"></script>
 </head>
 <body>
 <div id="contents">
@@ -51,6 +50,11 @@
             <form action="order" method="post">
                 <input type="submit" value="Submit"/>
             </form>
+        </div>
+        <br/>
+        <br/>
+        <div align="center">
+            <a href="${pageContext.request.contextPath}/dish">Menu</a>
         </div>
     </div>
 </div>

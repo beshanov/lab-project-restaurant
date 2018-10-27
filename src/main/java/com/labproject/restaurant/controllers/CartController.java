@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,16 +24,16 @@ public class CartController {
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
-    public void modifyCart(HttpServletRequest request) {
-        Map<Dish, Integer> dishMap;
+    public void addDishToCart(HttpServletRequest request) {
+        Map<Dish, Integer> dishMap = dishService.addToDishMap(request);
+        ;
+        request.getSession().setAttribute("dishMap", dishMap);
+    }
 
-        if (request.getParameter("deleteId") != null) {
-            dishMap = dishService.deleteFromDishMap(request);
-
-        } else {
-            dishMap = dishService.addToDishMap(request);
-        }
-
+    @RequestMapping(value = "/cart", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void removeDishFromCart(HttpServletRequest request) {
+        Map<Dish, Integer> dishMap = dishService.deleteFromDishMap(request);
         request.getSession().setAttribute("dishMap", dishMap);
     }
 }

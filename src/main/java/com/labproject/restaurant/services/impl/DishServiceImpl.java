@@ -3,6 +3,7 @@ package com.labproject.restaurant.services.impl;
 import com.labproject.restaurant.dao.DishDao;
 import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.services.DishService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -11,15 +12,18 @@ import java.util.Map;
 
 public class DishServiceImpl implements DishService {
 
+    @Autowired
     private DishDao dishDao;
 
-    public void setDishDao(DishDao dishDao) { this.dishDao = dishDao; }
+    @Override
+    public Dish getById(long id) {
+        return dishDao.getById(id);
+    }
 
     @Override
-    public Dish getById(long id) { return dishDao.getById(id); }
-
-    @Override
-    public List<Dish> getAll() { return dishDao.getAll(); }
+    public List<Dish> getAll() {
+        return dishDao.getAll();
+    }
 
     @Override
     public Map<Dish, Integer> addToDishMap(HttpServletRequest request) {
@@ -34,12 +38,14 @@ public class DishServiceImpl implements DishService {
 
         Map<Dish, Integer> dishMap = (Map<Dish, Integer>) objMap;
 
-        if (dish != null && count > 0) {
-            if (dishMap.containsKey(dish)) {
-                dishMap.put(dish, dishMap.get(dish) + count);
-            } else {
-                dishMap.put(dish, count);
-            }
+        if (count < 1) {
+            return dishMap;
+        }
+
+        if (dishMap.containsKey(dish)) {
+            dishMap.put(dish, dishMap.get(dish) + count);
+        } else {
+            dishMap.put(dish, count);
         }
 
         return dishMap;
@@ -47,21 +53,23 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Map<Dish, Integer> deleteFromDishMap(HttpServletRequest request) {
-        long deleteId = Long.valueOf(request.getParameter("deleteId"));
-
+        long deleteId = Long.valueOf(request.getParameter("id"));
         Object objMap = request.getSession().getAttribute("dishMap");
-        if (objMap == null || deleteId < 1) {
+
+        if (objMap == null) {
             return new HashMap<>();
         }
 
         Map<Dish, Integer> dishMap = (Map<Dish, Integer>) objMap;
 
-        if (dishMap != null) {
-            for (Map.Entry<Dish, Integer> entry : dishMap.entrySet()) {
-                if (entry.getKey().getId() == deleteId) {
-                    dishMap.remove(entry.getKey());
-                    break;
-                }
+        if (deleteId < 1) {
+            return dishMap;
+        }
+
+        for (Map.Entry<Dish, Integer> entry : dishMap.entrySet()) {
+            if (entry.getKey().getId() == deleteId) {
+                dishMap.remove(entry.getKey());
+                break;
             }
         }
 
@@ -69,11 +77,17 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public void insert(Dish dish) { dishDao.insert(dish); }
+    public void insert(Dish dish) {
+        dishDao.insert(dish);
+    }
 
     @Override
-    public void update(Dish dish) { dishDao.update(dish); }
+    public void update(Dish dish) {
+        dishDao.update(dish);
+    }
 
     @Override
-    public void delete(Dish dish) { dishDao.delete(dish); }
+    public void delete(Dish dish) {
+        dishDao.delete(dish);
+    }
 }

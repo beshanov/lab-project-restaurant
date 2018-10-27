@@ -1,10 +1,7 @@
 function deleteFromCart(dishId) {
     $.ajax({
-        url: "cart",
-        type: "POST",
-        data: {
-            deleteId: dishId
-        },
+        url: "cart?id=" + dishId,
+        type: "DELETE",
         success: window.location.replace(window.location)
     });
 }
