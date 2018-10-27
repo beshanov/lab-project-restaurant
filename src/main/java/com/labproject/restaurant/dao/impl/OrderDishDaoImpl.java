@@ -21,11 +21,12 @@ public class OrderDishDaoImpl implements OrderDishDao {
 
     @Override
     public void addDishToOrder(Dish dish, Order order, int count) {
-        final String ADD_DISH_TO_ORDER = "INSERT INTO ORDER_DISH(DISHID, ORDERID, COUNT) VALUES(?, ?, ?)";
-        try (Connection conn = dataSource.getConnection(); PreparedStatement statement = conn.prepareStatement(ADD_DISH_TO_ORDER)) {
+        final String ADD_DISH_TO_ORDER = "INSERT INTO ORDER_DISH(DISH_ID, ORDER_ID, COUNT) VALUES(?, ?, ?)";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(ADD_DISH_TO_ORDER)) {
             statement.setLong(1, dish.getId());
             statement.setLong(2, order.getId());
-            statement.setDouble(3, count);
+            statement.setInt(3, count);
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("Error: " + e.getMessage(), e);
@@ -34,8 +35,9 @@ public class OrderDishDaoImpl implements OrderDishDao {
 
     @Override
     public void deleteDishFromOrder(Dish dish, Order order) {
-        final String DELETE_DISH_FROM_ORDER = "DELETE FROM ORDER_DISH WHERE DISHID = ? AND ORDERID = ?";
-        try (Connection conn = dataSource.getConnection(); PreparedStatement statement = conn.prepareStatement(DELETE_DISH_FROM_ORDER)) {
+        final String DELETE_DISH_FROM_ORDER = "DELETE FROM ORDER_DISH WHERE DISH_ID = ? AND ORDER_ID = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(DELETE_DISH_FROM_ORDER)) {
             statement.setLong(1, dish.getId());
             statement.setLong(2, order.getId());
             statement.executeUpdate();
