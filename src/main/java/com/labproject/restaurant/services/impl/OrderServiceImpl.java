@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void createOrderWithDishes(long userId, Map<Dish, Integer> dishMap) {
-        if (dishMap == null) {
+        if (dishMap == null || userId < 1) {
             LOGGER.error("Error while getting order: orderId < 1");
             return;
         }

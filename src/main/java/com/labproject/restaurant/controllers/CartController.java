@@ -26,7 +26,6 @@ public class CartController {
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
     public void addDishToCart(HttpServletRequest request) {
         Map<Dish, Integer> dishMap = dishService.addToDishMap(request);
-        ;
         request.getSession().setAttribute("dishMap", dishMap);
     }
 

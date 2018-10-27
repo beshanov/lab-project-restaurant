@@ -48,7 +48,7 @@
         <br/>
         <div align="center">
             <form action="order" method="post">
-                <input type="submit" value="Submit"/>
+                <input type="submit" value="Submit order"/>
             </form>
         </div>
         <br/>
