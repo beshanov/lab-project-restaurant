@@ -24,11 +24,12 @@ public interface BillDao {
 
     /**
      * Returns a List of {@link Bill} objects from a data storage
+     * by the specified column
      *
      * @return the list of Bill objects
      * @see Bill
      */
-    List<Bill> getAll();
+    List<Bill> getByAdminId(long adminId);
 
     /**
      * Inserts the {@link Bill} object into a data storage
