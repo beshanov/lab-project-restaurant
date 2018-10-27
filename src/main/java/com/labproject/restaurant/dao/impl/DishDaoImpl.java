@@ -2,10 +2,11 @@ package com.labproject.restaurant.dao.impl;
 
 import com.labproject.restaurant.dao.DishDao;
 import com.labproject.restaurant.entities.Dish;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
@@ -13,7 +14,6 @@ import java.util.List;
 
 public class DishDaoImpl implements DishDao {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcInsert simpleJdbcInsert;
@@ -25,11 +25,11 @@ public class DishDaoImpl implements DishDao {
 
     @Override
     public void insert(Dish dish) {
-        final String SAVE = "INSERT INTO DISH(NAME, DESCRIPTION , PRICE) VALUES(?,?,?)";
-        jdbcTemplate.update(SAVE,
-                dish.getName(),
-                dish.getDescription(),
-                dish.getPrice());
+        SqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("NAME", dish.getName())
+                .addValue("DESCRIPTION", dish.getDescription())
+                .addValue("PRICE", dish.getPrice());
+        dish.setId(simpleJdbcInsert.executeAndReturnKey(parameters).longValue());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class DishDaoImpl implements DishDao {
     @Override
     public List<Dish> getAll() {
         final String FIND_ALL = "SELECT * FROM DISH";
-            return jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Dish.class));
+        return jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Dish.class));
     }
 
     @Override
@@ -61,6 +61,6 @@ public class DishDaoImpl implements DishDao {
         List<Dish> dishList = jdbcTemplate.query(FIND_BY_ID,
                 new BeanPropertyRowMapper<>(Dish.class),
                 id);
-            return dishList.isEmpty() ? new Dish() : dishList.get(0);
+        return dishList.isEmpty() ? new Dish() : dishList.get(0);
     }
 }
