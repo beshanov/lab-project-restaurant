@@ -6,6 +6,8 @@ import com.labproject.restaurant.entities.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+
 public class OrderDishDaoImpl implements OrderDishDao {
 
     @Autowired
@@ -15,6 +17,12 @@ public class OrderDishDaoImpl implements OrderDishDao {
     public void addDishToOrder(Dish dish, Order order, int count) {
         final String ADD_DISH_TO_ORDER = "INSERT INTO ORDER_DISH(DISH_ID, ORDER_ID, COUNT) VALUES(?, ?, ?)";
         jdbcTemplate.update(ADD_DISH_TO_ORDER, dish.getId(), order.getId(), count);
+    }
+
+    @Override
+    public List<Dish> getDishesByOrder(Order order) {
+        final String query = "SELECT * FROM ORDER_DISH WHERE ORDER_ID = ?";
+        return jdbcTemplate.queryForList(query, Dish.class, order.getId());
     }
 
     @Override

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,15 +60,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createOrderWithDishes(long userId, Map<Dish, Integer> dishMap) {
-        if (dishMap == null || userId < 1) {
-            LOGGER.error("Error while getting order: orderId < 1");
+    public void createOrderWithDishes(Object objUser, Object objDishMap) {
+        Map<Dish, Integer> dishMap;
+        User user;
+
+        if (objDishMap != null && objUser != null) {
+            dishMap = (Map<Dish, Integer>) objDishMap;
+            user = (User) objUser;
+        } else {
+            LOGGER.error("Error while getting order: null arguments");
             return;
         }
 
         Order order = new Order();
         order.setStatus(orderStatusDao.getById(1));
-        order.setUser(userDao.getById(userId));
+        order.setUser(user);
         order.setOrderDate(Timestamp.from(Instant.now()));
         orderDao.insert(order);
 
@@ -77,12 +84,36 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrders() {
-        List<Order> result = orderDao.getAll();
+    public Map<Order, List<Dish>> getAllOrdersWithDishes() {
+        Map<Order, List<Dish>> result = new HashMap<>();
 
-        for (Order o : result) {
-            o.setStatus(orderStatusDao.getById(o.getStatus().getId()));
-            o.setUser(userDao.getById(o.getUser().getId()));
+        for (Order order : orderDao.getAll()) {
+            order.setStatus(orderStatusDao.getById(order.getStatus().getId()));
+            order.setUser(userDao.getById(order.getUser().getId()));
+            result.put(order, orderDishDao.getDishesByOrder(order));
+        }
+
+        return result;
+    }
+
+    @Override
+    public Map<Order, List<Dish>> getOrdersWithDishesByUser(Object objUser) {
+        User user;
+
+        if (objUser != null) {
+            user = (User) objUser;
+        } else {
+            LOGGER.error("Error while getting users orders: null user");
+            return new HashMap<>();
+        }
+
+        if (user.getRole().getId() == 1L) {
+            return getAllOrdersWithDishes();
+        }
+
+        Map<Order, List<Dish>> result = new HashMap<>();
+        for (Order order : orderDao.getAllByUserId(user.getId())) {
+            result.put(order, orderDishDao.getDishesByOrder(order));
         }
 
         return result;
@@ -102,6 +133,7 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrderById(long orderId) {
         if (orderId < 1) {
             LOGGER.error("Error while deleting order: orderId < 1");
+            return;
         }
 
         orderDao.deleteById(orderId);
