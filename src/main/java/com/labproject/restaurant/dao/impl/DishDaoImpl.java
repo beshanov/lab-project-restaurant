@@ -20,7 +20,7 @@ public class DishDaoImpl implements DishDao {
 
     @Autowired
     public DishDaoImpl(DataSource dataSource) {
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("USER").usingGeneratedKeyColumns("ID");
+        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("DISH").usingGeneratedKeyColumns("ID");
     }
 
     @Override
