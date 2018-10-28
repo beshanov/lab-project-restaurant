@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import javax.sql.DataSource;
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
@@ -18,12 +18,13 @@ public class OrderDaoImpl implements OrderDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
+    @Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
-    @Autowired
-    public OrderDaoImpl(DataSource dataSource) {
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("ORDER").usingGeneratedKeyColumns("ID");
+
+    @PostConstruct
+    public void init() {
+        simpleJdbcInsert.withTableName("ORDER").usingGeneratedKeyColumns("ID");
     }
 
     @Override

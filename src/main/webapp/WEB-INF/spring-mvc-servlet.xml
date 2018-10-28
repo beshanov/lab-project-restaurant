@@ -23,24 +23,17 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="simpleJdbcInsert" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
+    <bean id="simpleJdbcInsert" scope="prototype" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="orderDishDao" class="com.labproject.restaurant.dao.impl.OrderDishDaoImpl">
-    </bean>
+    <bean id="orderDishDao" class="com.labproject.restaurant.dao.impl.OrderDishDaoImpl"/>
 
-    <bean id="dishDao" class="com.labproject.restaurant.dao.impl.DishDaoImpl">
-        <constructor-arg ref="dataSource"/>
-    </bean>
+    <bean id="dishDao" class="com.labproject.restaurant.dao.impl.DishDaoImpl"/>
 
-    <bean id="roleDao" class="com.labproject.restaurant.dao.impl.RoleDaoImpl">
-        <constructor-arg ref="dataSource"/>
-    </bean>
+    <bean id="roleDao" class="com.labproject.restaurant.dao.impl.RoleDaoImpl"/>
 
-    <bean id="userDao" class="com.labproject.restaurant.dao.impl.UserDaoImpl">
-        <constructor-arg ref="dataSource"/>
-    </bean>
+    <bean id="userDao" class="com.labproject.restaurant.dao.impl.UserDaoImpl"/>
 
     <bean id="orderStatusDao" class="com.labproject.restaurant.dao.impl.OrderStatusDaoImpl"/>
 
