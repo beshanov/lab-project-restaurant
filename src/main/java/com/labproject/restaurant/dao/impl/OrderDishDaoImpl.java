@@ -20,6 +20,12 @@ public class OrderDishDaoImpl implements OrderDishDao {
     }
 
     @Override
+    public List<Dish> getDishesByOrder(Order order) {
+        final String query = "SELECT * FROM ORDER_DISH WHERE ORDER_ID = ?";
+        return jdbcTemplate.queryForList(query, Dish.class, order.getId());
+    }
+
+    @Override
     public void deleteDishFromOrder(Dish dish, Order order) {
         final String DELETE_DISH_FROM_ORDER = "DELETE FROM ORDER_DISH WHERE DISHID = ? AND ORDER_ID = ?";
         jdbcTemplate.update(DELETE_DISH_FROM_ORDER, dish.getId(), order.getId());

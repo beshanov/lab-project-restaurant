@@ -52,6 +52,12 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<Order> getAllByUserId(long userId) {
+        String query = "SELECT * FROM `ORDER` WHERE USER_ID = ?";
+        return jdbcTemplate.query(query, new OrderMapper(), userId);
+    }
+
+    @Override
     public void update(Order order) {
         String query = "UPDATE `ORDER` SET ORDERDATE = ?, USER_ID = ?, STATUS_ID = ? WHERE ID = ?";
         jdbcTemplate.update(query,

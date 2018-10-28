@@ -1,8 +1,6 @@
 package com.labproject.restaurant.controllers;
 
-import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.entities.Order;
-import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 @Controller
 public class OrderController {
@@ -22,17 +19,18 @@ public class OrderController {
     private OrderService orderService;
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public ModelAndView getAllOrders() {
+    public ModelAndView getAllOrders(HttpSession session) {
         ModelAndView mav = new ModelAndView("profile");
 
-        mav.addObject("orderList", orderService.getAllOrders());
+        mav.addObject("orderList",
+                orderService.getOrdersWithDishesByUser(session.getAttribute("user")));
 
         return mav;
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
     public ModelAndView getOrder(@PathVariable long orderId) {
-        ModelAndView mav = new ModelAndView("profile");
+        ModelAndView mav = new ModelAndView("order");
         Order order = orderService.getOrderById(orderId);
 
         mav.addObject("order", order);
@@ -42,8 +40,8 @@ public class OrderController {
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public ModelAndView createNewOrder(HttpSession session) {
-        orderService.createOrderWithDishes(((User) session.getAttribute("user")).getId(),
-                (Map<Dish, Integer>) session.getAttribute("dishMap"));
+        orderService.createOrderWithDishes(session.getAttribute("user"),
+                session.getAttribute("dishMap"));
 
         return new ModelAndView("redirect:/dish");
     }
