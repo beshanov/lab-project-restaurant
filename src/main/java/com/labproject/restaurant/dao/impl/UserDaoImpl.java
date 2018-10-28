@@ -5,46 +5,39 @@ import com.labproject.restaurant.dao.mapping.UserMapper;
 import com.labproject.restaurant.entities.User;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import javax.sql.DataSource;
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
-    @Autowired
-    public UserDaoImpl(DataSource dataSource) {
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("USER").usingGeneratedKeyColumns("ID");
+    @PostConstruct
+    public void init() {
+        simpleJdbcInsert.withTableName("USER").usingGeneratedKeyColumns("ID");
     }
 
     @Override
     public User getById(long id) {
         String query = "SELECT * FROM USER WHERE ID = ?";
-        User user = new User();
-        try {
-            user = jdbcTemplate.queryForObject(query, new UserMapper(), id);
-        } catch (EmptyResultDataAccessException e) {
-        }
-        return user;
+        List<User> list = jdbcTemplate.query(query, new UserMapper(), id);
+        return list.isEmpty() ? new User() : list.get(0);
     }
 
     @Override
     public User getByLogin(String login) {
         String query = "SELECT * FROM USER WHERE LOGIN = ?";
-        User user = new User();
-        try {
-            user = jdbcTemplate.queryForObject(query, new UserMapper(), login);
-        } catch (EmptyResultDataAccessException e) {
-        }
-        return user;
+        List<User> list = jdbcTemplate.query(query, new UserMapper(), login);
+        return list.isEmpty() ? new User() : list.get(0);
     }
 
     @Override
