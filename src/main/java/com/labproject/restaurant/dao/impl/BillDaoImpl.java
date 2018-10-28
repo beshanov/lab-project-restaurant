@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -25,11 +26,12 @@ public class BillDaoImpl implements BillDao {
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
-    @Autowired
-    public BillDaoImpl(DataSource dataSource) {
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("BILL").usingGeneratedKeyColumns("ID");
+    @PostConstruct
+    public void init(){
+        simpleJdbcInsert.withTableName("BILL").usingGeneratedKeyColumns("ID");
     }
 
     @Override

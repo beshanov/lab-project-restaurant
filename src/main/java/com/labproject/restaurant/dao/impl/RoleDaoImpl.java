@@ -5,45 +5,39 @@ import com.labproject.restaurant.dao.mapping.RoleMapper;
 import com.labproject.restaurant.entities.Role;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import javax.sql.DataSource;
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 public class RoleDaoImpl implements RoleDao {
 
     private static final Logger LOGGER = Logger.getLogger(RoleDaoImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
-    @Autowired
-    public RoleDaoImpl(DataSource dataSource) {
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("ROLE").usingGeneratedKeyColumns("id");
+    @PostConstruct
+    public void init() {
+        simpleJdbcInsert.withTableName("ROLE").usingGeneratedKeyColumns("id");
     }
 
     @Override
     public Role getById(long id) {
         String query = "SELECT * FROM ROLE WHERE ID = ?";
-        Role role = new Role();
-        try {
-            role = jdbcTemplate.queryForObject(query, new RoleMapper(), id);
-        } catch (EmptyResultDataAccessException e) {
-        }
-        return role;
+        List<Role> list = jdbcTemplate.query(query, new RoleMapper(), id);
+        return list.isEmpty() ? new Role() : list.get(0);
     }
 
     @Override
     public Role getRoleByLogin(String login) {
         String query = "SELECT ROLE.ID,ROLE.NAME FROM ROLE, USER WHERE ROLE_ID = ROLE.ID AND LOGIN = ?";
         Role role = new Role();
-        try {
-            role = jdbcTemplate.queryForObject(query, new RoleMapper(), login);
-        } catch (EmptyResultDataAccessException e) {
-        }
-        return role;
+        List<Role> list = jdbcTemplate.query(query, new RoleMapper(), login);
+        return list.isEmpty() ? new Role() : list.get(0);
     }
 
 

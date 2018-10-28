@@ -9,18 +9,20 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import javax.sql.DataSource;
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 public class DishDaoImpl implements DishDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
-    @Autowired
-    public DishDaoImpl(DataSource dataSource) {
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("USER").usingGeneratedKeyColumns("ID");
+
+    @PostConstruct
+    public void init() {
+        simpleJdbcInsert.withTableName("DISH").usingGeneratedKeyColumns("ID");
     }
 
     @Override
