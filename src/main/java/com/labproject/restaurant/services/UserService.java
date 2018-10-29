@@ -17,4 +17,6 @@ public interface UserService {
     boolean isLoginExist(String login);
 
     User userSettingsValidation(User userFromSession, User user);
+
+    User getLoggedUser();
 }

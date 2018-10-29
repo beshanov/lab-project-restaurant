@@ -12,9 +12,13 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework:spring-context:4.0.0.RELEASE")
-    compile("org.springframework:spring-webmvc:4.0.0.RELEASE")
-    compile("org.springframework:spring-jdbc:4.0.0.RELEASE")
+    compile("org.springframework:spring-context:5.0.0.RELEASE")
+    compile("org.springframework:spring-webmvc:5.0.0.RELEASE")
+    compile("org.springframework:spring-jdbc:5.0.0.RELEASE")
+    compile("org.springframework.security:spring-security-web:5.0.0.RELEASE")
+    compile("org.springframework.security:spring-security-config:5.0.0.RELEASE")
+
+
 
     compile("mysql:mysql-connector-java:8.0.12")
 
