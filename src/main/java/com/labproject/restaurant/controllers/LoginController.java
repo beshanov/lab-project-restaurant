@@ -15,28 +15,9 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-    @Autowired
-    private AccountService accountService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView showLogin(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mav = new ModelAndView("login");
-        mav.addObject("user", new User());
-        return mav;
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView loginProcess(HttpSession session,
-                                     @ModelAttribute("user") User user) {
-        ModelAndView mav = null;
-        try {
-            User existingUser = accountService.validateUser(user);
-            session.setAttribute("user", existingUser);
-            mav = new ModelAndView("redirect:/profile");
-        } catch (IllegalArgumentException e) {
-            mav = new ModelAndView("login");
-            mav.addObject("message", e.getMessage());
-        }
-        return mav;
+    public ModelAndView init() {
+        return new ModelAndView("login");
     }
 }

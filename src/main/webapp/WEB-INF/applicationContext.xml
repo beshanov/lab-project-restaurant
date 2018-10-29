@@ -2,16 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-                    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+                    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <context:component-scan base-package="com.labproject.restaurant.*"/>
     <context:component-scan base-package="com.labproject.restaurant.config"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -27,40 +29,27 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="simpleJdbcInsert" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
+    <bean id="simpleJdbcInsert" scope="prototype" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="orderDishDao" class="com.labproject.restaurant.dao.impl.OrderDishDaoImpl">
-    </bean>
+    <bean id="orderDishDao" class="com.labproject.restaurant.dao.impl.OrderDishDaoImpl"/>
 
-    <bean id="dishDao" class="com.labproject.restaurant.dao.impl.DishDaoImpl">
-        <constructor-arg ref="dataSource"/>
-    </bean>
+    <bean id="dishDao" class="com.labproject.restaurant.dao.impl.DishDaoImpl"/>
 
-    <bean id="roleDao" class="com.labproject.restaurant.dao.impl.RoleDaoImpl">
-        <constructor-arg ref="dataSource"/>
-    </bean>
+    <bean id="roleDao" class="com.labproject.restaurant.dao.impl.RoleDaoImpl"/>
 
-    <bean id="userDao" class="com.labproject.restaurant.dao.impl.UserDaoImpl">
-        <constructor-arg ref="dataSource"/>
-    </bean>
+    <bean id="userDao" class="com.labproject.restaurant.dao.impl.UserDaoImpl"/>
 
-    <bean id="orderStatusDao" class="com.labproject.restaurant.dao.impl.OrderStatusDaoImpl">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+    <bean id="orderStatusDao" class="com.labproject.restaurant.dao.impl.OrderStatusDaoImpl"/>
 
-    <bean id="orderDao" class="com.labproject.restaurant.dao.impl.OrderDaoImpl">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+    <bean id="orderDao" class="com.labproject.restaurant.dao.impl.OrderDaoImpl"/>
 
     <bean id="orderService" class="com.labproject.restaurant.services.impl.OrderServiceImpl"/>
 
     <bean id="billDao" class="com.labproject.restaurant.dao.impl.BillDaoImpl"/>
 
-    <bean id="userService" class="com.labproject.restaurant.services.impl.UserServiceImpl">
-        <property name="userDao" ref="userDao"/>
-    </bean>
+    <bean id="userService" class="com.labproject.restaurant.services.impl.UserServiceImpl"/>
 
     <bean id="roleService" class="com.labproject.restaurant.services.impl.RoleServiceImpl">
         <property name="roleDao" ref="roleDao"/>
@@ -71,5 +60,15 @@
     <bean id="accountService" class="com.labproject.restaurant.services.impl.AccountServiceImpl">
         <property name="userService" ref="userService"/>
         <property name="roleService" ref="roleService"/>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:lab-project-restaurant" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="ru" />
+        <property name="cookieName" value="myAppLocaleCookie"></property>
     </bean>
 </beans>
