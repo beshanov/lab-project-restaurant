@@ -1,6 +1,7 @@
 package com.labproject.restaurant.controllers;
 
 import com.labproject.restaurant.entities.User;
+import com.labproject.restaurant.services.RoleService;
 import com.labproject.restaurant.services.UserService;
 import com.labproject.restaurant.services.validators.ProfileValidator;
 import org.apache.log4j.Logger;
@@ -22,34 +23,27 @@ public class ProfileController {
     private UserService userService;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
     private ProfileValidator profileValidator;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView showSettings(HttpSession session) {
-        Object userFromSession = session.getAttribute("user");
-
-        if (userFromSession == null) {
-            return new ModelAndView("redirect:/login");
-        }
 
         ModelAndView mav = new ModelAndView("profile");
-        User userFromDB = userService.getById(((User) userFromSession).getId());
-        userFromDB.setRole(((User) userFromSession).getRole());
-        mav.addObject("user", userFromDB);
+        User loggedUser = userService.getLoggedUser();
+        loggedUser.setRole(roleService.getById(loggedUser.getRole().getId()));
+        mav.addObject("user", loggedUser);
         return mav;
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
     public ModelAndView updateUser(HttpSession session, @ModelAttribute("user") User user,
                                    BindingResult bindingResult) {
-        Object userFromSession = session.getAttribute("user");
-        if (userFromSession == null) {
-            return new ModelAndView("redirect:/login");
-        }
 
-        user.setId(((User) userFromSession).getId());
-        user.setRole(((User) userFromSession).getRole());
-
+        User loggedUser = userService.getLoggedUser();
+        loggedUser.setRole(roleService.getById(loggedUser.getRole().getId()));
         profileValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return new ModelAndView("profile");

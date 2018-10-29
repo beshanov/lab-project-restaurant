@@ -1,12 +1,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
+    <sec:csrfMetaTags />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Dish ${dish.name}</title>
 </head>
 <body>
 <form:form id="dishForm" modelAttribute="dish" action="/dish/${dish.id}" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <table align="center">
         <tr>
             <td>
