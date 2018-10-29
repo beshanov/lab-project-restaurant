@@ -4,6 +4,6 @@
     <title>HOME</title>
 </head>
 <body>
-    <a href="/register">register</a>
+<a href="/register">register</a>
 </body>
 </html>

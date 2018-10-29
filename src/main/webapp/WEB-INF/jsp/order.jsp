@@ -6,6 +6,7 @@
     <title>Order details</title>
 </head>
 <body>
+<jsp:include page="navigate.jsp"></jsp:include>
 <div id="contents">
     <h1 align="center">Order № ${order.id}</h1>
     <div id="orderSettings">

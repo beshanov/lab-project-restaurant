@@ -7,65 +7,41 @@
     <title>Registration</title>
 </head>
 <body>
-<form:form id="regForm" modelAttribute="user" action="register" method="post">
-    <table align="center">
-        <tr>
-            <td>
-                <form:label path="login">Login: </form:label>
-            </td>
-            <td>
-                <form:input path="login" pattern="[\w\d]{3,8}" required="required"/>
-            </td>
-            <td>
+<jsp:include page="navigate.jsp"></jsp:include>
+<div class="container-fluid">
+    <form:form id="regForm" modelAttribute="user" action="register" method="post">
+        <div class="form-group">
+            <form:label path="login">Login: </form:label>
+            <form:input class="form-control" path="login" pattern="[\w\d]{3,8}" required="required"/>
+            <div class="invalid-feedback">
                 <form:errors path="login"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="password">Password</form:label>
-            </td>
-            <td>
-                <form:password path="password" pattern="[\w\d]{3,8}" required="required"/>
-            </td>
-            <td>
+            </div>
+        </div>
+        <div class="form-group">
+            <form:label path="password">Password</form:label>
+            <form:password class="form-control" path="password" pattern="[\w\d]{3,8}" required="required"/>
+            <div class="invalid-feedback">
                 <form:errors path="password"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="firstname">FirstName</form:label>
-            </td>
-            <td>
-                <form:input path="firstname" pattern="[\w\d]{2,10}" required="required"/>
-            </td>
-            <td>
+            </div>
+        </div>
+        <div class="form-group">
+            <form:label path="firstname">FirstName</form:label>
+            <form:input class="form-control" path="firstname" pattern="[\w\d]{2,10}" required="required"/>
+            <div class="invalid-feedback">
                 <form:errors path="firstname"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="lastname">LastName</form:label>
-            </td>
-            <td>
-                <form:input path="lastname" pattern="[\w\d]{3,20}" required="required"/>
-            </td>
-            <td>
+            </div>
+        </div>
+        <div class="form-group">
+            <form:label path="lastname">LastName</form:label>
+            <form:input class="form-control" path="lastname" pattern="[\w\d]{3,20}" required="required"/>
+            <div class="invalid-feedback">
                 <form:errors path="lastname"/>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <form:button id="register" name="register">Register</form:button>
-            </td>
-        </tr>
-        <tr></tr>
-        <tr>
-            <td></td>
-            <td><a href="/dish">Home</a>
-            </td>
-        </tr>
-    </table>
-</form:form>
+            </div>
+        </div>
+        <div class="form-group">
+            <form:button class="btn btn-dark" id="register" name="register">Register</form:button>
+        </div>
+    </form:form>
+</div>
 </body>
 </html>

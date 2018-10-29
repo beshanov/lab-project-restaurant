@@ -4,10 +4,11 @@
 <html>
 <head>
     <title>Cart contents</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/cart.js"></script>
 </head>
 <body>
+<jsp:include page="navigate.jsp"></jsp:include>
 <div id="contents">
     <h1 align="center">Composing new order</h1>
     <div id="orderSettings">
