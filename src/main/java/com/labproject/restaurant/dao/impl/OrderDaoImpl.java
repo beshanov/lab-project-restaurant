@@ -24,7 +24,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @PostConstruct
     public void init() {
-        simpleJdbcInsert.withTableName("ORDER").usingGeneratedKeyColumns("ID");
+        simpleJdbcInsert.withTableName("`ORDER`").usingGeneratedKeyColumns("ID");
     }
 
     @Override

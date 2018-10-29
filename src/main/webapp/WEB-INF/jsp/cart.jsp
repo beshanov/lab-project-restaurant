@@ -41,7 +41,8 @@
         <table align="center" width="40%" cellpadding="1" bgcolor="#DDDDDD" border="1">
             <tr>
                 <td>
-                    <span><p align="left">Total: </p><p align="right">${totalPrice}</p></span>
+                    <div><p align="left">Total: </p>
+                        <p align="right">${totalPrice}</p></div>
                 </td>
             </tr>
         </table>

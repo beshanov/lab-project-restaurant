@@ -6,7 +6,9 @@ import com.labproject.restaurant.entities.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderDishDaoImpl implements OrderDishDao {
 
@@ -20,14 +22,23 @@ public class OrderDishDaoImpl implements OrderDishDao {
     }
 
     @Override
-    public List<Dish> getDishesByOrder(Order order) {
+    public Map<Dish, Integer> getDishesByOrder(Order order) {
         final String query = "SELECT * FROM ORDER_DISH WHERE ORDER_ID = ?";
-        return jdbcTemplate.queryForList(query, Dish.class, order.getId());
+        List<Map<String, Object>> queryResults = jdbcTemplate.queryForList(query, order.getId());
+        Map<Dish, Integer> result = new HashMap<>();
+
+        for (Map map : queryResults) {
+            Dish dish = new Dish();
+            dish.setId((long) map.get("DISH_ID"));
+            result.put(dish, (int) map.get("COUNT"));
+        }
+
+        return result;
     }
 
     @Override
     public void deleteDishFromOrder(Dish dish, Order order) {
-        final String DELETE_DISH_FROM_ORDER = "DELETE FROM ORDER_DISH WHERE DISHID = ? AND ORDER_ID = ?";
+        final String DELETE_DISH_FROM_ORDER = "DELETE FROM ORDER_DISH WHERE DISH_ID = ? AND ORDER_ID = ?";
         jdbcTemplate.update(DELETE_DISH_FROM_ORDER, dish.getId(), order.getId());
     }
 }
