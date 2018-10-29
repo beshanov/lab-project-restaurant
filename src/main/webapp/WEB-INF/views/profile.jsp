@@ -8,6 +8,7 @@
     <body>
         <h1 align="center">Settings</h1>
         <form:form id="settingsForm" modelAttribute="user" action="profile" method="post">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <table align="center">
                 <tr>
                     <td>

@@ -17,7 +17,7 @@ dependencies {
     compile("org.springframework:spring-jdbc:5.0.0.RELEASE")
     compile("org.springframework.security:spring-security-web:5.0.0.RELEASE")
     compile("org.springframework.security:spring-security-config:5.0.0.RELEASE")
-
+    compile("org.springframework.security:spring-security-taglibs:5.0.0.RELEASE")
 
 
     compile("mysql:mysql-connector-java:8.0.12")

@@ -10,11 +10,13 @@
         <form id="loginForm" action="/login" method="post">
             <table align="center">
                 <tr>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                     <td>
                         <label path="login">Login: </label>
                     </td>
                     <td>
-                        <input path="login" pattern="[\w\d]{3,8}" required = "required"/>
+                        <input path="login" name="login" pattern="[\w\d]{3,8}" required = "required"/>
                     </td>
                 </tr>
                 <tr>
@@ -22,7 +24,7 @@
                         <label path="password">Password:</label>
                     </td>
                     <td>
-                        <input type="password" path="password" pattern="[\w\d]{3,8}" required = "required"/>
+                        <input type="password" name="password" path="password" pattern="[\w\d]{3,8}" required = "required"/>
                     </td>
                 </tr>
                 <tr>
