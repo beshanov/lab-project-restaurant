@@ -3,6 +3,10 @@ package com.labproject.restaurant.services.impl;
 import com.labproject.restaurant.dao.UserDao;
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
@@ -54,4 +58,9 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        Optional<User> user = Optional.of(userDao.getByLogin(login));
+        return user.orElseThrow(() -> new UsernameNotFoundException("login " + login + " was not found!"));
+    }
 }
