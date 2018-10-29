@@ -1,9 +1,6 @@
 package com.labproject.restaurant.services.impl;
 
-import com.labproject.restaurant.dao.OrderDao;
-import com.labproject.restaurant.dao.OrderDishDao;
-import com.labproject.restaurant.dao.OrderStatusDao;
-import com.labproject.restaurant.dao.UserDao;
+import com.labproject.restaurant.dao.*;
 import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.entities.Order;
 import com.labproject.restaurant.entities.OrderStatus;
@@ -34,6 +31,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDishDao orderDishDao;
+
+    @Autowired
+    private DishDao dishDao;
 
     @Override
     public void createNewOrder(Order order) {
@@ -86,20 +86,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Map<Order, List<Dish>> getAllOrdersWithDishes() {
-        Map<Order, List<Dish>> result = new HashMap<>();
-
-        for (Order order : orderDao.getAll()) {
-            order.setStatus(orderStatusDao.getById(order.getStatus().getId()));
-            order.setUser(userDao.getById(order.getUser().getId()));
-            result.put(order, orderDishDao.getDishesByOrder(order));
-        }
-
-        return result;
-    }
-
-    @Override
-    public Map<Order, List<Dish>> getOrdersWithDishesByUser(Object objUser) {
+    public Map<Order, Map<Dish, Integer>> getOrdersWithDishesByUser(Object objUser) {
         User user;
 
         if (objUser != null) {
@@ -109,13 +96,26 @@ public class OrderServiceImpl implements OrderService {
             return new HashMap<>();
         }
 
+        List<Order> orderList;
+
         if (user.getRole().getId() == 1L) {
-            return getAllOrdersWithDishes();
+            orderList = orderDao.getAll();
+        } else {
+            orderList = orderDao.getAllByUserId(user.getId());
         }
 
-        Map<Order, List<Dish>> result = new HashMap<>();
-        for (Order order : orderDao.getAllByUserId(user.getId())) {
-            result.put(order, orderDishDao.getDishesByOrder(order));
+        Map<Order, Map<Dish, Integer>> result = new HashMap<>();
+
+        for (Order order : orderList) {
+            order.setStatus(orderStatusDao.getById(order.getStatus().getId()));
+            order.setUser(userDao.getById(order.getUser().getId()));
+            Map<Dish, Integer> tmpDishMap = orderDishDao.getDishesByOrder(order);
+
+            for (Map.Entry<Dish, Integer> dishEntry : tmpDishMap.entrySet()) {
+                tmpDishMap.put(dishDao.getById(dishEntry.getKey().getId()), dishEntry.getValue());
+            }
+
+            result.put(order, tmpDishMap);
         }
 
         return result;

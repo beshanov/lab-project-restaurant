@@ -20,9 +20,9 @@ public class OrderController {
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public ModelAndView getAllOrders(HttpSession session) {
-        ModelAndView mav = new ModelAndView("profile");
+        ModelAndView mav = new ModelAndView("order");
 
-        mav.addObject("orderList",
+        mav.addObject("orderMap",
                 orderService.getOrdersWithDishesByUser(session.getAttribute("user")));
 
         return mav;
@@ -33,7 +33,7 @@ public class OrderController {
         ModelAndView mav = new ModelAndView("order");
         Order order = orderService.getOrderById(orderId);
 
-        mav.addObject("order", order);
+        mav.addObject("orderMap", order);
 
         return mav;
     }
@@ -43,7 +43,7 @@ public class OrderController {
         orderService.createOrderWithDishes(session.getAttribute("user"),
                 session.getAttribute("dishMap"));
 
-        return new ModelAndView("redirect:/dish");
+        return new ModelAndView("order");
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)

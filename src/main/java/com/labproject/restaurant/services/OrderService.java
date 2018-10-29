@@ -3,7 +3,6 @@ package com.labproject.restaurant.services;
 import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.entities.Order;
 
-import java.util.List;
 import java.util.Map;
 
 public interface OrderService {
@@ -14,9 +13,7 @@ public interface OrderService {
 
     Order getOrderById(long orderId);
 
-    Map<Order, List<Dish>> getAllOrdersWithDishes();
-
-    Map<Order, List<Dish>> getOrdersWithDishesByUser(Object objUser);
+    Map<Order, Map<Dish, Integer>> getOrdersWithDishesByUser(Object objUser);
 
     void setOrder(Order order);
 
