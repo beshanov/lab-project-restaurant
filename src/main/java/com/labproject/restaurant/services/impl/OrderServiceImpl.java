@@ -11,12 +11,14 @@ import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.OrderService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
 
