@@ -2,7 +2,6 @@ package com.labproject.restaurant.services.impl;
 
 import com.labproject.restaurant.dao.RoleDao;
 import com.labproject.restaurant.dao.UserDao;
-import com.labproject.restaurant.entities.Role;
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired

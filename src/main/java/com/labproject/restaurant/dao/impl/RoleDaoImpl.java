@@ -8,13 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+@Repository
 public class RoleDaoImpl implements RoleDao {
 
     private static final Logger LOGGER = Logger.getLogger(RoleDaoImpl.class);
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
