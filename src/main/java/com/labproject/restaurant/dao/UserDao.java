@@ -2,16 +2,19 @@ package com.labproject.restaurant.dao;
 
 import com.labproject.restaurant.entities.User;
 
+import java.util.List;
+
 public interface UserDao {
 
-    public User getById(long id);
+    User getById(long id);
 
-    public User getByLogin(String login);
+    User getByLogin(String login);
 
-    public void insert(User user);
+    void insert(User user);
 
-    public void update(User user);
+    void update(User user);
 
-    public void delete(User user);
+    void delete(User user);
 
+    List<User> getAllUsers(boolean full);
 }

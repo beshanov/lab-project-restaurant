@@ -6,6 +6,8 @@ import com.labproject.restaurant.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -35,5 +37,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getRoleByLogin(String login) {
         return roleDao.getRoleByLogin(login);
+    }
+
+    @Override
+    public List<Role> getAllRoles() {
+        return roleDao.getAllRoles();
     }
 }
