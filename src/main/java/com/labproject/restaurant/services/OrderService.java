@@ -1,19 +1,18 @@
 package com.labproject.restaurant.services;
 
-import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.entities.Order;
 
-import java.util.Map;
+import java.util.List;
 
 public interface OrderService {
 
     void createNewOrder(Order order);
 
-    void createOrderWithDishes(Object objUser, Object objDishMap);
+    void createOrderWithDishes(Object objDishMap);
 
     Order getOrderById(long orderId);
 
-    Map<Order, Map<Dish, Integer>> getOrdersWithDishesByUser(Object objUser);
+    List<Order> getOrdersByUser(Object objUser);
 
     void setOrder(Order order);
 

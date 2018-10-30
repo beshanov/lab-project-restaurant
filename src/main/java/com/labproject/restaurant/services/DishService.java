@@ -12,6 +12,8 @@ public interface DishService {
 
     List<Dish> getAll();
 
+    Map<Dish, Integer> getAllByOrderId(long orderId);
+
     Map<Dish, Integer> addToDishMap(HttpServletRequest request);
 
     Map<Dish, Integer> deleteFromDishMap(HttpServletRequest request);

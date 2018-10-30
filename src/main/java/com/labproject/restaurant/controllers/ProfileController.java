@@ -33,7 +33,6 @@ public class ProfileController {
 
         ModelAndView mav = new ModelAndView("profile");
         User loggedUser = userService.getLoggedUser();
-        loggedUser.setRole(roleService.getById(loggedUser.getRole().getId()));
         mav.addObject("user", loggedUser);
         return mav;
     }
@@ -43,7 +42,6 @@ public class ProfileController {
                                    BindingResult bindingResult) {
 
         User loggedUser = userService.getLoggedUser();
-        loggedUser.setRole(roleService.getById(loggedUser.getRole().getId()));
         profileValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return new ModelAndView("profile");

@@ -9,7 +9,7 @@ public interface OrderDishDao {
 
     void addDishToOrder(Dish dish, Order order, int count);
 
-    Map<Dish, Integer> getDishesByOrder(Order order);
+    Map<Dish, Integer> getDishesByOrderId(long orderId);
 
     void deleteDishFromOrder(Dish dish, Order order);
 }

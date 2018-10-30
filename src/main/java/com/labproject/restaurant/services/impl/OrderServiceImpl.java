@@ -1,18 +1,22 @@
 package com.labproject.restaurant.services.impl;
 
-import com.labproject.restaurant.dao.*;
+import com.labproject.restaurant.dao.OrderDao;
+import com.labproject.restaurant.dao.OrderDishDao;
+import com.labproject.restaurant.dao.OrderStatusDao;
+import com.labproject.restaurant.dao.UserDao;
 import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.entities.Order;
 import com.labproject.restaurant.entities.OrderStatus;
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.OrderService;
+import com.labproject.restaurant.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderDishDao orderDishDao;
 
     @Autowired
-    private DishDao dishDao;
+    private UserService userService;
 
     @Override
     public void createNewOrder(Order order) {
@@ -62,13 +66,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createOrderWithDishes(Object objUser, Object objDishMap) {
+    public void createOrderWithDishes(Object objDishMap) {
         Map<Dish, Integer> dishMap;
         User user;
 
-        if (objDishMap != null && objUser != null) {
+        if (objDishMap != null) {
             dishMap = (Map<Dish, Integer>) objDishMap;
-            user = (User) objUser;
+            user = userService.getLoggedUser();
         } else {
             LOGGER.error("Error while getting order: null arguments");
             return;
@@ -86,36 +90,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Map<Order, Map<Dish, Integer>> getOrdersWithDishesByUser(Object objUser) {
+    public List<Order> getOrdersByUser(Object objUser) {
         User user;
 
         if (objUser != null) {
             user = (User) objUser;
         } else {
             LOGGER.error("Error while getting users orders: null user");
-            return new HashMap<>();
+            return new ArrayList<>();
         }
 
-        List<Order> orderList;
+        List<Order> result;
 
         if (user.getRole().getId() == 1L) {
-            orderList = orderDao.getAll();
+            result = orderDao.getAll();
         } else {
-            orderList = orderDao.getAllByUserId(user.getId());
+            result = orderDao.getAllByUserId(user.getId());
         }
 
-        Map<Order, Map<Dish, Integer>> result = new HashMap<>();
-
-        for (Order order : orderList) {
+        for (Order order : result) {
             order.setStatus(orderStatusDao.getById(order.getStatus().getId()));
             order.setUser(userDao.getById(order.getUser().getId()));
-            Map<Dish, Integer> tmpDishMap = orderDishDao.getDishesByOrder(order);
-
-            for (Map.Entry<Dish, Integer> dishEntry : tmpDishMap.entrySet()) {
-                tmpDishMap.put(dishDao.getById(dishEntry.getKey().getId()), dishEntry.getValue());
-            }
-
-            result.put(order, tmpDishMap);
         }
 
         return result;

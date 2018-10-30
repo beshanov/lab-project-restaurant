@@ -6,7 +6,6 @@ function deleteFromCart(dishId) {
             request.setRequestHeader(header, token);
         },
         url: "cart?id=" + dishId,
-        type: "DELETE",
-        success: window.location.replace(window.location)
+        type: "DELETE"
     });
 }
