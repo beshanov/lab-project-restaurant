@@ -5,7 +5,9 @@ import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.entities.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class OrderDishDaoImpl implements OrderDishDao {
 
     @Autowired

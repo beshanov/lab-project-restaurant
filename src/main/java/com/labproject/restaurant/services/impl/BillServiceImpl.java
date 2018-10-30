@@ -3,14 +3,13 @@ package com.labproject.restaurant.services.impl;
 import com.labproject.restaurant.dao.BillDao;
 import com.labproject.restaurant.entities.Bill;
 import com.labproject.restaurant.services.BillService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BillServiceImpl implements BillService {
-
+    @Autowired
     private BillDao billDao;
-
-    public void setBillDao(BillDao billDao) {
-        this.billDao = billDao;
-    }
 
     @Override
     public Bill getById(long id) {

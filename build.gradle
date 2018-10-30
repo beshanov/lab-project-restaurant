@@ -12,9 +12,13 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework:spring-context:4.0.0.RELEASE")
-    compile("org.springframework:spring-webmvc:4.0.0.RELEASE")
-    compile("org.springframework:spring-jdbc:4.0.0.RELEASE")
+    compile("org.springframework:spring-context:5.0.0.RELEASE")
+    compile("org.springframework:spring-webmvc:5.0.0.RELEASE")
+    compile("org.springframework:spring-jdbc:5.0.0.RELEASE")
+    compile("org.springframework.security:spring-security-web:5.0.0.RELEASE")
+    compile("org.springframework.security:spring-security-config:5.0.0.RELEASE")
+    compile("org.springframework.security:spring-security-taglibs:5.0.0.RELEASE")
+
 
     compile("mysql:mysql-connector-java:8.0.12")
 
@@ -28,4 +32,8 @@ dependencies {
 
     testCompile("junit:junit:4.7")
     testCompile("org.mockito:mockito-all:1.10.19")
+
+    compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.0.0.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.0.0.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '4.0.0.RELEASE'
 }

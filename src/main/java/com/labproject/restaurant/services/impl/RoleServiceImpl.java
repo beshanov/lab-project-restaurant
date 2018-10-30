@@ -3,14 +3,14 @@ package com.labproject.restaurant.services.impl;
 import com.labproject.restaurant.dao.RoleDao;
 import com.labproject.restaurant.entities.Role;
 import com.labproject.restaurant.services.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RoleServiceImpl implements RoleService {
 
+    @Autowired
     private RoleDao roleDao;
-
-    public void setRoleDao(RoleDao roleDao) {
-        this.roleDao = roleDao;
-    }
 
     @Override
     public Role getById(long id) {

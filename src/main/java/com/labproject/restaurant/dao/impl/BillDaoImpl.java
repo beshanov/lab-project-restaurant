@@ -9,9 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 import java.util.List;
 
 
@@ -21,9 +21,12 @@ import java.util.List;
  *
  * @author Zhanna Fedorova
  */
+
+@Repository
 public class BillDaoImpl implements BillDao {
 
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired

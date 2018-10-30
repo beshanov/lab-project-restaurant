@@ -7,28 +7,30 @@
         <title>Login</title>
     </head>
     <body>
-        <form:form id="loginForm" modelAttribute="user" action="login" method="post">
+        <form id="loginForm" action="/login" method="post">
             <table align="center">
                 <tr>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                     <td>
-                        <form:label path="login">Login: </form:label>
+                        <label path="login">Login: </label>
                     </td>
                     <td>
-                        <form:input path="login" name="login" id="login" pattern="[\w\d]{3,8}" required = "required"/>
+                        <input path="login" name="login" pattern="[\w\d]{3,8}" required = "required"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <form:label path="password">Password:</form:label>
+                        <label path="password">Password:</label>
                     </td>
                     <td>
-                        <form:password path="password" name="password" id="password" pattern="[\w\d]{3,8}" required = "required"/>
+                        <input type="password" name="password" path="password" pattern="[\w\d]{3,8}" required = "required"/>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td align="left">
-                        <form:button id="loginProcess" name="loginProcess">Login</form:button>
+                        <button id="loginProcess" name="loginProcess">Login</button>
                     </td>
                 </tr>
                 <tr></tr>
@@ -38,7 +40,7 @@
                     </td>
                 </tr>
             </table>
-        </form:form>
+        </form>
         <table align="center">
             <tr>
                 <td style="font-style: italic; color: red;">${message}</td>

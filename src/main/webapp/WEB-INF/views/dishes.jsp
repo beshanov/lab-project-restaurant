@@ -1,7 +1,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html>
 <head>
+    <sec:csrfMetaTags />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Dishes</title>
     <style>
@@ -30,6 +33,11 @@
 <script>
     function addToCart(dishId) {
         $.ajax({
+            beforeSend: function (request) {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                request.setRequestHeader(header, token);
+            },
             url: "cart",
             type: "POST",
             data: {

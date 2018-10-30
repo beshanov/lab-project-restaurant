@@ -6,23 +6,19 @@ import com.labproject.restaurant.services.AccountService;
 import com.labproject.restaurant.services.RoleService;
 import com.labproject.restaurant.services.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AccountServiceImpl implements AccountService {
-
+    @Autowired
     private UserService userService;
+    @Autowired
     private RoleService roleService;
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public void setRoleService(RoleService roleService) {
-        this.roleService = roleService;
-    }
 
     @Override
     public void doRegister(User user) {
-        user.setRole(roleService.getById(1));
+        user.setRole(roleService.getById(2));
         userService.insert(user);
     }
 
