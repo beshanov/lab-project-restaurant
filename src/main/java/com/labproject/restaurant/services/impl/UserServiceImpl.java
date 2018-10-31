@@ -56,19 +56,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean isLoginExist(String login) {
-        return userDao.getByLogin(login).getId() != 0;
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers(false);
     }
 
     @Override
-    public User userSettingsValidation(User userFromSession, User user) {
-        if (!user.getLogin().equals(userFromSession.getLogin())) {
-            if (isLoginExist(user.getLogin())) {
-                throw new IllegalArgumentException("This login is already exists!");
-            }
-        }
-        user.setRole(((User) userFromSession).getRole());
-        return user;
+    public List<User> getAllUsers(boolean full) {
+        return userDao.getAllUsers(full);
+    }
+
+    @Override
+    public boolean isLoginExist(String login) {
+        return userDao.getByLogin(login).getId() != 0;
     }
 
     @Override
@@ -103,6 +102,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             return null;
         }
-        return userDao.getByLogin(email);
+        User user = userDao.getByLogin(email);
+        user.setRole(roleDao.getById(user.getRole().getId()));
+        return user;
     }
 }

@@ -4,6 +4,7 @@ import com.labproject.restaurant.dao.OrderStatusDao;
 import com.labproject.restaurant.entities.OrderStatus;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -19,13 +20,13 @@ public class OrderStatusDaoImpl implements OrderStatusDao {
     @Override
     public OrderStatus getById(long orderStatusId) {
         String query = "SELECT * FROM ORDER_STATUS WHERE ID = ?";
-        List<OrderStatus> list = jdbcTemplate.queryForList(query, OrderStatus.class, orderStatusId);
+        List<OrderStatus> list = jdbcTemplate.query(query, new BeanPropertyRowMapper<>(OrderStatus.class), orderStatusId);
         return list.isEmpty() ? new OrderStatus() : list.get(0);
     }
 
     @Override
     public List<OrderStatus> getAll() {
         String query = "SELECT * FROM ORDER_STATUS";
-        return jdbcTemplate.queryForList(query, OrderStatus.class);
+        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(OrderStatus.class));
     }
 }

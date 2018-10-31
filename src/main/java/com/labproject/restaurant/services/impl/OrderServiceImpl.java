@@ -9,12 +9,14 @@ import com.labproject.restaurant.entities.Order;
 import com.labproject.restaurant.entities.OrderStatus;
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.OrderService;
+import com.labproject.restaurant.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +35,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDishDao orderDishDao;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public void createNewOrder(Order order) {
@@ -61,15 +66,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createOrderWithDishes(long userId, Map<Dish, Integer> dishMap) {
-        if (dishMap == null || userId < 1) {
-            LOGGER.error("Error while getting order: orderId < 1");
+    public void createOrderWithDishes(Map<Dish, Integer> dishMap) {
+        User loggedUser = userService.getLoggedUser();
+
+        if (loggedUser == null || loggedUser.getId() == 0) {
+            LOGGER.error("Error while getting users orders: no such user");
             return;
         }
 
         Order order = new Order();
         order.setStatus(orderStatusDao.getById(1));
-        order.setUser(userDao.getById(userId));
+        order.setUser(loggedUser);
         order.setOrderDate(Timestamp.from(Instant.now()));
         orderDao.insert(order);
 
@@ -79,12 +86,25 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrders() {
-        List<Order> result = orderDao.getAll();
+    public List<Order> getOrdersByUser() {
+        User loggedUser = userService.getLoggedUser();
 
-        for (Order o : result) {
-            o.setStatus(orderStatusDao.getById(o.getStatus().getId()));
-            o.setUser(userDao.getById(o.getUser().getId()));
+        if (loggedUser == null || loggedUser.getId() == 0) {
+            LOGGER.error("Error while getting users orders: no such user");
+            return new ArrayList<>();
+        }
+
+        List<Order> result;
+
+        if (loggedUser.getRole().getId() == 1L) {
+            result = orderDao.getAll();
+        } else {
+            result = orderDao.getAllByUserId(loggedUser.getId());
+        }
+
+        for (Order order : result) {
+            order.setStatus(orderStatusDao.getById(order.getStatus().getId()));
+            order.setUser(userDao.getById(order.getUser().getId()));
         }
 
         return result;
@@ -104,6 +124,7 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrderById(long orderId) {
         if (orderId < 1) {
             LOGGER.error("Error while deleting order: orderId < 1");
+            return;
         }
 
         orderDao.deleteById(orderId);

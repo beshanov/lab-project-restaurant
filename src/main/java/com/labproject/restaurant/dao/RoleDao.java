@@ -2,6 +2,8 @@ package com.labproject.restaurant.dao;
 
 import com.labproject.restaurant.entities.Role;
 
+import java.util.List;
+
 public interface RoleDao {
     Role getById(long id);
 
@@ -12,4 +14,6 @@ public interface RoleDao {
     void update(Role role);
 
     void delete(Role role);
+
+    List<Role> getAllRoles();
 }

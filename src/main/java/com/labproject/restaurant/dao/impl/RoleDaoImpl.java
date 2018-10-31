@@ -38,11 +38,15 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public Role getRoleByLogin(String login) {
         String query = "SELECT ROLE.ID,ROLE.NAME FROM ROLE, USER WHERE ROLE_ID = ROLE.ID AND LOGIN = ?";
-        Role role = new Role();
         List<Role> list = jdbcTemplate.query(query, new RoleMapper(), login);
         return list.isEmpty() ? new Role() : list.get(0);
     }
 
+    @Override
+    public List<Role> getAllRoles() {
+        String query = "SELECT * FROM ROLE";
+        return jdbcTemplate.query(query, new RoleMapper());
+    }
 
     @Override
     public void insert(Role role) {
@@ -60,5 +64,6 @@ public class RoleDaoImpl implements RoleDao {
         String query = "DELETE FROM ROLE WHERE ID = ?";
         jdbcTemplate.update(query, role.getId());
     }
+
 }
 
