@@ -20,13 +20,13 @@ public class OrderDaoImpl implements OrderDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
     @Autowired
     private SimpleJdbcInsert simpleJdbcInsert;
 
-
     @PostConstruct
     public void init() {
-        simpleJdbcInsert.withTableName("ORDER").usingGeneratedKeyColumns("ID");
+        simpleJdbcInsert.withTableName("`ORDER`").usingGeneratedKeyColumns("ID");
     }
 
     @Override
@@ -40,20 +40,26 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getById(long orderId) {
-        String query = "SELECT * FROM `ORDER` WHERE ID = ?";
+        final String query = "SELECT * FROM `ORDER` WHERE ID = ?";
         List<Order> list = jdbcTemplate.query(query, new OrderMapper(), orderId);
         return list.isEmpty() ? new Order() : list.get(0);
     }
 
     @Override
     public List<Order> getAll() {
-        String query = "SELECT * FROM `ORDER`";
+        final String query = "SELECT * FROM `ORDER`";
         return jdbcTemplate.query(query, new OrderMapper());
     }
 
     @Override
+    public List<Order> getAllByUserId(long userId) {
+        String query = "SELECT * FROM `ORDER` WHERE USER_ID = ?";
+        return jdbcTemplate.query(query, new OrderMapper(), userId);
+    }
+
+    @Override
     public void update(Order order) {
-        String query = "UPDATE `ORDER` SET ORDERDATE = ?, USER_ID = ?, STATUS_ID = ? WHERE ID = ?";
+        final String query = "UPDATE `ORDER` SET ORDERDATE = ?, USER_ID = ?, STATUS_ID = ? WHERE ID = ?";
         jdbcTemplate.update(query,
                 order.getOrderDate(),
                 order.getUser().getId(),
@@ -63,7 +69,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void deleteById(long orderId) {
-        String query = "DELETE FROM `ORDER` WHERE ID = ?";
+        final String query = "DELETE FROM `ORDER` WHERE ID = ?";
         jdbcTemplate.update(query, orderId);
     }
 }

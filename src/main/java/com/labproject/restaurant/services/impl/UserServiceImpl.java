@@ -103,6 +103,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             return null;
         }
-        return userDao.getByLogin(email);
+        User user = userDao.getByLogin(email);
+        user.setRole(roleDao.getById(user.getRole().getId()));
+        return user;
     }
 }

@@ -49,7 +49,7 @@ public class WebConfig implements WebMvcConfigurer {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/restaurant?serverTimezone=Europe/Moscow");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/RESTAURANT?serverTimezone=Europe/Moscow");
         dataSource.setUsername("root");
         dataSource.setPassword("password");
         return dataSource;

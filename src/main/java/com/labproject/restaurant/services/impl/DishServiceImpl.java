@@ -20,6 +20,9 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private OrderDishDao orderDishDao;
 
+    @Autowired
+    private OrderDishDao orderDishDao;
+
     @Override
     public Dish getById(long id) {
         return dishDao.getById(id);
@@ -28,6 +31,15 @@ public class DishServiceImpl implements DishService {
     @Override
     public List<Dish> getAll() {
         return dishDao.getAll();
+    }
+
+    @Override
+    public Map<Dish, Integer> getAllByOrderId(long orderId) {
+        if (orderId < 1) {
+            return new HashMap<>();
+        }
+
+        return orderDishDao.getDishesByOrderId(orderId);
     }
 
     @Override

@@ -1,12 +1,13 @@
 package com.labproject.restaurant.entities;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Dish {
     private long id;
     private String name;
     private String description;
-    private double price;
+    private BigDecimal price;
 
     public long getId() {
         return id;
@@ -32,11 +33,11 @@ public class Dish {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

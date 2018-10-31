@@ -10,11 +10,11 @@ public interface OrderService {
 
     void createNewOrder(Order order);
 
+    void createOrderWithDishes(Map<Dish, Integer> dishMap);
+
     Order getOrderById(long orderId);
 
-    void createOrderWithDishes(long userId, Map<Dish, Integer> dishMap);
-
-    List<Order> getAllOrders();
+    List<Order> getOrdersByUser();
 
     void setOrder(Order order);
 
