@@ -58,4 +58,10 @@ public class OrderDishDaoImpl implements OrderDishDao {
         final String DELETE_DISH_FROM_ORDER = "DELETE FROM ORDER_DISH WHERE DISH_ID = ? AND ORDER_ID = ?";
         jdbcTemplate.update(DELETE_DISH_FROM_ORDER, dish.getId(), order.getId());
     }
+
+    @Override
+    public void deleteDish(Dish dish) {
+        final String query = "DELETE FROM ORDER_DISH WHERE DISH_ID = ?";
+        jdbcTemplate.update(query, dish.getId());
+    }
 }
