@@ -1,7 +1,6 @@
 package com.labproject.restaurant.dao;
 
 import com.labproject.restaurant.entities.Dish;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
