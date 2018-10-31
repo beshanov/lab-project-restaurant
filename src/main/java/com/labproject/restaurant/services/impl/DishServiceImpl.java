@@ -1,6 +1,7 @@
 package com.labproject.restaurant.services.impl;
 
 import com.labproject.restaurant.dao.DishDao;
+import com.labproject.restaurant.dao.OrderDishDao;
 import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.services.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private DishDao dishDao;
+    @Autowired
+    private OrderDishDao orderDishDao;
 
     @Override
     public Dish getById(long id) {
@@ -90,6 +93,7 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public void delete(Dish dish) {
+        orderDishDao.deleteDish(dish);
         dishDao.delete(dish);
     }
 }
