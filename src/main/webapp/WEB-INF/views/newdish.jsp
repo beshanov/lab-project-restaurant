@@ -14,7 +14,7 @@
                         <form:label path="name">Name</form:label>
                     </td>
                     <td>
-                        <form:input path="name" pattern="[\w\d\s-\"]{2,45}" required = "required"/>
+                        <form:input path="name" pattern="[\w\d\s]{2,45}" required = "required"/>
                     </td>
                 </tr>
                 <tr>

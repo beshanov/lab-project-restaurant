@@ -16,10 +16,6 @@ public class MenuController {
     @Autowired
     private DishService dishService;
 
-    public void setDishService(DishService dishService) {
-        this.dishService = dishService;
-    }
-
     @RequestMapping(value = "/dish", method = RequestMethod.GET)
     public ModelAndView showAllDishes() {
         ModelAndView mav = new ModelAndView("dishes");
@@ -55,7 +51,7 @@ public class MenuController {
         dishService.delete(dish);
     }
 
-    @RequestMapping(value = "/newdish", method = RequestMethod.GET)
+    @RequestMapping(value = "/dish/create", method = RequestMethod.GET)
     public ModelAndView addDish(@ModelAttribute Dish dish) {
         ModelAndView mav = new ModelAndView("newdish");
         mav.addObject("dish", new Dish());
