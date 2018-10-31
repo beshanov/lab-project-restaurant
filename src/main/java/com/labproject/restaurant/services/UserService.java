@@ -3,11 +3,9 @@ package com.labproject.restaurant.services;
 import com.labproject.restaurant.entities.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService extends UserDetailsService{
+import java.util.List;
 
-    /*boolean registration(User user);
-
-    Optional<User> authorization(User user);*/
+public interface UserService extends UserDetailsService {
 
     User getById(long id);
 
@@ -21,7 +19,9 @@ public interface UserService extends UserDetailsService{
 
     boolean isLoginExist(String login);
 
-    User userSettingsValidation(User userFromSession, User user);
-
     User getLoggedUser();
+
+    List<User> getAllUsers();
+
+    List<User> getAllUsers(boolean full);
 }

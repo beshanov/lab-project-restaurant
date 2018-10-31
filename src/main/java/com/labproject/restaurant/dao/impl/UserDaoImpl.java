@@ -43,6 +43,17 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public List<User> getAllUsers(boolean full) {
+        String query;
+        if (full) {
+            query = "SELECT * FROM USER LEFT JOIN ROLE ON ROLE_ID = ROLE.ID";
+        } else {
+            query = "SELECT * FROM USER";
+        }
+        return jdbcTemplate.query(query, new UserMapper());
+    }
+
+    @Override
     public void insert(User user) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("LASTNAME", user.getLastname())
