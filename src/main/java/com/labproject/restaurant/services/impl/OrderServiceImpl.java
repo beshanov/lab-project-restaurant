@@ -66,21 +66,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createOrderWithDishes(Object objDishMap) {
-        Map<Dish, Integer> dishMap;
-        User user;
+    public void createOrderWithDishes(Map<Dish, Integer> dishMap) {
+        User loggedUser = userService.getLoggedUser();
 
-        if (objDishMap != null) {
-            dishMap = (Map<Dish, Integer>) objDishMap;
-            user = userService.getLoggedUser();
-        } else {
-            LOGGER.error("Error while getting order: null arguments");
+        if (loggedUser == null || loggedUser.getId() == 0) {
+            LOGGER.error("Error while getting users orders: no such user");
             return;
         }
 
         Order order = new Order();
         order.setStatus(orderStatusDao.getById(1));
-        order.setUser(user);
+        order.setUser(loggedUser);
         order.setOrderDate(Timestamp.from(Instant.now()));
         orderDao.insert(order);
 
@@ -90,22 +86,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrdersByUser(Object objUser) {
-        User user;
+    public List<Order> getOrdersByUser() {
+        User loggedUser = userService.getLoggedUser();
 
-        if (objUser != null) {
-            user = (User) objUser;
-        } else {
-            LOGGER.error("Error while getting users orders: null user");
+        if (loggedUser == null || loggedUser.getId() == 0) {
+            LOGGER.error("Error while getting users orders: no such user");
             return new ArrayList<>();
         }
 
         List<Order> result;
 
-        if (user.getRole().getId() == 1L) {
+        if (loggedUser.getRole().getId() == 1L) {
             result = orderDao.getAll();
         } else {
-            result = orderDao.getAllByUserId(user.getId());
+            result = orderDao.getAllByUserId(loggedUser.getId());
         }
 
         for (Order order : result) {

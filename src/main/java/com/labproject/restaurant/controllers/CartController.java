@@ -29,9 +29,9 @@ public class CartController {
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.DELETE)
-    public ModelAndView removeDishFromCart(HttpServletRequest request) {
+    public String removeDishFromCart(HttpServletRequest request) {
         Map<Dish, Integer> dishMap = dishService.deleteFromDishMap(request);
         request.getSession().setAttribute("dishMap", dishMap);
-        return new ModelAndView("redirect:/cart");
+        return "redirect:/cart";
     }
 }

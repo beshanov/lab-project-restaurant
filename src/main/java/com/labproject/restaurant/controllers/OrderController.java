@@ -1,9 +1,8 @@
 package com.labproject.restaurant.controllers;
 
-import com.labproject.restaurant.entities.User;
+import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.services.DishService;
 import com.labproject.restaurant.services.OrderService;
-import com.labproject.restaurant.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 public class OrderController {
@@ -20,17 +20,13 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private DishService dishService;
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public ModelAndView getAllOrders() {
         ModelAndView mav = new ModelAndView("orders");
-        User loggedUser = userService.getLoggedUser();
-        mav.addObject("orderList",
-                orderService.getOrdersByUser(loggedUser));
+
+        mav.addObject("orderList", orderService.getOrdersByUser());
 
         return mav;
     }
@@ -46,17 +42,18 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public ModelAndView createNewOrder(HttpSession session) {
-        orderService.createOrderWithDishes(session.getAttribute("dishMap"));
+    public String createNewOrder(HttpSession session) {
+        if (session.getAttribute("dishMap") != null) {
+            orderService.createOrderWithDishes((Map<Dish, Integer>) session.getAttribute("dishMap"));
+            session.removeAttribute("dishMap");
+        }
 
-        return new ModelAndView("order");
+        return "order";
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)
-    public ModelAndView deleteOrder(@PathVariable long orderId) {
-        ModelAndView mav = new ModelAndView("redirect:/cart");
+    public String deleteOrder(@PathVariable long orderId) {
         orderService.deleteOrderById(orderId);
-
-        return mav;
+        return "redirect:/cart";
     }
 }
