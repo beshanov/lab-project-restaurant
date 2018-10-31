@@ -16,10 +16,6 @@ public class MenuController {
     @Autowired
     private DishService dishService;
 
-    public void setDishService(DishService dishService) {
-        this.dishService = dishService;
-    }
-
     @RequestMapping(value = "/dish", method = RequestMethod.GET)
     public ModelAndView showAllDishes() {
         ModelAndView mav = new ModelAndView("dishes");
@@ -49,9 +45,16 @@ public class MenuController {
     }
 
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.DELETE)
-    public ModelAndView deleteDish(@PathVariable long dishId, @ModelAttribute Dish dish) {
+    public void deleteDish(@PathVariable long dishId) {
+        Dish dish = new Dish();
         dish.setId(dishId);
         dishService.delete(dish);
-        return new ModelAndView("redirect:/dish");
+    }
+
+    @RequestMapping(value = "/dish/create", method = RequestMethod.GET)
+    public ModelAndView addDish(@ModelAttribute Dish dish) {
+        ModelAndView mav = new ModelAndView("newdish");
+        mav.addObject("dish", new Dish());
+        return mav;
     }
 }
