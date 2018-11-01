@@ -37,7 +37,13 @@ public class DishServiceImpl implements DishService {
             return new HashMap<>();
         }
 
-        return orderDishDao.getDishesByOrderId(orderId);
+        Map<Dish, Integer> dishMap = orderDishDao.getDishesByOrderId(orderId);
+        for (Map.Entry<Dish, Integer> entry : dishMap.entrySet()) {
+            Dish tmpDish = dishDao.getById(entry.getKey().getId());
+            dishMap.put(tmpDish, entry.getValue());
+        }
+
+        return dishMap;
     }
 
     @Override

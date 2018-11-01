@@ -21,8 +21,8 @@
             <c:forEach items="${orderList}" var="entry">
                 <tr>
                     <td>${entry.id}</td>
-                    <td>${entry.user.firstname + " " + entry.user.lastname} (${entry.user.login})</td>
-                    <td>${entry.orderdate}</td>
+                    <td>${entry.user.firstname} ${entry.user.lastname} (${entry.user.login})</td>
+                    <td>${entry.orderDate}</td>
                     <td>${entry.status.name}</td>
                     <td><a href="/order/${entry.id}"><spring:message code="label.viewDetails"/></a></td>
                 </tr>

@@ -12,9 +12,10 @@
     <h1 align="center"><spring:message code="label.orderNumber"/>: ${order.id}</h1>
     <div id="order" align="center">
         <div align="center" border-style="solid" border-radius="5px">
-            <p>User: ${order.user.firstname + " " + order.user.lastname}</p>
-            <p>Date: ${order.orderdate}</p>
-            <p>Status: ${order.status.name}</p>
+            <p><spring:message code="label.user"/>: ${order.user.firstname} ${order.user.lastname}</p>
+            <p><spring:message code="label.login"/>: ${order.user.login}</p>
+            <p><spring:message code="label.date"/>: ${order.orderdate}</p>
+            <p><spring:message code="label.status"/>: ${order.status.name}</p>
         </div>
         <table align="center" width="40%" cellpadding="1" bgcolor="#DDDDDD" border="1">
             <tr>
