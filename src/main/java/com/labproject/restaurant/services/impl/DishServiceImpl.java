@@ -53,11 +53,13 @@ public class DishServiceImpl implements DishService {
         Dish dish = getById(dishId);
 
         Object objMap = request.getSession().getAttribute("dishMap");
-        if (objMap == null) {
-            return new HashMap<>();
-        }
+        Map<Dish, Integer> dishMap;
 
-        Map<Dish, Integer> dishMap = (Map<Dish, Integer>) objMap;
+        if (objMap == null) {
+            dishMap = new HashMap<>();
+        } else {
+            dishMap = (Map<Dish, Integer>) objMap;
+        }
 
         if (count < 1) {
             return dishMap;

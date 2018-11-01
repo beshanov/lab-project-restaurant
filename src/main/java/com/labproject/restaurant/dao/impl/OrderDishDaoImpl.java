@@ -35,7 +35,7 @@ public class OrderDishDaoImpl implements OrderDishDao {
                 .addValue("DISH_ID", dish.getId())
                 .addValue("ORDER_ID", order.getId())
                 .addValue("COUNT", count);
-        order.setId(simpleJdbcInsert.executeAndReturnKey(parameters).longValue());
+        simpleJdbcInsert.execute(parameters);
     }
 
     @Override

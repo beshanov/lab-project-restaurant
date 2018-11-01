@@ -43,12 +43,12 @@ public class OrderController {
             orderService.createOrderWithDishes((Map<Dish, Integer>) session.getAttribute("dishMap"));
             session.removeAttribute("dishMap");
         }
-        return "redirect:/orders";
+        return "redirect:/order";
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)
     public String deleteOrder(@PathVariable long orderId) {
         orderService.deleteOrderById(orderId);
-        return "redirect:/orders";
+        return "redirect:/order";
     }
 }

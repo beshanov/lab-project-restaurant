@@ -54,6 +54,7 @@
         <br/>
         <div align="center">
             <form action="order" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="submit" value="${submitLabel}"/>
             </form>
         </div>
