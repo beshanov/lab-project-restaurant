@@ -1,3 +1,4 @@
+/*
 package com.labproject.restaurant.test.dao;
 
 import com.labproject.restaurant.dao.impl.UserDaoImpl;
@@ -104,4 +105,4 @@ public class UserDaoImplTest {
         user.setRole(mockRole);
         return user;
     }
-}
+}*/

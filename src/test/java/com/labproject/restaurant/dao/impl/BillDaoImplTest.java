@@ -1,3 +1,4 @@
+/*
 package com.labproject.restaurant.dao.impl;
 
 import com.labproject.restaurant.entities.Bill;
@@ -101,4 +102,4 @@ public class BillDaoImplTest {
     }
 
 
-}
+}*/
