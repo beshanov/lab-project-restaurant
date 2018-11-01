@@ -9,7 +9,7 @@
     </head>
     <body>
     <a href="profile?lang=en">English</a> | <a href="profile?lang=ru">Russian</a>
-        <h1 align="center">Settings</h1>
+    <h1 align="center"><spring:message code="label.settings"/></h1>
         <form:form id="settingsForm" modelAttribute="user" action="profile" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <table align="center">

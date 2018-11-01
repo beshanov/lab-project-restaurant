@@ -27,7 +27,8 @@
             <div class="dish_name"><a href="dish/${dish.id}">${dish.name}</a></div>
                 <div class="dish_price">${dish.price}</div>
             <form id="dishForm_${dish.id}">
-                <input type="number" min="1" value="1" style="width: 50px;" name="pieces_${dish.id}"> pieces</input>
+                <input type="number" min="1" value="1" style="width: 50px;" name="pieces_${dish.id}">
+                <spring:message code="label.pieces"/>
             </form>
             <button onclick="addToCart('${dish.id}')"><spring:message code="button.addToCart"/></button>
             <button onclick="deleteDish('${dish.id}')"><spring:message code="button.delete"/></button>

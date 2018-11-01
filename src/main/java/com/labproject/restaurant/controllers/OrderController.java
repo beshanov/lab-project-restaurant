@@ -25,19 +25,15 @@ public class OrderController {
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public ModelAndView getAllOrders() {
         ModelAndView mav = new ModelAndView("orders");
-
         mav.addObject("orderList", orderService.getOrdersByUser());
-
         return mav;
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
     public ModelAndView getOrder(@PathVariable long orderId) {
         ModelAndView mav = new ModelAndView("order");
-
         mav.addObject("order", orderService.getOrderById(orderId));
         mav.addObject("dishMap", dishService.getAllByOrderId(orderId));
-
         return mav;
     }
 
@@ -47,13 +43,12 @@ public class OrderController {
             orderService.createOrderWithDishes((Map<Dish, Integer>) session.getAttribute("dishMap"));
             session.removeAttribute("dishMap");
         }
-
-        return "order";
+        return "redirect:/orders";
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)
     public String deleteOrder(@PathVariable long orderId) {
         orderService.deleteOrderById(orderId);
-        return "redirect:/cart";
+        return "redirect:/orders";
     }
 }

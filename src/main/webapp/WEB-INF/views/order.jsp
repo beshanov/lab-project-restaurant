@@ -14,7 +14,7 @@
         <div align="center" border-style="solid" border-radius="5px">
             <p><spring:message code="label.user"/>: ${order.user.firstname} ${order.user.lastname}</p>
             <p><spring:message code="label.login"/>: ${order.user.login}</p>
-            <p><spring:message code="label.date"/>: ${order.orderdate}</p>
+            <p><spring:message code="label.date"/>: ${order.orderDate}</p>
             <p><spring:message code="label.status"/>: ${order.status.name}</p>
         </div>
         <table align="center" width="40%" cellpadding="1" bgcolor="#DDDDDD" border="1">

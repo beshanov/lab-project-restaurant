@@ -10,7 +10,7 @@
     <title><spring:message code="title.dish"/></title>
 </head>
 <body>
-<h1>${dish.name} details</h1>
+<h1 align="center">${dish.name} <spring:message code="label.details"/></h1>
 <form:form id="dishForm" modelAttribute="dish" action="/dish/${dish.id}" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <table align="center">

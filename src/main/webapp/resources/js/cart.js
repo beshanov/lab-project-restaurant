@@ -5,7 +5,8 @@ function deleteFromCart(dishId) {
             var header = $("meta[name='_csrf_header']").attr("content");
             request.setRequestHeader(header, token);
         },
-        url: "cart?id=" + dishId,
-        type: "DELETE"
+        url: "cart/" + dishId,
+        type: "DELETE",
+        success: window.location.replace(window.location)
     });
 }
