@@ -1,10 +1,13 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<!DOCTYPE html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page pageEncoding="utf-8" %>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Dishes</title>
+    <title><spring:message code="title.dishes"/></title>
     <style>
         .dish {
             margin: 10px 0px;
@@ -26,11 +29,11 @@
             <form id="dishForm_${dish.id}">
                 <input type="number" min="1" value="1" style="width: 50px;" name="pieces_${dish.id}"> pieces</input>
             </form>
-            <button onclick="addToCart('${dish.id}')">Add to Cart</button>
-            <button onclick="deleteDish('${dish.id}')">Delete</button>
+            <button onclick="addToCart('${dish.id}')"><spring:message code="button.addToCart"/></button>
+            <button onclick="deleteDish('${dish.id}')"><spring:message code="button.delete"/></button>
         </div>
     </c:forEach>
-    <a href="/dish/create" type="button">Add new</a>
+    <a href="${pageContext.request.contextPath}/dish/create" type="button"><spring:message code="button.addNew"/></a>
 </div>
 </body>
 </html>
