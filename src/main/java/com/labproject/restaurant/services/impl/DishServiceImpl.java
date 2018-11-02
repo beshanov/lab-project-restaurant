@@ -19,6 +19,9 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private DishDao dishDao;
 
+    @Autowired
+    private OrderDishDao orderDishDao;
+
     @Override
     public Dish getById(long id) {
         return dishDao.getById(id);
@@ -107,7 +110,6 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public void delete(Dish dish) {
-        orderDishDao.deleteDish(dish);
         dishDao.delete(dish);
     }
 }
