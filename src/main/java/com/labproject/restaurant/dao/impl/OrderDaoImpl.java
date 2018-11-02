@@ -34,7 +34,9 @@ public class OrderDaoImpl implements OrderDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("ORDERDATE", order.getOrderDate())
                 .addValue("USER_ID", order.getUser().getId())
-                .addValue("STATUS_ID", order.getStatus().getId());
+                .addValue("STATUS_ID", order.getStatus().getId())
+                .addValue("ADMIN_ID", order.getAdmin().getId())
+                .addValue("AMOUNT", order.getAmount());
         order.setId(simpleJdbcInsert.executeAndReturnKey(parameters).longValue());
     }
 
@@ -59,11 +61,14 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void update(Order order) {
-        final String query = "UPDATE `ORDER` SET ORDERDATE = ?, USER_ID = ?, STATUS_ID = ? WHERE ID = ?";
+        final String query = "UPDATE `ORDER` SET ORDERDATE = ?, USER_ID = ?," +
+                " STATUS_ID = ?, ADMIN_ID=? AMOUNT=? WHERE ID = ?";
         jdbcTemplate.update(query,
                 order.getOrderDate(),
                 order.getUser().getId(),
                 order.getStatus().getId(),
+                order.getAdmin().getId(),
+                order.getAmount(),
                 order.getId());
     }
 

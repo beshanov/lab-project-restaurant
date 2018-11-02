@@ -110,7 +110,6 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public void delete(Dish dish) {
-        orderDishDao.deleteDish(dish);
         dishDao.delete(dish);
     }
 }

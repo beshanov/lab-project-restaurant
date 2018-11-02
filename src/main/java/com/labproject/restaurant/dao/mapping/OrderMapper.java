@@ -5,6 +5,7 @@ import com.labproject.restaurant.entities.OrderStatus;
 import com.labproject.restaurant.entities.User;
 import org.springframework.jdbc.core.RowMapper;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -22,6 +23,12 @@ public class OrderMapper implements RowMapper<Order> {
         OrderStatus status = new OrderStatus();
         status.setId(rs.getLong("STATUS_ID"));
         order.setStatus(status);
+
+        User admin = new User();
+        admin.setId(rs.getLong("ADMIN_ID"));
+        order.setAdmin(admin);
+
+        order.setAmount(rs.getBigDecimal("AMOUNT"));
 
         return order;
     }
