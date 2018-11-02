@@ -20,9 +20,6 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private OrderDishDao orderDishDao;
 
-    @Autowired
-    private OrderDishDao orderDishDao;
-
     @Override
     public Dish getById(long id) {
         return dishDao.getById(id);

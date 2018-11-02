@@ -31,6 +31,7 @@
         </div>
     </c:forEach>
     <a href="/dish/create" type="button">Add new</a>
+
 </div>
 </body>
 </html>

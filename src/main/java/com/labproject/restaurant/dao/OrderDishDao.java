@@ -12,4 +12,6 @@ public interface OrderDishDao {
     Map<Dish, Integer> getDishesByOrderId(long orderId);
 
     void deleteDishFromOrder(Dish dish, Order order);
+
+    void deleteDish(Dish dish);
 }
