@@ -1,3 +1,4 @@
+/*
 package com.labproject.restaurant.test.dao;
 
 import com.labproject.restaurant.dao.impl.RoleDaoImpl;
@@ -76,4 +77,4 @@ public class RoleDaoImplTest {
         role.setName(name);
         return role;
     }
-}
+}*/

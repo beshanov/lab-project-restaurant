@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,6 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private DishDao dishDao;
-    @Autowired
-    private OrderDishDao orderDishDao;
 
     @Override
     public Dish getById(long id) {
@@ -36,7 +35,12 @@ public class DishServiceImpl implements DishService {
             return new HashMap<>();
         }
 
-        return orderDishDao.getDishesByOrderId(orderId);
+        Map<Dish, Integer> result = new HashMap<>();
+        for (Map.Entry<Dish, Integer> entry : orderDishDao.getDishesByOrderId(orderId).entrySet()) {
+            result.put(dishDao.getById(entry.getKey().getId()), entry.getValue());
+        }
+
+        return result;
     }
 
     @Override
@@ -46,11 +50,13 @@ public class DishServiceImpl implements DishService {
         Dish dish = getById(dishId);
 
         Object objMap = request.getSession().getAttribute("dishMap");
-        if (objMap == null) {
-            return new HashMap<>();
-        }
+        Map<Dish, Integer> dishMap;
 
-        Map<Dish, Integer> dishMap = (Map<Dish, Integer>) objMap;
+        if (objMap == null) {
+            dishMap = new HashMap<>();
+        } else {
+            dishMap = (Map<Dish, Integer>) objMap;
+        }
 
         if (count < 1) {
             return dishMap;
@@ -66,9 +72,8 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public Map<Dish, Integer> deleteFromDishMap(HttpServletRequest request) {
-        long deleteId = Long.valueOf(request.getParameter("id"));
-        Object objMap = request.getSession().getAttribute("dishMap");
+    public Map<Dish, Integer> deleteFromDishMap(HttpSession session, long dishId) {
+        Object objMap = session.getAttribute("dishMap");
 
         if (objMap == null) {
             return new HashMap<>();
@@ -76,12 +81,12 @@ public class DishServiceImpl implements DishService {
 
         Map<Dish, Integer> dishMap = (Map<Dish, Integer>) objMap;
 
-        if (deleteId < 1) {
+        if (dishId < 1) {
             return dishMap;
         }
 
         for (Map.Entry<Dish, Integer> entry : dishMap.entrySet()) {
-            if (entry.getKey().getId() == deleteId) {
+            if (entry.getKey().getId() == dishId) {
                 dishMap.remove(entry.getKey());
                 break;
             }
