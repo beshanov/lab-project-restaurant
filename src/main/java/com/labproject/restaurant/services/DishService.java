@@ -3,6 +3,7 @@ package com.labproject.restaurant.services;
 import com.labproject.restaurant.entities.Dish;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public interface DishService {
 
     Map<Dish, Integer> addToDishMap(HttpServletRequest request);
 
-    Map<Dish, Integer> deleteFromDishMap(HttpServletRequest request);
+    Map<Dish, Integer> deleteFromDishMap(HttpSession session, long dishId);
 
     void insert(Dish dish);
 

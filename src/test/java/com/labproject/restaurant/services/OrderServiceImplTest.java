@@ -1,3 +1,4 @@
+/*
 package com.labproject.restaurant.services;
 
 import com.labproject.restaurant.dao.OrderDao;
@@ -102,4 +103,4 @@ public class OrderServiceImplTest {
 
         return result;
     }
-}
+}*/

@@ -1,17 +1,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
-<!DOCTYPE HTML>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page pageEncoding="utf-8" %>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Registration</title>
+    <title><spring:message code="title.register"/></title>
 </head>
 <body>
 <form:form id="regForm" modelAttribute="user" action="register" method="post">
     <table align="center">
         <tr>
             <td>
-                <form:label path="login">Login: </form:label>
+                <form:label path="login"><spring:message code="label.login"/> </form:label>
             </td>
             <td>
                 <form:input path="login" pattern="[\w\d]{3,8}" required="required"/>
@@ -22,7 +23,7 @@
         </tr>
         <tr>
             <td>
-                <form:label path="password">Password</form:label>
+                <form:label path="password"><spring:message code="label.password"/></form:label>
             </td>
             <td>
                 <form:password path="password" pattern="[\w\d]{3,8}" required="required"/>
@@ -33,7 +34,7 @@
         </tr>
         <tr>
             <td>
-                <form:label path="firstname">FirstName</form:label>
+                <form:label path="firstname"><spring:message code="label.firstName"/></form:label>
             </td>
             <td>
                 <form:input path="firstname" pattern="[\w\d]{2,10}" required="required"/>
@@ -44,7 +45,7 @@
         </tr>
         <tr>
             <td>
-                <form:label path="lastname">LastName</form:label>
+                <form:label path="lastname"><spring:message code="label.lastName"/></form:label>
             </td>
             <td>
                 <form:input path="lastname" pattern="[\w\d]{3,20}" required="required"/>
@@ -56,13 +57,13 @@
         <tr>
             <td></td>
             <td>
-                <form:button id="register" name="register">Register</form:button>
+                <form:button id="register" name="register"><spring:message code="button.register"/></form:button>
             </td>
         </tr>
         <tr></tr>
         <tr>
             <td></td>
-            <td><a href="/dish">Home</a>
+            <td><a href="/dish"><spring:message code="label.home"/></a>
             </td>
         </tr>
     </table>

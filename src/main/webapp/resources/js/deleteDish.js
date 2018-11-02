@@ -8,7 +8,7 @@ function deleteDish(dishId) {
         url: "dish/" + dishId,
         type: "DELETE",
         complete: setTimeout(function () {
-            window.location.replace("/dish")
+            window.location.replace(window.location)
         }, 200)
     });
 }

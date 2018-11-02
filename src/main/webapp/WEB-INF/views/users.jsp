@@ -1,15 +1,17 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page pageEncoding="utf-8" %>
 
-<!DOCTYPE html>
 <html>
 <head>
     <sec:csrfMetaTags/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Users</title>
+    <title><spring:message code="title.users"/></title>
 </head>
 <body>
 <div>
+    <spring:message code="button.save" var="saveLabel"/>
     <c:forEach var="user" items="${usersList}">
         <div class="user" id="user_${user.id}">
             <div>${user.lastname}
@@ -22,7 +24,8 @@
                             </option>
                         </c:forEach>
                     </select>
-                    <input type="button" value="Save" id="UserButton_${user.id}" onclick="saveUserRole('${user.id}')"
+                    <input type="button" value="${saveLabel}" id="UserButton_${user.id}"
+                           onclick="saveUserRole('${user.id}')"
                            hidden>
                 </form>
 
