@@ -35,7 +35,6 @@ public class OrderDaoImpl implements OrderDao {
                 .addValue("ORDERDATE", order.getOrderDate())
                 .addValue("USER_ID", order.getUser().getId())
                 .addValue("STATUS_ID", order.getStatus().getId())
-                .addValue("ADMIN_ID", order.getAdmin().getId())
                 .addValue("AMOUNT", order.getAmount());
         order.setId(simpleJdbcInsert.executeAndReturnKey(parameters).longValue());
     }
