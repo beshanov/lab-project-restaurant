@@ -2,6 +2,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page pageEncoding="utf-8" %>
 
 <html>
@@ -26,15 +27,25 @@
         <div class="dish" id="dish_${dish.id}">
             <div class="dish_name"><a href="dish/${dish.id}">${dish.name}</a></div>
                 <div class="dish_price">${dish.price}</div>
-            <form id="dishForm_${dish.id}">
-                <input type="number" min="1" value="1" style="width: 50px;" name="pieces_${dish.id}">
-                <spring:message code="label.pieces"/>
-            </form>
-            <button onclick="addToCart('${dish.id}')"><spring:message code="button.addToCart"/></button>
-            <button onclick="deleteDish('${dish.id}')"><spring:message code="button.delete"/></button>
+            <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
+                <form id="dishForm_${dish.id}">
+                    <input type="number" min="1" value="1" style="width: 50px;" name="pieces_${dish.id}">
+                    <spring:message code="label.pieces"/>
+                </form>
+                <button onclick="addToCart('${dish.id}')"><spring:message code="button.addToCart"/></button>
+            </sec:authorize>
+            <sec:authorize access="hasAuthority('ADMINISTRATOR')">
+                <c:if test="${dish.deleted == false}" >
+                    <button id="delete_${dish.id}" onclick="deleteDish('${dish.id}')">
+                        <spring:message code="button.delete"/>
+                    </button>
+                </c:if>
+            </sec:authorize>
         </div>
     </c:forEach>
-    <a href="${pageContext.request.contextPath}/dish/create" type="button"><spring:message code="button.addNew"/></a>
+    <sec:authorize access="hasAuthority('ADMINISTRATOR')">
+        <a href="${pageContext.request.contextPath}/dish/create" type="button"><spring:message code="button.addNew"/></a>
+    </sec:authorize>
 </div>
 </body>
 </html>

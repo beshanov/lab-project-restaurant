@@ -7,6 +7,6 @@ function deleteDish(dishId) {
         },
         url: "dish/" + dishId,
         type: "DELETE",
-        success: $("#dish_" + dishId).remove()
+        success: $("#delete_" + dishId).remove()
     });
 }
