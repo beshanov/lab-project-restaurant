@@ -33,6 +33,7 @@ public class MenuController {
 
     @RequestMapping(value = "/dish", method = RequestMethod.POST)
     public ModelAndView addNewDish(@ModelAttribute Dish dish) {
+        dish.setDeleted(false);
         dishService.insert(dish);
         return new ModelAndView("redirect:/dish");
     }

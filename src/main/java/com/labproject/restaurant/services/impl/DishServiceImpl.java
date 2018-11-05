@@ -3,7 +3,10 @@ package com.labproject.restaurant.services.impl;
 import com.labproject.restaurant.dao.DishDao;
 import com.labproject.restaurant.dao.OrderDishDao;
 import com.labproject.restaurant.entities.Dish;
+import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.DishService;
+import com.labproject.restaurant.services.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +19,16 @@ import java.util.Map;
 @Service
 public class DishServiceImpl implements DishService {
 
+    private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
+
     @Autowired
     private DishDao dishDao;
 
     @Autowired
     private OrderDishDao orderDishDao;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public Dish getById(long id) {
@@ -29,7 +37,12 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public List<Dish> getAll() {
-        return dishDao.getAll();
+        User loggedUser = userService.getLoggedUser();
+
+        if (loggedUser != null && loggedUser.getRole().getId() == 1L) {
+            return dishDao.getAll();
+        }
+        return dishDao.getAvailable();
     }
 
     @Override

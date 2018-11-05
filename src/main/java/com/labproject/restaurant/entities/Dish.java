@@ -8,6 +8,7 @@ public class Dish {
     private String name;
     private String description;
     private BigDecimal price;
+    private boolean deleted;
 
     public long getId() {
         return id;
@@ -39,6 +40,14 @@ public class Dish {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

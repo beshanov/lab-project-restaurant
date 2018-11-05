@@ -32,7 +32,8 @@ public class DishDaoImpl implements DishDao {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("NAME", dish.getName())
                 .addValue("DESCRIPTION", dish.getDescription())
-                .addValue("PRICE", dish.getPrice());
+                .addValue("PRICE", dish.getPrice())
+                .addValue("IS_DELETED", dish.isDeleted());
         dish.setId(simpleJdbcInsert.executeAndReturnKey(parameters).longValue());
     }
 
@@ -49,14 +50,22 @@ public class DishDaoImpl implements DishDao {
 
     @Override
     public void delete(Dish dish) {
-        final String DELETE = "DELETE FROM DISH WHERE ID = ?";
-        jdbcTemplate.update(DELETE, dish.getId());
+        final String UPDATE = "UPDATE DISH SET IS_DELETED = ? WHERE ID = ?";
+        jdbcTemplate.update(UPDATE,
+                true,
+                dish.getId());
     }
 
     @Override
     public List<Dish> getAll() {
         final String FIND_ALL = "SELECT * FROM DISH";
         return jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Dish.class));
+    }
+
+    @Override
+    public List<Dish> getAvailable() {
+        final String FIND_AVAILABLE = "SELECT * FROM DISH WHERE IS_DELETED=FALSE";
+        return jdbcTemplate.query(FIND_AVAILABLE, new BeanPropertyRowMapper<>(Dish.class));
     }
 
     @Override
@@ -67,4 +76,6 @@ public class DishDaoImpl implements DishDao {
                 id);
         return dishList.isEmpty() ? new Dish() : dishList.get(0);
     }
+
+
 }
