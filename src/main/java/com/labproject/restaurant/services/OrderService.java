@@ -19,4 +19,6 @@ public interface OrderService {
     void setOrder(Order order);
 
     void deleteOrderById(long orderId);
+
+    void modifyOrderStatus(long orderId, long statusId);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -50,5 +51,13 @@ public class OrderController {
     public String deleteOrder(@PathVariable long orderId) {
         orderService.deleteOrderById(orderId);
         return "redirect:/order";
+    }
+
+    @RequestMapping(value = "/orderModifyStatus", method = RequestMethod.POST)
+    public void modifyStatus(@RequestParam(name = "orderId", defaultValue = "0") long orderId,
+                             @RequestParam(name = "statusId", defaultValue = "0") long statusId) {
+        orderService.modifyOrderStatus(orderId, statusId);
+
+        //return "redirect:/order";
     }
 }
