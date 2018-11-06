@@ -33,7 +33,7 @@ public class DishDaoImpl implements DishDao {
                 .addValue("NAME", dish.getName())
                 .addValue("DESCRIPTION", dish.getDescription())
                 .addValue("PRICE", dish.getPrice())
-                .addValue("IS_DELETED", dish.isDeleted());
+                .addValue("IS_DELETED", false);
         dish.setId(simpleJdbcInsert.executeAndReturnKey(parameters).longValue());
     }
 
