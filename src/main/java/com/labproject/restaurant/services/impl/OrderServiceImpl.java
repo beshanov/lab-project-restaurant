@@ -139,4 +139,27 @@ public class OrderServiceImpl implements OrderService {
 
         orderDao.deleteById(orderId);
     }
+
+    @Override
+    public void modifyOrderStatus(long orderId, long statusId) {
+        if (orderId < 1 || statusId < 1) {
+            LOGGER.error("Error while modifying order status: orderId < 1 or statusId < 1");
+            return;
+        }
+
+        OrderStatus status = orderStatusDao.getById(statusId + 1);
+        if (status == null || status.getId() == 0) {
+            LOGGER.error("Error while modifying order status: no such status");
+            return;
+        }
+
+        Order order = orderDao.getById(orderId);
+        if (order == null || order.getId() == 0) {
+            LOGGER.error("Error while modifying order status: no such order");
+            return;
+        }
+
+        order.setStatus(status);
+        orderDao.update(order);
+    }
 }

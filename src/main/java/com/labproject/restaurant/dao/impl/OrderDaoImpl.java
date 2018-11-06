@@ -61,7 +61,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public void update(Order order) {
         final String query = "UPDATE `ORDER` SET ORDERDATE = ?, USER_ID = ?," +
-                " STATUS_ID = ?, ADMIN_ID=? AMOUNT=? WHERE ID = ?";
+                " STATUS_ID = ?, ADMIN_ID=?, AMOUNT=? WHERE ID = ?";
         jdbcTemplate.update(query,
                 order.getOrderDate(),
                 order.getUser().getId(),
