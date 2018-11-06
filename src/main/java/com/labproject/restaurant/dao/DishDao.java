@@ -14,5 +14,7 @@ public interface DishDao {
 
     List<Dish> getAll();
 
+    List<Dish> getAvailable();
+
     Dish getById(long id);
 }

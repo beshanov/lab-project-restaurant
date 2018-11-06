@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -78,6 +79,15 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(orderStatusDao.getById(1));
         order.setUser(loggedUser);
         order.setOrderDate(Timestamp.from(Instant.now()));
+
+        BigDecimal amount = new BigDecimal(0);
+
+
+        for (Map.Entry<Dish, Integer> entry : dishMap.entrySet()) {
+            amount = amount.add(entry.getKey().getPrice().multiply(BigDecimal.valueOf(entry.getValue())));
+        }
+        order.setAmount(amount);
+
         orderDao.insert(order);
 
         for (Map.Entry<Dish, Integer> entry : dishMap.entrySet()) {

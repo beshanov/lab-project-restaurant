@@ -32,7 +32,7 @@
                         <form:label path="price"><spring:message code="label.price"/></form:label>
                     </td>
                     <td>
-                        <form:input path="price" pattern="\d+(\.\d{1,2})?" required = "required"/>
+                        <form:input path="price" pattern="\d{1,10}(\.\d{1,2})?" required = "required"/>
                     </td>
                 </tr>
                 <tr>

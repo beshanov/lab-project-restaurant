@@ -46,6 +46,16 @@
                 <form:input path="price"/>
             </td>
         </tr>
+        <sec:authorize access="hasAuthority('ADMINISTRATOR')">
+           <tr>
+                <td>
+                    <form:label path="deleted"><spring:message code="label.deleted"/></form:label>
+                </td>
+                <td>
+                    <form:checkbox path="deleted"/>
+                </td>
+            </tr>
+        </sec:authorize>
         <tr>
             <td></td>
             <td>
