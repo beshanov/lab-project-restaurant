@@ -11,6 +11,5 @@ function modifyOrderStatus(orderId, statusId) {
             orderId: orderId,
             statusId: statusId
         }
-        //success: window.location.replace(window.location)
     });
 }

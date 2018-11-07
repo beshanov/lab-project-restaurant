@@ -150,13 +150,13 @@ public class OrderServiceImpl implements OrderService {
         }
 
         OrderStatus status = orderStatusDao.getById(statusId);
-        if (status == null || status.getId() == 0) {
+        if (status.getId() == 0) {
             LOGGER.error("Error while modifying order status: no such status");
             return;
         }
 
         Order order = orderDao.getById(orderId);
-        if (order == null || order.getId() == 0) {
+        if (order.getId() == 0) {
             LOGGER.error("Error while modifying order status: no such order");
             return;
         }
