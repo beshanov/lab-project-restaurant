@@ -39,7 +39,16 @@
                 </li>
             </sec:authorize>
         </ul>
+        <sec:authorize access="isAuthenticated()">
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <a class="nav-link" href="javascript:logout()"><spring:message code="label.logout"/></a>
+                </li>
+            </ul>
+        </sec:authorize>
     </div>
 </nav>
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/js/logout.js" type="text/javascript"></script>
