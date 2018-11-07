@@ -7,6 +7,7 @@
     <title><spring:message code="title.orders"/></title>
 </head>
 <body>
+<jsp:include page="navigate.jsp"/>
 <div id="contents">
     <h1 align="center"><spring:message code="label.orders"/></h1>
     <div id="orders" align="center">
