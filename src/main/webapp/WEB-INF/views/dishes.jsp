@@ -30,11 +30,17 @@
                 <input type="number" min="1" value="1" style="width: 50px;" name="pieces_${dish.id}">
                 <spring:message code="label.pieces"/>
             </form>
-            <button onclick="addToCart('${dish.id}')"><spring:message code="button.addToCart"/></button>
-            <button onclick="deleteDish('${dish.id}')"><spring:message code="button.delete"/></button>
+            <sec:authorize access="hasAuthority('CUSTOMER')">
+                <button onclick="addToCart('${dish.id}')"><spring:message code="button.addToCart"/></button>
+            </sec:authorize>
+            <sec:authorize access="hasAuthority('ADMINISTRATOR')">
+                <button onclick="deleteDish('${dish.id}')"><spring:message code="button.delete"/></button>
+            </sec:authorize>
         </div>
     </c:forEach>
-    <a href="${pageContext.request.contextPath}/dish/create" type="button"><spring:message code="button.addNew"/></a>
+    <sec:authorize access="hasAuthority('ADMINISTRATOR')">
+        <a href="${pageContext.request.contextPath}/dish/create" type="button"><spring:message code="button.addNew"/></a>
+    </sec:authorize>
 </div>
 </body>
 </html>

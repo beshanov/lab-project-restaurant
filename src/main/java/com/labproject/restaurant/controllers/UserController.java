@@ -36,4 +36,9 @@ public class UserController {
         userService.update(user);
         resp.setStatus(HttpServletResponse.SC_ACCEPTED);
     }
+
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    public ModelAndView accesssDenied() {
+        return new ModelAndView("accessDenied");
+    }
 }

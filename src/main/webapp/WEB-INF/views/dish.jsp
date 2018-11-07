@@ -13,6 +13,7 @@
 <h1 align="center">${dish.name} <spring:message code="label.details"/></h1>
 <form:form id="dishForm" modelAttribute="dish" action="/dish/${dish.id}" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <sec:authorize access="hasAuthority('ADMINISTRATOR')">
     <table align="center">
         <tr>
             <td>
@@ -55,11 +56,46 @@
             </td>
         </tr>
         <tr></tr>
+    </table>
+    </sec:authorize>
+
+    <sec:authorize access="hasAuthority('CUSTOMER')">
+        <table align="center">
+            <tr>
+                <td>
+                    <form:label path="name"><spring:message code="label.name"/></form:label>
+                </td>
+                <td>
+                    <form:input path="name" disabled = "true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form:label path="description"><spring:message code="label.description"/></form:label>
+                </td>
+                <td>
+                    <form:textarea  path="description" disabled = "true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form:label path="price"><spring:message code="label.price"/></form:label>
+                </td>
+                <td>
+                    <form:input path="price" disabled = "true"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+
+        <tr></tr>
         <tr>
             <td></td>
             <td><a href="/dish"><spring:message code="label.back"/></a></td>
         </tr>
     </table>
+    </sec:authorize>
 </form:form>
 
 </div>

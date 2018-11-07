@@ -4,6 +4,7 @@ package com.labproject.restaurant.controllers;
 import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.services.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,7 @@ public class MenuController {
     }
 
     @RequestMapping(value = "/dish/create", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ModelAndView addDish(@ModelAttribute Dish dish) {
         ModelAndView mav = new ModelAndView("newdish");
         mav.addObject("dish", new Dish());
