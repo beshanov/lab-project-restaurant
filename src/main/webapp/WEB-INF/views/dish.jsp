@@ -39,13 +39,12 @@
                     <form:label path="deleted"><spring:message code="label.deleted"/></form:label>
                     <form:checkbox class="form-control" path="deleted"/>
         </div>
-        </sec:authorize>
         <div class="form-group">
             <form:button class="btn btn-dark" id="dish_${dish.id}" name="dish_${dish.id}">
                 <spring:message code="button.update"/>
             </form:button>
         </div>
-        <a href="/dish"><spring:message code="label.back"/></a></td>
+        </sec:authorize>
 
     </form:form>
 
