@@ -5,12 +5,12 @@ function modifyOrderStatus(orderId, statusId) {
             var header = $("meta[name='_csrf_header']").attr("content");
             request.setRequestHeader(header, token);
         },
-        url: "orderModifyStatus",
+        url: "order.setStatus",
         type: "POST",
         data: {
             orderId: orderId,
             statusId: statusId
-        },
+        }
         //success: window.location.replace(window.location)
     });
 }

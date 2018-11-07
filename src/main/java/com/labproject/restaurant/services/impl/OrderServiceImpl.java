@@ -60,8 +60,10 @@ public class OrderServiceImpl implements OrderService {
         Order result = orderDao.getById(orderId);
         OrderStatus status = orderStatusDao.getById(result.getStatus().getId());
         User user = userDao.getById(result.getUser().getId());
+        User admin = userDao.getById(result.getAdmin().getId());
         result.setStatus(status);
         result.setUser(user);
+        result.setAdmin(admin);
 
         return result;
     }
@@ -141,13 +143,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void modifyOrderStatus(long orderId, long statusId) {
-        if (orderId < 1 || statusId < 1) {
-            LOGGER.error("Error while modifying order status: orderId < 1 or statusId < 1");
+    public void setOrderStatus(long orderId, long statusId) {
+        if (orderId < 1 || statusId < 2) {
+            LOGGER.error("Error while modifying order status: orderId < 1 or statusId < 2");
             return;
         }
 
-        OrderStatus status = orderStatusDao.getById(statusId + 1);
+        OrderStatus status = orderStatusDao.getById(statusId);
         if (status == null || status.getId() == 0) {
             LOGGER.error("Error while modifying order status: no such status");
             return;
@@ -157,6 +159,11 @@ public class OrderServiceImpl implements OrderService {
         if (order == null || order.getId() == 0) {
             LOGGER.error("Error while modifying order status: no such order");
             return;
+        }
+
+        if (statusId == 2) {
+            User admin = userService.getLoggedUser();
+            order.setAdmin(admin);
         }
 
         order.setStatus(status);

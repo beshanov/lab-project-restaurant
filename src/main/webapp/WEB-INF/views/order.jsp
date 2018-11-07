@@ -15,21 +15,36 @@
 <div id="contents">
     <h1 align="center"><spring:message code="label.orderNumber"/>: ${order.id}</h1>
     <div id="order" align="center">
-        <div align="center">
-            <p><spring:message code="label.user"/>: ${order.user.firstname} ${order.user.lastname}</p>
-            <p><spring:message code="label.login"/>: ${order.user.login}</p>
-            <p><spring:message code="label.date"/>: ${order.orderDate}</p>
-            <p><spring:message code="label.status"/>: ${order.status.name}</p>
-        </div>
+        <table align="center" width="40%">
+            <tr align="left">
+                <td width="20%"><spring:message code="label.user"/>:</td>
+                <td>${order.user.firstname} ${order.user.lastname}</td>
+            </tr>
+            <tr align="left">
+                <td width="20%"><spring:message code="label.login"/>:</td>
+                <td>${order.user.login}</td>
+            </tr>
+            <tr align="left">
+                <td width="20%"><spring:message code="label.date"/>:</td>
+                <td>${order.orderDate}</td>
+            </tr>
+            <tr align="left">
+                <td width="20%"><spring:message code="label.status"/>:</td>
+                <td>${order.status.name}</td>
+            </tr>
+            <tr align="left">
+                <td width="20%"><spring:message code="label.admin"/>:</td>
+                <td>${order.admin.firstname} ${order.admin.lastname}</td>
+            </tr>
+        </table>
+        <br/>
         <table align="center" width="40%" cellpadding="1" bgcolor="#DDDDDD" border="1">
             <tr>
                 <th align="center" width="70%"><spring:message code="label.dish"/></th>
                 <th align="center" width="10%"><spring:message code="label.amount"/></th>
                 <th align="center" width="10%"><spring:message code="label.price"/></th>
             </tr>
-            <%--<c:set var="totalPrice" value="${0}"/>--%>
             <c:forEach items="${dishMap}" var="entry">
-                <%--<c:set var="totalPrice" value="${totalPrice + entry.key.price * entry.value}"/>--%>
                 <tr>
                     <td>
                         <h3 align="left">${entry.key.name}</h3>
@@ -55,20 +70,28 @@
             </tr>
         </table>
         <div id="adminButton" align="center">
-            <c:choose>
-                <c:when test="${order.status.id == 1}">
-                    <button onclick="modifyOrderStatus('${order.id}', '2')">Accept</button>
-                </c:when>
-                <c:when test="${order.status.id == 2}">
-                    <button onclick="modifyOrderStatus('${order.id}', '3')">Pay</button>
-                </c:when>
-                <c:when test="${order.status.id == 3}">
-                    <button onclick="modifyOrderStatus('${order.id}', '4')">Close</button>
-                </c:when>
-                <c:when test="${order.status.id == 4}">
-                    <p>Order closed</p>
-                </c:when>
-            </c:choose>
+            <form action="${pageContext.request.contextPath}/order.setStatus" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="hidden" name="orderId" value="${order.id}">
+
+                <c:choose>
+                    <c:when test="${order.status.id == 1}">
+                        <input type="hidden" name="statusId" value="2">
+                        <button type="submit"><spring:message code="button.accept"/></button>
+                    </c:when>
+                    <c:when test="${order.status.id == 2}">
+                        <input type="hidden" name="statusId" value="3">
+                        <button type="submit">Pew</button>
+                    </c:when>
+                    <c:when test="${order.status.id == 3}">
+                        <input type="hidden" name="statusId" value="4">
+                        <button type="submit"><spring:message code="button.pay"/></button>
+                    </c:when>
+                    <c:when test="${order.status.id == 4}">
+                        <p align="center"><spring:message code="label.orderClosed"/></p>
+                    </c:when>
+                </c:choose>
+            </form>
         </div>
         <div align="center">
             <a href="${pageContext.request.contextPath}/order"><spring:message code="label.back"/></a>
