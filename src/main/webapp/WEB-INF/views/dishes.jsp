@@ -26,22 +26,22 @@
 
                 </div>
                 <div class="card-footer">
-                    <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
-                    <form class="input-group" id="dishForm_${dish.id}">
-                        <input type="number" min="1" value="1" class="form-control" aria-describedby="button-addon"
-                               name="pieces_${dish.id}">
-                        <div class="input-group-append">
-                            <input type="button" class="btn btn-outline-dark" id="button-addon"
-                                   onclick="addToCart('${dish.id}')"
-                                   value="<spring:message code="button.addToCart"/>">
-                        </div>
-                    </form>
+                    <sec:authorize access="hasAuthority('CUSTOMER')">
+                        <form class="input-group" id="dishForm_${dish.id}">
+                            <input type="number" min="1" value="1" class="form-control" aria-describedby="button-addon"
+                                   name="pieces_${dish.id}">
+                            <div class="input-group-append">
+                                <input type="button" class="btn btn-outline-dark" id="button-addon"
+                                       onclick="addToCart('${dish.id}')"
+                                       value="<spring:message code="button.addToCart"/>">
+                            </div>
+                        </form>
                     </sec:authorize>
                     <sec:authorize access="hasAuthority('ADMINISTRATOR')">
-                    <c:if test="${dish.deleted == false}" >
-                    <button class="btn btn-dark" onclick="deleteDish('${dish.id}')"><spring:message
-                            code="button.delete"/></button>
-                    </c:if>
+                        <c:if test="${dish.deleted == false}">
+                            <button class="btn btn-dark" onclick="deleteDish('${dish.id}')"><spring:message
+                                    code="button.delete"/></button>
+                        </c:if>
                     </sec:authorize>
                 </div>
             </div>
@@ -55,12 +55,12 @@
 
         </c:forEach>
         <sec:authorize access="hasAuthority('ADMINISTRATOR')">
-        <div class="card">
-            <div class="card-header">
-                <a href="${pageContext.request.contextPath}/dish/create" type="button"><spring:message
-                        code="button.addNew"/></a>
+            <div class="card">
+                <div class="card-header">
+                    <a href="${pageContext.request.contextPath}/dish/create" type="button"><spring:message
+                            code="button.addNew"/></a>
+                </div>
             </div>
-        </div>
         </sec:authorize>
     </div>
 </div>

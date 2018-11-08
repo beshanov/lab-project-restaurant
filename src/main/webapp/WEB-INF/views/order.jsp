@@ -45,24 +45,26 @@
                 <form action="${pageContext.request.contextPath}/order.setStatus" method="post">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input type="hidden" name="orderId" value="${order.id}">
-                    <c:choose>
-                        <c:when test="${order.status.id == 1}">
-                            <input type="hidden" name="statusId" value="2">
-                            <button class="btn-dark btn" type="submit"><spring:message
-                                    code="button.accept"/></button>
-                        </c:when>
-                        <c:when test="${order.status.id == 2}">
-                            <input type="hidden" name="statusId" value="3">
-                            <button class="btn-dark btn" type="submit">Pew</button>
-                        </c:when>
-                        <c:when test="${order.status.id == 3}">
-                            <input type="hidden" name="statusId" value="4">
-                            <button class="btn-dark btn" type="submit"><spring:message code="button.pay"/></button>
-                        </c:when>
-                        <c:when test="${order.status.id == 4}">
-                            <p align="center"><spring:message code="label.orderClosed"/></p>
-                        </c:when>
-                    </c:choose>
+                    <sec:authorize access="hasAuthority('ADMINISTRATOR')">
+                        <c:choose>
+                            <c:when test="${order.status.id == 1}">
+                                <input type="hidden" name="statusId" value="2">
+                                <button class="btn-dark btn" type="submit"><spring:message
+                                        code="button.accept"/></button>
+                            </c:when>
+                            <c:when test="${order.status.id == 2}">
+                                <input type="hidden" name="statusId" value="3">
+                                <button class="btn-dark btn" type="submit">Pew</button>
+                            </c:when>
+                            <c:when test="${order.status.id == 3}">
+                                <input type="hidden" name="statusId" value="4">
+                                <button class="btn-dark btn" type="submit"><spring:message code="button.pay"/></button>
+                            </c:when>
+                            <c:when test="${order.status.id == 4}">
+                                <p align="center"><spring:message code="label.orderClosed"/></p>
+                            </c:when>
+                        </c:choose>
+                    </sec:authorize>
                 </form>
             </div>
         </div>

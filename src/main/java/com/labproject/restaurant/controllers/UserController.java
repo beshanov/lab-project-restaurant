@@ -4,6 +4,7 @@ import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.RoleService;
 import com.labproject.restaurant.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class UserController {
     private RoleService roleService;
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ModelAndView showUsers() {
         ModelAndView mav = new ModelAndView("users");
         mav.addObject("usersList", userService.getAllUsers(true));
@@ -30,6 +32,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{userID}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public void updateUserRole(@PathVariable long userID, Long roleId, HttpServletResponse resp) {
         User user = userService.getById(userID);
         user.setRole(roleService.getById(roleId));

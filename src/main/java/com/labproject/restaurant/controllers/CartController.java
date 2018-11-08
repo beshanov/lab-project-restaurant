@@ -3,6 +3,7 @@ package com.labproject.restaurant.controllers;
 import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.services.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,17 +21,20 @@ public class CartController {
     private DishService dishService;
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public ModelAndView displayCart() {
         return new ModelAndView("cart");
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public void addDishToCart(HttpServletRequest request) {
         Map<Dish, Integer> dishMap = dishService.addToDishMap(request);
         request.getSession().setAttribute("dishMap", dishMap);
     }
 
     @RequestMapping(value = "/cart/{dishId}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public void removeDishFromCart(HttpSession session, @PathVariable long dishId) {
         Map<Dish, Integer> dishMap = dishService.deleteFromDishMap(session, dishId);
         session.setAttribute("dishMap", dishMap);

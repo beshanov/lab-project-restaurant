@@ -31,14 +31,15 @@ public class MenuController {
         return mav;
     }
 
-
     @RequestMapping(value = "/dish", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public ModelAndView addNewDish(@ModelAttribute Dish dish) {
         dishService.insert(dish);
         return new ModelAndView("redirect:/dish");
     }
 
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ModelAndView updateDish(@PathVariable long dishId, @ModelAttribute Dish dish) {
         dish.setId(dishId);
         dishService.update(dish);
@@ -46,6 +47,7 @@ public class MenuController {
     }
 
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public void deleteDish(@PathVariable long dishId) {
         Dish dish = new Dish();
         dish.setId(dishId);
