@@ -7,31 +7,26 @@
     <title><spring:message code="title.orders"/></title>
 </head>
 <body>
+<jsp:include page="navigate.jsp"/>
 <div id="contents">
     <h1 align="center"><spring:message code="label.orders"/></h1>
-    <div id="orders" align="center">
-        <table>
-            <tr>
-                <th><spring:message code="label.orderNumber"/></th>
-                <th><spring:message code="label.user"/></th>
-                <th><spring:message code="label.date"/></th>
-                <th><spring:message code="label.status"/></th>
-                <th><spring:message code="label.details"/></th>
-            </tr>
+    <div id="orders" align="center" class="container-fluid col-4">
+        <div class="list-group">
             <c:forEach items="${orderList}" var="entry">
-                <tr>
-                    <td>${entry.id}</td>
-                    <td>${entry.user.firstname} ${entry.user.lastname} (${entry.user.login})</td>
-                    <td>${entry.orderDate}</td>
-                    <td>${entry.status.name}</td>
-                    <td><a href="order/${entry.id}"><spring:message code="label.viewDetails"/></a></td>
-                </tr>
+                <a href="${pageContext.request.contextPath}/order/${entry.id}"
+                   class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1"><spring:message code="label.orderNumber"/>: ${entry.id}</h5>
+                        <small>${entry.orderDate}</small>
+                    </div>
+                    <div class="d-flex w-100 justify-content-between">
+                        <div class="mb-1"><spring:message
+                                code="label.user"/>: ${entry.user.firstname} ${entry.user.lastname} (${entry.user.login})
+                        </div>
+                        <div class="mb-1"><spring:message code="label.status"/>: ${entry.status.name}</div>
+                    </div>
+                </a>
             </c:forEach>
-        </table>
-        <br/>
-        <br/>
-        <div align="center">
-            <a href="${pageContext.request.contextPath}/dish"><spring:message code="label.menu"/></a>
         </div>
     </div>
 </div>

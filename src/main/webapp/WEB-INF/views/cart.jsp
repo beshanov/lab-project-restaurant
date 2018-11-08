@@ -11,57 +11,49 @@
     <sec:csrfMetaTags/>
 </head>
 <body>
-<div id="contents">
-    <h1 align="center"><spring:message code="label.newOrder"/></h1>
-    <div id="orderSettings">
-        <table align="center" width="40%" cellpadding="1" bgcolor="#DDDDDD" border="1">
-            <tr>
-                <th align="center" width="70%"><spring:message code="label.dish"/></th>
-                <th align="center" width="10%"><spring:message code="label.amount"/></th>
-                <th align="center" width="10%"><spring:message code="label.price"/></th>
-                <th align="center" width="10%"><spring:message code="label.action"/></th>
-            </tr>
-            <c:set var="totalPrice" value="${0}"/>
-            <spring:message code="button.remove" var="removeLabel"/>
-            <spring:message code="button.submit" var="submitLabel"/>
-            <c:forEach items="${sessionScope.dishMap}" var="entry">
-                <c:set var="totalPrice" value="${totalPrice + entry.key.price * entry.value}"/>
-                <tr>
-                    <td>
-                        <h3 align="left">${entry.key.name}</h3>
-                        <p align="left">${entry.key.description}</p>
-                    </td>
-                    <td>
-                        <p align="center">${entry.value}</p>
-                    </td>
-                    <td>
-                        <p align="center">${entry.key.price * entry.value}</p>
-                    </td>
-                    <td>
-                        <input type="button" onclick="deleteFromCart('${entry.key.id}')" value="${removeLabel}">
-                    </td>
-                </tr>
-            </c:forEach>
-        </table>
-        <table align="center" width="40%" cellpadding="1" bgcolor="#DDDDDD" border="1">
-            <tr>
-                <td>
-                    <div><p align="left"><spring:message code="label.total"/>: </p>
-                        <p align="right">${totalPrice}</p></div>
-                </td>
-            </tr>
-        </table>
-        <br/>
-        <div align="center">
-            <form action="order" method="post">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <input type="submit" value="${submitLabel}"/>
-            </form>
-        </div>
-        <br/>
-        <br/>
-        <div align="center">
-            <a href="${pageContext.request.contextPath}/dish"><spring:message code="label.menu"/></a>
+<jsp:include page="navigate.jsp"/>
+<spring:message code="button.remove" var="removeLabel"/>
+<spring:message code="button.submit" var="submitLabel"/>
+<div class="row container-fluid">
+    <div class="col-lg-2"></div>
+    <div class="d-inline-block col-lg-5">
+        <c:forEach items="${sessionScope.dishMap}" var="entry">
+            <c:set var="totalPrice" value="${totalPrice + entry.key.price * entry.value}"/>
+            <div class="card mb-2">
+                <div class="card-header">
+                        ${entry.key.name}
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                            ${entry.key.description}
+                    </p>
+                    <div class="text-right">
+                        <input type="button" class="btn btn-dark" onclick="deleteFromCart('${entry.key.id}')"
+                               value="${removeLabel}">
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <spring:message code="label.amount"/>: ${entry.value}
+                    &nbsp;&nbsp;&nbsp;
+                    <spring:message code="label.price"/>: ${entry.key.price * entry.value}
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+    <div class="d-inline-block col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">
+                <h3><spring:message code="label.newOrder"/></h3>
+            </div>
+            <div class="card-body">
+                <spring:message code="label.total"/>: ${totalPrice}
+            </div>
+            <div class="card-footer align-content-center">
+                <form action="order" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <input type="submit" class="btn-lg btn-dark" value="${submitLabel}"/>
+                </form>
+            </div>
         </div>
     </div>
 </div>

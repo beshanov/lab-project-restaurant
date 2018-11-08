@@ -5,99 +5,50 @@
 
 <html>
 <head>
-    <sec:csrfMetaTags />
+    <sec:csrfMetaTags/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><spring:message code="title.dish"/></title>
 </head>
 <body>
+<jsp:include page="navigate.jsp"/>
 <h1 align="center">${dish.name} <spring:message code="label.details"/></h1>
-<form:form id="dishForm" modelAttribute="dish" action="/dish/${dish.id}" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    <sec:authorize access="hasAuthority('ADMINISTRATOR')">
-    <table align="center">
-        <tr>
-            <td>
-                <form:label path="id" >Id </form:label>
-            </td>
-            <td>
-                <form:input path="id" disabled = "true"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="name"><spring:message code="label.name"/></form:label>
-            </td>
-            <td>
-                <form:input path="name"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="description"><spring:message code="label.description"/></form:label>
-            </td>
-            <td>
-                <form:textarea  path="description"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="price"><spring:message code="label.price"/></form:label>
-            </td>
-            <td>
-                <form:input path="price"/>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <form:button id="dish_${dish.id}" name="dish_${dish.id}">
-                    <spring:message code="button.update"/>
-                </form:button>
-            </td>
-        </tr>
-        <tr></tr>
-    </table>
-    </sec:authorize>
+<div class="container-fluid col-sm-7">
+    <form:form id="dishForm" modelAttribute="dish" action="/dish/${dish.id}" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <div class="form-group">
+            <form:label path="id">Id </form:label>
+            <form:input class="form-control" path="id" disabled="true"/>
+        </div>
+        <div class="form-group">
+            <form:label path="name"><spring:message code="label.name"/></form:label>
 
-    <sec:authorize access="hasAuthority('CUSTOMER')">
-        <table align="center">
-            <tr>
-                <td>
-                    <form:label path="name"><spring:message code="label.name"/></form:label>
-                </td>
-                <td>
-                    <form:input path="name" disabled = "true"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="description"><spring:message code="label.description"/></form:label>
-                </td>
-                <td>
-                    <form:textarea  path="description" disabled = "true"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="price"><spring:message code="label.price"/></form:label>
-                </td>
-                <td>
-                    <form:input path="price" disabled = "true"/>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-            </tr>
+            <form:input class="form-control" path="name"/>
+        </div>
+        <div class="form-group">
+            <form:label path="description"><spring:message code="label.description"/></form:label>
 
-        <tr></tr>
-        <tr>
-            <td></td>
-            <td><a href="/dish"><spring:message code="label.back"/></a></td>
-        </tr>
-    </table>
-    </sec:authorize>
-</form:form>
+            <form:textarea class="form-control" path="description"/>
+        </div>
+        <div class="form-group">
+            <form:label path="price"><spring:message code="label.price"/></form:label>
+
+            <form:input class="form-control" path="price"/>
+        </div>
+        <sec:authorize access="hasAuthority('ADMINISTRATOR')">
+        <div class="form-group">
+                    <form:label path="deleted"><spring:message code="label.deleted"/></form:label>
+                    <form:checkbox class="form-control" path="deleted"/>
+        </div>
+        <div class="form-group">
+            <form:button class="btn btn-dark" id="dish_${dish.id}" name="dish_${dish.id}">
+                <spring:message code="button.update"/>
+            </form:button>
+        </div>
+        </sec:authorize>
+
+    </form:form>
 
 </div>
+
 </body>
 </html>

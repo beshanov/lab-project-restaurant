@@ -8,6 +8,7 @@
         <title><spring:message code="title.profile"/></title>
     </head>
     <body>
+    <jsp:include page="navigate.jsp"/>
     <a href="profile?lang=en">English</a> | <a href="profile?lang=ru">Russian</a>
     <h1 align="center"><spring:message code="label.settings"/></h1>
         <form:form id="settingsForm" modelAttribute="user" action="profile" method="post">
