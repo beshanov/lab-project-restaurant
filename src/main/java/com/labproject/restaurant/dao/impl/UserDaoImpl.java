@@ -54,6 +54,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void updateUserRole(User user) {
+        String query = "UPDATE USER SET ROLE_ID = ? WHERE ID = ?";
+        jdbcTemplate.update(query, user.getRole().getId(), user.getId());
+    }
+
+    @Override
     public void insert(User user) {
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("LASTNAME", user.getLastname())
@@ -65,10 +71,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void update(User user) {
-        String query = "UPDATE USER SET LASTNAME = ?, FIRSTNAME = ?, LOGIN = ?, `PASSWORD` = ?, ROLE_ID = ? WHERE ID = ?";
-        jdbcTemplate.update(query, user.getLastname(), user.getFirstname(), user.getLogin(), user.getPassword(),
-                user.getRole().getId(), user.getId());
+    public void updateWithoutPasswordAndRole(User user) {
+        String query = "UPDATE USER SET LASTNAME = ?, FIRSTNAME = ?, LOGIN = ? WHERE ID = ?";
+        jdbcTemplate.update(query, user.getLastname(), user.getFirstname(), user.getLogin(), user.getId());
     }
 
     @Override

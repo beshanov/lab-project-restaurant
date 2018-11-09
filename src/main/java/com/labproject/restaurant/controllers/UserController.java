@@ -29,11 +29,9 @@ public class UserController {
         return mav;
     }
 
-    @RequestMapping(value = "/user/{userID}", method = RequestMethod.POST)
-    public void updateUserRole(@PathVariable long userID, Long roleId, HttpServletResponse resp) {
-        User user = userService.getById(userID);
-        user.setRole(roleService.getById(roleId));
-        userService.update(user);
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.POST)
+    public void updateUserRole(@PathVariable long userId, Long roleId, HttpServletResponse resp) {
+        userService.updateUserRole(userId, roleId);
         resp.setStatus(HttpServletResponse.SC_ACCEPTED);
     }
 }

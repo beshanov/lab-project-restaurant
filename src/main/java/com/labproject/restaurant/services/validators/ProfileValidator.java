@@ -24,15 +24,14 @@ public class ProfileValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstname", "firstname.empty", "Firstname field emty or has whitespaces");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastname", "lastname.empty", "Lastname field emty or has whitespaces");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "login.empty", "Login field emty or has whitespaces");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.empty", "Password field emty or has whitespaces");
 
         User user = (User) target;
-        User userFromDB = userService.getById(user.getId());
+        User loggedUser = userService.getLoggedUser();
+        user.setRole(loggedUser.getRole());
 
-        if (!user.getLogin().equals(userFromDB.getLogin())) {
+        if (!user.getLogin().equals(loggedUser.getLogin())) {
             if (userService.getByLogin(user.getLogin()).getId() != 0) {
-                errors.rejectValue("login", "login.alreadyExist",
-                        "This login already exists!");
+                errors.rejectValue("login", "login.alreadyExist");
             }
         }
 
@@ -49,11 +48,6 @@ public class ProfileValidator implements Validator {
         if (!user.getLogin().matches("[\\w\\d]{3,10}")) {
             errors.rejectValue("login", "login.failPattern",
                     "Login has wrong format!");
-        }
-
-        if (!user.getPassword().matches("[\\w\\d]{3,8}")) {
-            errors.rejectValue("password", "password.failPattern",
-                    "Password has wrong format!");
         }
     }
 }

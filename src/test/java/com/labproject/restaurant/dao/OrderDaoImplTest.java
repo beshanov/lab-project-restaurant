@@ -85,7 +85,7 @@ public class OrderDaoImplTest {
     public void testUpdate() throws SQLException {
         Order order = generateNewOrder();
 
-        orderDao.update(order);
+        orderDao.updateWithoutPasswordAndRole(order);
 
         verify(mockedDataSource).getConnection();
         verify(mockedConnection).prepareStatement(argThat(new StartsWith("UPDATE")));

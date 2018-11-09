@@ -12,9 +12,11 @@ public interface UserDao {
 
     void insert(User user);
 
-    void update(User user);
+    void updateWithoutPasswordAndRole(User user);
 
     void delete(User user);
 
     List<User> getAllUsers(boolean full);
+
+    void updateUserRole(User user);
 }

@@ -2,9 +2,13 @@ package com.labproject.restaurant.services.impl;
 
 import com.labproject.restaurant.dao.RoleDao;
 import com.labproject.restaurant.dao.UserDao;
+import com.labproject.restaurant.entities.Role;
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,11 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
-
+    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
     @Autowired
     private PasswordEncoder encoder;
 
@@ -41,8 +46,36 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void update(User user) {
-        userDao.update(user);
+    public void updateWithoutPasswordAndRole(User user) {
+        User loggedUser = getLoggedUser();
+        user.setId(loggedUser.getId());
+        if(!loggedUser.getLogin().equals(user.getLogin())){
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof User) {
+                ((User) principal).setLogin(user.getLogin());
+                userDao.updateWithoutPasswordAndRole(user);
+            }
+        }
+    }
+
+    @Override
+    public void updateUserRole(long userId, long roleId) {
+        if (userId < 1 || roleId < 1) {
+            LOGGER.error("Wrong userId or roleId");
+            return;
+        }
+        User user = getById(userId);
+        if (user.getId() == 0) {
+            LOGGER.error("No such user");
+            return;
+        }
+        Role role = roleDao.getById(roleId);
+        if (role.getId() == 0) {
+            LOGGER.error("No such role");
+            return;
+        }
+        user.setRole(role);
+        userDao.updateUserRole(user);
     }
 
     @Override
@@ -63,6 +96,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> getAllUsers(boolean full) {
         return userDao.getAllUsers(full);
+    }
+
+    @Override
+    public boolean checkIfValidOldPassword(User loggedUser, String oldPassword) {
+        return loggedUser.getPassword().equals(encoder.encode(oldPassword));
     }
 
     @Override
