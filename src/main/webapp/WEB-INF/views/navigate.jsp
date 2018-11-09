@@ -41,6 +41,18 @@
                 </li>
             </sec:authorize>
         </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Language
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="?lang=en">English</a>
+                    <a class="dropdown-item" href="?lang=ru">Русский</a>
+                </div>
+            </li>
+        </ul>
         <sec:authorize access="isAuthenticated()">
             <ul class="navbar-nav ml-auto">
                 <li>
