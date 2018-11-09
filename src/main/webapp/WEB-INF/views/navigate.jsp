@@ -2,6 +2,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.js" type="text/javascript"></script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavBar"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,13 +44,15 @@
         <sec:authorize access="isAuthenticated()">
             <ul class="navbar-nav ml-auto">
                 <li>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <a class="nav-link" href="javascript:logout()"><spring:message code="label.logout"/></a>
+                    <form action="${pageContext.request.contextPath}/logout" method="post" id="logoutForm"
+                          style="display: none">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                    <a class="nav-link" href="#" onclick="document.getElementById('logoutForm').submit()">
+                        <spring:message code="label.logout"/>
+                    </a>
                 </li>
             </ul>
         </sec:authorize>
     </div>
 </nav>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/resources/js/logout.js" type="text/javascript"></script>

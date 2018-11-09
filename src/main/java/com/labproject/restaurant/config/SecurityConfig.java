@@ -34,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("login")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/dish")
-                .and().exceptionHandling().accessDeniedPage("/profile")
-                .and().logout().logoutSuccessUrl("/login?logout")
+                .and().exceptionHandling().accessDeniedPage("/login")
+                .and().logout().logoutSuccessUrl("/login").invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .and().rememberMe().key("uniqueAndSecret")
                 .and().csrf();
     }
