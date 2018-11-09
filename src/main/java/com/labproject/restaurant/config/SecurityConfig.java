@@ -29,11 +29,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profile", "/order").authenticated()
                 .antMatchers("/dish/**", "/register", "/cart").permitAll()
                 .antMatchers("/user").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/login").not().authenticated()
                 .and().formLogin().loginPage("/login")
                 .usernameParameter("login")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/dish")
-                .and().logout().logoutSuccessUrl("/login?logout")
+                .and().exceptionHandling().accessDeniedPage("/login")
+                .and().logout().logoutSuccessUrl("/login").invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .and().rememberMe().key("uniqueAndSecret")
                 .and().csrf();
     }
