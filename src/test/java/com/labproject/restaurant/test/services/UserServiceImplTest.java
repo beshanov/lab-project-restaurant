@@ -35,10 +35,10 @@
 //    }
 //
 //    @Test
-//    public void updateWithoutPasswordAndRole() {
+//    public void updateDetails() {
 //        User user = new User();
-//        userService.updateWithoutPasswordAndRole(user);
-//        verify(mockUserDao).updateWithoutPasswordAndRole(user);
+//        userService.updateDetails(user);
+//        verify(mockUserDao).updateDetails(user);
 //    }
 //    @Test
 //    public void delete() {

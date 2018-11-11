@@ -79,7 +79,7 @@ public class OrderServiceImplTest {
     public void testSetOrder() {
         orderService.setOrder(mockedOrder);
 
-        verify(mockedOrderDao).updateWithoutPasswordAndRole(mockedOrder);
+        verify(mockedOrderDao).updateDetails(mockedOrder);
     }
 
     @Test

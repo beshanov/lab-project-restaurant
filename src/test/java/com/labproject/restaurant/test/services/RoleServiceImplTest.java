@@ -38,8 +38,8 @@
 //    @Test
 //    public void testUpdate() {
 //        Role role = new Role();
-//        roleService.updateWithoutPasswordAndRole(role);
-//        verify(mockRoleDao).updateWithoutPasswordAndRole(role);
+//        roleService.updateDetails(role);
+//        verify(mockRoleDao).updateDetails(role);
 //    }
 //
 //    @Test

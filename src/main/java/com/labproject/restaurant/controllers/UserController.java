@@ -1,6 +1,5 @@
 package com.labproject.restaurant.controllers;
 
-import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.RoleService;
 import com.labproject.restaurant.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.POST)
     public void updateUserRole(@PathVariable long userId, Long roleId, HttpServletResponse resp) {
-        userService.updateUserRole(userId, roleId);
+        userService.updateRole(userId, roleId);
         resp.setStatus(HttpServletResponse.SC_ACCEPTED);
     }
 }

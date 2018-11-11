@@ -56,7 +56,7 @@ public class RoleDaoImplTest {
 
     @Test
     public void testUpdate() throws SQLException {
-        roleDao.updateWithoutPasswordAndRole(getNewRole());
+        roleDao.updateDetails(getNewRole());
         verify(mockDataSource).getConnection();
         verify(mockPreparedStatement).setLong(anyInt(), eq(id));
         verify(mockPreparedStatement).setString(anyInt(), eq(name));

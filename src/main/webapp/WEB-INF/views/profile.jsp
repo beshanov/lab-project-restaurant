@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <title><spring:message code="title.profile"/></title>
     <sec:csrfMetaTags/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/changePassword.js"></script>
 </head>
 <body>
 <jsp:include page="navigate.jsp"/>
@@ -41,10 +42,12 @@
         <div class="form-group row">
             <form:errors path="lastname" class="alert alert-danger"/>
         </div>
-        <div class="form-group row">
-            <label class="col-4 col-form-label"><spring:message code="label.role"/></label>
-            <input class="form-control col-8" readonly="true" value="${user.role.name}"/>
-        </div>
+        <sec:authorize access="hasAuthority('ADMINISTRATOR')">
+            <div class="form-group row">
+                <label class="col-4 col-form-label"><spring:message code="label.role"/></label>
+                <input class="form-control col-8" readonly="true" value="${user.role.name}"/>
+            </div>
+        </sec:authorize>
         <div class="form-group">
             <form:button class="btn btn-primary" id="apply" type="submit"><spring:message
                     code="button.apply"/></form:button>
@@ -52,13 +55,18 @@
                 <spring:message code="button.change"/>
             </button>
         </div>
+        <div class="form-group">
+            <div id="success" class="alert alert-success col-12" style="display:none">
+                <strong><spring:message code="alert.success"/></strong>
+            </div>
+        </div>
     </form:form>
 </div>
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="profile/updatePassword" method="post">
+            <form>
                 <div class="modal-header">
                     <h4 class="modal-title">
                         <spring:message code="button.change"/>
@@ -69,27 +77,29 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <div id="errormsg" class="alert alert-danger" style="display:none"></div>
                     <div class="form-group">
                         <label class="col-form-label">
                             <spring:message code="label.oldpassword"/>
-                            </label>
-                            <input type="password" class="form-control" name="oldpassword" pattern="[\w\d]{3,10}" required="required"/>
+                        </label>
+                        <input id="oldPassword" name="oldPassword" type="password" class="form-control" pattern="[\w\d]{3,10}" required="required"/>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label"><spring:message code="label.newpassword"/></label>
-                            <input type="password" class="form-control" name="password" pattern="[\w\d]{3,10}" required="required"/>
+                        <input id="newPassword" name="newPassword" type="password" class="form-control" pattern="[\w\d]{3,10}" required="required"/>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label"><spring:message code="label.confirm"/></label>
-                            <input type="password" class="form-control" id="confirm" pattern="[\w\d]{3,10}" required="required"/>
+                        <input id="matchPassword" type="password" class="form-control" pattern="[\w\d]{3,10}" required="required"/>
                     </div>
                     <div class="alert alert-danger" id="error" style="display:none">
-                        <strong>Password mismatch!</strong>
+                        <strong ><spring:message code="error.mismatch"/></strong>
+                    </div>
+                    <div class="alert alert-danger" id="wrong" style="display:none">
+                        <strong ><spring:message code="error.wrong"/></strong>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-dark" onclick="changePassword()">
+                    <button type="button" class="btn btn-dark" onclick="changePassword()">
                         <spring:message code="button.apply"/>
                     </button>
                 </div>

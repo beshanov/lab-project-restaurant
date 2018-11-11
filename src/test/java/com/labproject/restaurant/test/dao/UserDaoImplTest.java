@@ -75,7 +75,7 @@ public class UserDaoImplTest {
 
     @Test
     public void testUpdate() throws SQLException {
-        userDao.updateWithoutPasswordAndRole(getNewUser());
+        userDao.updateDetails(getNewUser());
         verify(mockDataSource).getConnection();
         verify(mockPreparedStatement).setString(anyInt(), eq(login));
         verify(mockPreparedStatement).setString(anyInt(), eq(firstname));
