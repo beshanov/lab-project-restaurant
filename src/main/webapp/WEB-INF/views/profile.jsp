@@ -66,7 +66,6 @@
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form>
                 <div class="modal-header">
                     <h4 class="modal-title">
                         <spring:message code="button.change"/>
@@ -81,21 +80,24 @@
                         <label class="col-form-label">
                             <spring:message code="label.oldpassword"/>
                         </label>
-                        <input id="oldPassword" name="oldPassword" type="password" class="form-control" pattern="[\w\d]{3,10}" required="required"/>
+                        <input id="oldPassword" name="oldPassword" type="password" class="form-control"
+                               pattern="[\w\d]{3,10}" required="required"/>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label"><spring:message code="label.newpassword"/></label>
-                        <input id="newPassword" name="newPassword" type="password" class="form-control" pattern="[\w\d]{3,10}" required="required"/>
+                        <input id="newPassword" name="newPassword" type="password" class="form-control"
+                               pattern="[\w\d]{3,10}" required="required"/>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label"><spring:message code="label.confirm"/></label>
-                        <input id="matchPassword" type="password" class="form-control" pattern="[\w\d]{3,10}" required="required"/>
+                        <input id="matchPassword" type="password" class="form-control" pattern="[\w\d]{3,10}"
+                               required="required"/>
+                    </div>
+                    <div class="alert alert-danger" id="mismatch" style="display:none">
+                        <strong><spring:message code="error.mismatch"/></strong>
                     </div>
                     <div class="alert alert-danger" id="error" style="display:none">
-                        <strong ><spring:message code="error.mismatch"/></strong>
-                    </div>
-                    <div class="alert alert-danger" id="wrong" style="display:none">
-                        <strong ><spring:message code="error.wrong"/></strong>
+                        <strong><spring:message code="error.wrong"/></strong>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -103,7 +105,6 @@
                         <spring:message code="button.apply"/>
                     </button>
                 </div>
-            </form>
         </div>
     </div>
 </div>
