@@ -15,7 +15,7 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/dish"> <spring:message
                         code="title.dishes"/></a>
             </li>
-            <sec:authorize access="hasAuthority('CUSTOMER')">
+            <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/cart"> <spring:message
                             code="title.cart"/></a>

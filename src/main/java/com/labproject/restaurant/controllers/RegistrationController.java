@@ -4,6 +4,7 @@ import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.AccountService;
 import com.labproject.restaurant.services.validators.UserRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +20,7 @@ public class RegistrationController {
     private UserRegistrationValidator userValidator;
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @PreAuthorize("!isAuthenticated()")
     public ModelAndView showRegister() {
         ModelAndView mav = new ModelAndView("register");
         mav.addObject("user", new User());
@@ -26,6 +28,7 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PreAuthorize("!isAuthenticated()")
     public ModelAndView addUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {

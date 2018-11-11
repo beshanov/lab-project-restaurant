@@ -55,10 +55,18 @@ public class OrderController {
         return "redirect:/order";
     }
 
+    @RequestMapping(value = "/order/{orderId}/pay", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public String payOrder(@PathVariable long orderId) {
+        orderService.setOrderStatus(orderId, 4);
+        return "redirect:/order/";
+    }
+
     @PostMapping(value = "/order.setStatus")
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public String setStatus(@RequestParam(name = "orderId", defaultValue = "0") long orderId,
                             @RequestParam(name = "statusId", defaultValue = "0") long statusId) {
+        if(statusId == 4) return "redirect:/order/" + orderId + "/pay";
         orderService.setOrderStatus(orderId, statusId);
         return "redirect:/order/" + orderId;
     }

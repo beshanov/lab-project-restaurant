@@ -6,6 +6,7 @@ import com.labproject.restaurant.services.UserService;
 import com.labproject.restaurant.services.validators.ProfileValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +30,7 @@ public class ProfileController {
     private ProfileValidator profileValidator;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView showSettings(HttpSession session) {
 
         ModelAndView mav = new ModelAndView("profile");
@@ -38,6 +40,7 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView updateUser(HttpSession session, @ModelAttribute("user") User user,
                                    BindingResult bindingResult) {
 

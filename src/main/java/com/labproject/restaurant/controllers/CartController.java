@@ -21,20 +21,20 @@ public class CartController {
     private DishService dishService;
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @PreAuthorize("!hasAuthority('ADMINISTRATOR')")
     public ModelAndView displayCart() {
         return new ModelAndView("cart");
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @PreAuthorize("!hasAuthority('ADMINISTRATOR')")
     public void addDishToCart(HttpServletRequest request) {
         Map<Dish, Integer> dishMap = dishService.addToDishMap(request);
         request.getSession().setAttribute("dishMap", dishMap);
     }
 
     @RequestMapping(value = "/cart/{dishId}", method = RequestMethod.DELETE)
-    @PreAuthorize("hasAuthority('CUSTOMER')")
+    @PreAuthorize("!hasAuthority('ADMINISTRATOR')")
     public void removeDishFromCart(HttpSession session, @PathVariable long dishId) {
         Map<Dish, Integer> dishMap = dishService.deleteFromDishMap(session, dishId);
         session.setAttribute("dishMap", dishMap);

@@ -28,18 +28,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/profile", "/order").authenticated()
-                .antMatchers("/dish/**", "/register", "/cart").permitAll()
-                .antMatchers("/user").hasAuthority("ADMINISTRATOR")
                 .antMatchers("/login").not().authenticated()
                 .and().formLogin().loginPage("/login")
                 .usernameParameter("login")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/dish")
                 .and().exceptionHandling().accessDeniedPage("/login")
+                .and().exceptionHandling().accessDeniedPage("/accessDenied")
                 .and().logout().logoutSuccessUrl("/login").invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .and().rememberMe().key("uniqueAndSecret")
-                .and().exceptionHandling().accessDeniedPage("/accessDenied")
                 .and().csrf();
     }
 
