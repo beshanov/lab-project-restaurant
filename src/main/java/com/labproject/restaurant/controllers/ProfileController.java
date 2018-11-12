@@ -1,20 +1,19 @@
 package com.labproject.restaurant.controllers;
 
 import com.labproject.restaurant.entities.User;
-import com.labproject.restaurant.services.RoleService;
 import com.labproject.restaurant.services.UserService;
 import com.labproject.restaurant.services.validators.ProfileValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class ProfileController {
@@ -24,15 +23,11 @@ public class ProfileController {
     private UserService userService;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
     private ProfileValidator profileValidator;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView showSettings(HttpSession session) {
-
+    public ModelAndView showSettings() {
         ModelAndView mav = new ModelAndView("profile");
         User loggedUser = userService.getLoggedUser();
         mav.addObject("user", loggedUser);
@@ -41,17 +36,27 @@ public class ProfileController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView updateUser(HttpSession session, @ModelAttribute("user") User user,
+    public ModelAndView updateUser(@ModelAttribute("user") User user,
                                    BindingResult bindingResult) {
-
-        User loggedUser = userService.getLoggedUser();
         profileValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("profile");
+            ModelAndView mav = new ModelAndView("profile");
+            mav.addObject("user", user);
+            return mav;
         }
-
-        userService.update(user);
-        session.setAttribute("user", user);
+        userService.updateDetails(user);
         return new ModelAndView("redirect:/profile");
+    }
+
+    @RequestMapping(value = "/profile/updatePassword", method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<String> updatePassword(@RequestParam("oldPassword") String oldPassword,
+                                                 @RequestParam("newPassword") String newPassword) {
+        User loggedUser = userService.getLoggedUser();
+        if (!userService.isValidOldPasssword(loggedUser, oldPassword)) {
+            return ResponseEntity.badRequest().body("");
+        }
+        userService.updatePassword(loggedUser, newPassword);
+        return ResponseEntity.ok().body("");
     }
 }

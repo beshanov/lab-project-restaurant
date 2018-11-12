@@ -2,11 +2,15 @@ package com.labproject.restaurant.services.impl;
 
 import com.labproject.restaurant.dao.RoleDao;
 import com.labproject.restaurant.dao.UserDao;
+import com.labproject.restaurant.entities.Role;
 import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +23,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
-
+    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
     @Autowired
     private PasswordEncoder encoder;
 
@@ -41,8 +45,50 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void update(User user) {
-        userDao.update(user);
+    public void updateDetails(User user) {
+        User loggedUser = getLoggedUser();
+        user.setId(loggedUser.getId());
+        if (!loggedUser.getLogin().equals(user.getLogin())) {
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            UserDetails oldUserDetails = (UserDetails) securityContext.getAuthentication().getPrincipal();
+            UserDetails newUserDetails = new org.springframework.security.core.userdetails.User(
+                    user.getLogin(),
+                    loggedUser.getPassword(),
+                    oldUserDetails.isEnabled(),
+                    oldUserDetails.isAccountNonExpired(),
+                    oldUserDetails.isCredentialsNonExpired(),
+                    oldUserDetails.isAccountNonLocked(),
+                    oldUserDetails.getAuthorities());
+            securityContext.setAuthentication(new UsernamePasswordAuthenticationToken(newUserDetails,
+                    securityContext.getAuthentication().getCredentials(), oldUserDetails.getAuthorities()));
+        }
+        userDao.updateDetails(user);
+    }
+
+    @Override
+    public void updateRole(long userId, long roleId) {
+        if (userId < 1 || roleId < 1) {
+            LOGGER.error("Wrong userId or roleId");
+            return;
+        }
+        User user = getById(userId);
+        if (user.getId() == 0) {
+            LOGGER.error("No such user");
+            return;
+        }
+        Role role = roleDao.getById(roleId);
+        if (role.getId() == 0) {
+            LOGGER.error("No such role");
+            return;
+        }
+        user.setRole(role);
+        userDao.updateRole(user);
+    }
+
+    @Override
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(encoder.encode(newPassword));
+        userDao.updatePassword(user);
     }
 
     @Override
@@ -66,6 +112,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public boolean isValidOldPasssword(User loggedUser, String oldPassword) {
+        return encoder.matches(oldPassword, loggedUser.getPassword());
+    }
+
+    @Override
     public boolean isLoginExist(String login) {
         return userDao.getByLogin(login).getId() != 0;
     }
@@ -83,7 +134,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             List<GrantedAuthority> authorities = new ArrayList<>();
             String roleName = roleDao.getById(user.getRole().getId()).getName();
             authorities.add(new SimpleGrantedAuthority(roleName));
-            return new org.springframework.security.core.userdetails.User(user.getLogin(),
+            return new org.springframework.security.core.userdetails.User(
+                    user.getLogin(),
                     user.getPassword(),
                     enabled,
                     accountNonExpired,

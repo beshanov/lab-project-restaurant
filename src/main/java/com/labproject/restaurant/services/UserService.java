@@ -11,7 +11,11 @@ public interface UserService extends UserDetailsService {
 
     void insert(User user);
 
-    void update(User user);
+    void updateDetails(User user);
+
+    void updateRole(long userId, long roleId);
+
+    void updatePassword(User user, String newPassword);
 
     void delete(User user);
 
@@ -24,4 +28,6 @@ public interface UserService extends UserDetailsService {
     List<User> getAllUsers();
 
     List<User> getAllUsers(boolean full);
+
+    boolean isValidOldPasssword(User loggedUser, String oldPassword);
 }

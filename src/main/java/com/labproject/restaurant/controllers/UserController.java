@@ -1,6 +1,5 @@
 package com.labproject.restaurant.controllers;
 
-import com.labproject.restaurant.entities.User;
 import com.labproject.restaurant.services.RoleService;
 import com.labproject.restaurant.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,10 @@ public class UserController {
         return mav;
     }
 
-    @RequestMapping(value = "/user/{userID}", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public void updateUserRole(@PathVariable long userID, Long roleId, HttpServletResponse resp) {
-        User user = userService.getById(userID);
-        user.setRole(roleService.getById(roleId));
-        userService.update(user);
+    public void updateUserRole(@PathVariable long userId, Long roleId, HttpServletResponse resp) {
+        userService.updateRole(userId, roleId);
         resp.setStatus(HttpServletResponse.SC_ACCEPTED);
     }
 
