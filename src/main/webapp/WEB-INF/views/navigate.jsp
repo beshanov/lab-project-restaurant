@@ -12,32 +12,41 @@
     <div class="collapse navbar-collapse" id="mainNavBar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/dish"> <spring:message code="title.dishes"/></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/dish"> <spring:message
+                        code="title.dishes"/></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/cart"> <spring:message code="title.cart"/></a>
-            </li>
+            <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/cart"> <spring:message
+                            code="title.cart"/></a>
+                </li>
+            </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                 <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/order"> <spring:message code="title.orders"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/order"> <spring:message
+                            code="title.orders"/></a>
                 </li>
             </sec:authorize>
             <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                 <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/user"> <spring:message code="title.users"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user"> <spring:message
+                            code="title.users"/></a>
                 </li>
             </sec:authorize>
             <sec:authorize access="!isAuthenticated()">
                 <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/register"> <spring:message code="title.register"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/register"> <spring:message
+                            code="title.register"/></a>
                 </li>
                 <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/login"> <spring:message code="title.login"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/login"> <spring:message
+                            code="title.login"/></a>
                 </li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                 <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/profile"> <spring:message code="title.profile"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/profile"> <spring:message
+                            code="title.profile"/></a>
                 </li>
             </sec:authorize>
         </ul>

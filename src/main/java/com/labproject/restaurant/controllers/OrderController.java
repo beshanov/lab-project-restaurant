@@ -4,6 +4,7 @@ import com.labproject.restaurant.entities.Dish;
 import com.labproject.restaurant.services.DishService;
 import com.labproject.restaurant.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +22,7 @@ public class OrderController {
     private DishService dishService;
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView getAllOrders() {
         ModelAndView mav = new ModelAndView("orders");
         mav.addObject("orderList", orderService.getOrdersByUser());
@@ -28,6 +30,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView getOrder(@PathVariable long orderId) {
         ModelAndView mav = new ModelAndView("order");
         mav.addObject("order", orderService.getOrderById(orderId));
@@ -36,6 +39,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
     public String createNewOrder(HttpSession session) {
         if (session.getAttribute("dishMap") != null) {
             orderService.createOrderWithDishes((Map<Dish, Integer>) session.getAttribute("dishMap"));
@@ -45,14 +49,24 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public String deleteOrder(@PathVariable long orderId) {
         orderService.deleteOrderById(orderId);
         return "redirect:/order";
     }
 
+    @RequestMapping(value = "/order/{orderId}/pay", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('CUSTOMER')")
+    public String payOrder(@PathVariable long orderId) {
+        orderService.setOrderStatus(orderId, 4);
+        return "redirect:/order/";
+    }
+
     @PostMapping(value = "/order.setStatus")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public String setStatus(@RequestParam(name = "orderId", defaultValue = "0") long orderId,
                             @RequestParam(name = "statusId", defaultValue = "0") long statusId) {
+        if(statusId == 4) return "redirect:/order/" + orderId + "/pay";
         orderService.setOrderStatus(orderId, statusId);
         return "redirect:/order/" + orderId;
     }

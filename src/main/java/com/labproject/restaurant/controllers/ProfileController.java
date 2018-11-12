@@ -6,6 +6,7 @@ import com.labproject.restaurant.services.validators.ProfileValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +26,7 @@ public class ProfileController {
     private ProfileValidator profileValidator;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView showSettings() {
         ModelAndView mav = new ModelAndView("profile");
         User loggedUser = userService.getLoggedUser();
@@ -33,6 +35,7 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView updateUser(@ModelAttribute("user") User user,
                                    BindingResult bindingResult) {
         profileValidator.validate(user, bindingResult);
@@ -46,6 +49,7 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/profile/updatePassword", method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> updatePassword(@RequestParam("oldPassword") String oldPassword,
                                                  @RequestParam("newPassword") String newPassword) {
         User loggedUser = userService.getLoggedUser();
