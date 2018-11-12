@@ -1,5 +1,5 @@
-/*
 package com.labproject.restaurant.dao;
+
 
 import com.labproject.restaurant.dao.impl.OrderDaoImpl;
 import com.labproject.restaurant.entities.Order;
@@ -7,113 +7,80 @@ import com.labproject.restaurant.entities.OrderStatus;
 import com.labproject.restaurant.entities.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.internal.matchers.StartsWith;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-import javax.sql.DataSource;
-import java.sql.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.*;
-
+@RunWith(MockitoJUnitRunner.class)
 public class OrderDaoImplTest {
-    private OrderDaoImpl orderDao;
-    private DataSource mockedDataSource;
-    private Connection mockedConnection;
-    private PreparedStatement mockedPreparedStatement;
-    private ResultSet mockedResultSet;
+
+    @Mock
+    private JdbcTemplate mockJdbcTemplate;
+    @Mock
+    private SimpleJdbcInsert mockSimpleJdbcInsert;
+    @InjectMocks
+    OrderDaoImpl orderDao;
+
 
     @Before
-    public void setUp() throws Exception {
-        mockedDataSource = mock(DataSource.class);
-        mockedConnection = mock(Connection.class);
-        mockedPreparedStatement = mock(PreparedStatement.class);
-        mockedResultSet = mock(ResultSet.class);
-
-        when(mockedDataSource.getConnection()).thenReturn(mockedConnection);
-        when(mockedConnection.prepareStatement(anyString())).thenReturn(mockedPreparedStatement);
-        when(mockedPreparedStatement.executeQuery()).thenReturn(mockedResultSet);
-        when(mockedResultSet.next()).thenReturn(true).thenReturn(false);
-        when(mockedResultSet.getLong(anyString())).thenReturn(5L);
-        when(mockedResultSet.getString(anyString())).thenReturn("");
-        when(mockedResultSet.getTimestamp(anyString())).thenReturn(new Timestamp(10L));
-
-        orderDao = new OrderDaoImpl();
-        orderDao.setDataSource(mockedDataSource);
+    public void setUp() {
+        when(mockSimpleJdbcInsert.executeAndReturnKey(any(SqlParameterSource.class))).thenReturn(new Long(1));
     }
 
     @Test
-    public void testGetById() throws SQLException {
-        long id = 1;
-
-        orderDao.getById(id);
-
-        verify(mockedDataSource).getConnection();
-        verify(mockedPreparedStatement).setLong(anyInt(), eq(id));
-        verify(mockedConnection).prepareStatement(argThat(new StartsWith("SELECT")));
-        verify(mockedResultSet).getTimestamp("ORDERDATE");
-        verify(mockedResultSet).getLong("USERID");
-        verify(mockedResultSet).getLong("STATUSID");
-    }
-
-    @Test
-    public void testInsert() throws SQLException {
-        Order order = generateNewOrder();
-
+    public void testInsert() {
+        Order order = new Order();
+        order.setUser(new User());
+        order.setStatus(new OrderStatus());
         orderDao.insert(order);
-
-        verify(mockedDataSource).getConnection();
-        verify(mockedConnection).prepareStatement(argThat(new StartsWith("INSERT")));
-        verify(mockedPreparedStatement).setTimestamp(anyInt(), eq(order.getOrderDate()));
-        verify(mockedPreparedStatement, times(2)).setLong(anyInt(), anyLong());
+        verify(mockSimpleJdbcInsert).executeAndReturnKey(any(SqlParameterSource.class));
     }
 
     @Test
-    public void testGetAll() throws SQLException {
-        orderDao.getAll();
-
-        verify(mockedDataSource).getConnection();
-        verify(mockedConnection).prepareStatement(argThat(new StartsWith("SELECT")));
-        verify(mockedResultSet).getTimestamp("ORDERDATE");
-        verify(mockedResultSet, times(3)).getLong(anyString());
-    }
-
-    @Test
-    public void testUpdate() throws SQLException {
-        Order order = generateNewOrder();
-
-        orderDao.updateDetails(order);
-
-        verify(mockedDataSource).getConnection();
-        verify(mockedConnection).prepareStatement(argThat(new StartsWith("UPDATE")));
-        verify(mockedPreparedStatement).setTimestamp(anyInt(), eq(order.getOrderDate()));
-        verify(mockedPreparedStatement, times(3)).setLong(anyInt(), anyLong());
-    }
-
-    @Test
-    public void testDeleteById() throws SQLException {
+    public void testGetById() {
         long id = 1;
+        orderDao.getById(id);
+        verify(mockJdbcTemplate).query(argThat(new StartsWith("SELECT")), any(RowMapper.class), eq(id));
+    }
 
+    @Test
+    public void testGetAll() {
+        orderDao.getAll();
+        verify(mockJdbcTemplate).query(argThat(new StartsWith("SELECT")), any(RowMapper.class));
+
+    }
+
+    public void testGetAllByUserId() {
+        long id = 1;
+        orderDao.getAllByUserId(id);
+        verify(mockJdbcTemplate).query(argThat(new StartsWith("SELECT")), any(RowMapper.class), eq(id));
+    }
+
+    @Test
+    public void testUpdate() {
+        Order order = new Order();
+        order.setUser(new User());
+        order.setStatus(new OrderStatus());
+        order.setAdmin(new User());
+        orderDao.update(order);
+        verify(mockJdbcTemplate).update(argThat(new StartsWith("UPDATE")), Matchers.<Object>anyVararg());
+    }
+
+    @Test
+    public void testDeleteById() {
+        long id = 1;
         orderDao.deleteById(id);
-
-        verify(mockedDataSource).getConnection();
-        verify(mockedConnection).prepareStatement(argThat(new StartsWith("DELETE")));
-        verify(mockedPreparedStatement).setLong(anyInt(), eq(id));
+        verify(mockJdbcTemplate).update(argThat(new StartsWith("DELETE")), eq(id));
     }
-
-    private Order generateNewOrder() {
-        Order result = new Order();
-
-        result.setId(5L);
-        result.setOrderDate(new Timestamp(10L));
-        result.setUser(new User());
-        result.getUser().setId(10L);
-        result.setStatus(new OrderStatus());
-        result.getStatus().setId(10L);
-
-        return result;
-    }
-}*/
+}
