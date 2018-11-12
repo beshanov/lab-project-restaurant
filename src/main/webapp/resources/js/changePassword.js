@@ -1,10 +1,15 @@
 function changePassword() {
-    var pass = $("#newPassword").val();
-    var valid = pass == $("#matchPassword").val();
     $("#error").hide();
     $("#mismatch").hide();
+    $("#wrongFormat").hide();
+    var pass = $("#newPassword").val();
+    var valid = pass == $("#matchPassword").val();
     if (!valid) {
         $("#mismatch").show();
+        return;
+    }
+    if(!/^[\w\d]{3,10}$/.test(pass)){
+        $("#wrongFormat").show();
         return;
     }
     $.ajax({
@@ -22,7 +27,12 @@ function changePassword() {
         success: function () {
             $("#myModal").modal('hide');
             $("#success").show();
+            $("#oldPassword").val('');
+            $("#newPassword").val('');
+            $("#matchPassword").val('');
         },
-        error: $("#error").show()
+        error: function () {
+            $("#error").show();
+        }
     });
 }
