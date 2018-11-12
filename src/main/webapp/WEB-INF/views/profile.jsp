@@ -81,16 +81,19 @@
                             <spring:message code="label.oldpassword"/>
                         </label>
                         <input id="oldPassword" name="oldPassword" type="password" class="form-control"
-                               pattern="[\w\d]{3,10}" required="required"/>
+                               required="required"/>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label"><spring:message code="label.newpassword"/></label>
                         <input id="newPassword" name="newPassword" type="password" class="form-control"
-                               pattern="[\w\d]{3,10}" required="required"/>
+                               required="required"/>
+                    </div>
+                    <div class="alert alert-danger" id="wrongFormat" style="display:none">
+                        <strong><spring:message code="error.wrongFormat"/></strong>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label"><spring:message code="label.confirm"/></label>
-                        <input id="matchPassword" type="password" class="form-control" pattern="[\w\d]{3,10}"
+                        <input id="matchPassword" type="password" class="form-control"
                                required="required"/>
                     </div>
                     <div class="alert alert-danger" id="mismatch" style="display:none">
