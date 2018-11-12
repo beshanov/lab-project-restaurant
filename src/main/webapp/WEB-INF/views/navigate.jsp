@@ -15,22 +15,15 @@
     <div class="collapse navbar-collapse" id="mainNavBar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="oi oi-grid-three-up nav-link" href="${pageContext.request.contextPath}/dish">
+                <a class="oi oi-clipboard nav-link" href="${pageContext.request.contextPath}/dish">
                     <spring:message code="title.dishes"/>
                 </a>
             </li>
-            <li class="nav-item">
+            <li>
                 <a class="oi oi-cart nav-link" href="${pageContext.request.contextPath}/cart">
                     <spring:message code="title.cart"/>
                 </a>
             </li>
-            <sec:authorize access="isAuthenticated()">
-                <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/order">
-                        <spring:message code="title.orders"/>
-                    </a>
-                </li>
-            </sec:authorize>
             <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                 <li>
                     <a class="nav-link" href="${pageContext.request.contextPath}/user">
@@ -39,36 +32,54 @@
                 </li>
             </sec:authorize>
         </ul>
-            <ul class="navbar-nav ml-auto">
-                <sec:authorize access="!isAuthenticated()">
-                    <li>
-                        <a class="oi oi-account-login nav-link" href="${pageContext.request.contextPath}/login">
-                            <spring:message code="button.login"/>
+        <ul class="navbar-nav ml-auto">
+            <li class="dropdown">
+                <a class="oi oi-globe nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Language
+                </a>
+                <div class="dropdown-menu bg-dark text-white-50" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="?lang=en">English</a>
+                    <a class="dropdown-item" href="?lang=ru">Русский</a>
+                </div>
+            </li>
+            <sec:authorize access="!isAuthenticated()">
+                <li>
+                    <a class="oi oi-account-login nav-link" href="${pageContext.request.contextPath}/login">
+                        <spring:message code="button.login"/>
+                    </a>
+                </li>
+                <li>
+                    <a class="oi oi-plus nav-link" href="${pageContext.request.contextPath}/register">
+                        <spring:message code="button.register"/>
+                    </a>
+                </li>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <li class="dropdown bg-dark text-white-50">
+                    <a class="oi oi-cog nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <spring:message code="label.settings"/>
+                    </a>
+                    <div class="dropdown-menu bg-dark text-white-50" aria-labelledby="settingsDropdown">
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/order">
+                            <spring:message code="title.orders"/>
                         </a>
-                    </li>
-                    <li>
-                        <a class="oi oi-plus nav-link" href="${pageContext.request.contextPath}/register">
-                            <spring:message code="button.register"/>
-                        </a>
-                    </li>
-                </sec:authorize>
-                <sec:authorize access="isAuthenticated()">
-                    <li>
-                        <a class="oi oi-cog nav-link" href="${pageContext.request.contextPath}/profile">
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/profile">
                             <spring:message code="title.profile"/>
                         </a>
-                    </li>
-                    <li>
-                        <form action="${pageContext.request.contextPath}/logout" method="post" id="logoutForm"
-                              style="display: none">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>
-                        <a class="oi oi-account-logout nav-link" href="#"
-                           onclick="document.getElementById('logoutForm').submit()">
+                        <a class="dropdown-item" href="#" onclick="document.getElementById('logoutForm').submit()">
+                            <form action="${pageContext.request.contextPath}/logout" method="post" id="logoutForm"
+                                  style="display: none">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
                             <spring:message code="label.logout"/>
                         </a>
-                    </li>
-                </sec:authorize>
-            </ul>
+                    </div>
+                </li>
+            </sec:authorize>
+        </ul>
     </div>
 </nav>
