@@ -5,6 +5,7 @@ import com.labproject.restaurant.services.UserService;
 import com.labproject.restaurant.services.validators.ProfileValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -54,9 +55,9 @@ public class ProfileController {
                                                  @RequestParam("newPassword") String newPassword) {
         User loggedUser = userService.getLoggedUser();
         if (!userService.isValidOldPasssword(loggedUser, oldPassword)) {
-            return ResponseEntity.badRequest().body("");
+            return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
         }
         userService.updatePassword(loggedUser, newPassword);
-        return ResponseEntity.ok().body("");
+        return new ResponseEntity<String>(HttpStatus.OK);
     }
 }
