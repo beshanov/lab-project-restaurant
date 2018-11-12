@@ -38,8 +38,8 @@
 //    @Test
 //    public void testUpdate() {
 //        Role role = new Role();
-//        roleService.update(role);
-//        verify(mockRoleDao).update(role);
+//        roleService.updateDetails(role);
+//        verify(mockRoleDao).updateDetails(role);
 //    }
 //
 //    @Test

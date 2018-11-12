@@ -41,18 +41,28 @@
                 </li>
             </sec:authorize>
         </ul>
-        <sec:authorize access="isAuthenticated()">
             <ul class="navbar-nav ml-auto">
-                <li>
-                    <form action="${pageContext.request.contextPath}/logout" method="post" id="logoutForm"
-                          style="display: none">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    </form>
-                    <a class="nav-link" href="#" onclick="document.getElementById('logoutForm').submit()">
-                        <spring:message code="label.logout"/>
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Language
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="?lang=en">English</a>
+                        <a class="dropdown-item" href="?lang=ru">Русский</a>
+                    </div>
                 </li>
+                <sec:authorize access="isAuthenticated()">
+                    <li>
+                        <form action="${pageContext.request.contextPath}/logout" method="post" id="logoutForm"
+                              style="display: none">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                        <a class="nav-link" href="#" onclick="document.getElementById('logoutForm').submit()">
+                            <spring:message code="label.logout"/>
+                        </a>
+                    </li>
+                </sec:authorize>
             </ul>
-        </sec:authorize>
     </div>
 </nav>

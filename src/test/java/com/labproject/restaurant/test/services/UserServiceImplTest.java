@@ -35,10 +35,10 @@
 //    }
 //
 //    @Test
-//    public void update() {
+//    public void updateDetails() {
 //        User user = new User();
-//        userService.update(user);
-//        verify(mockUserDao).update(user);
+//        userService.updateDetails(user);
+//        verify(mockUserDao).updateDetails(user);
 //    }
 //    @Test
 //    public void delete() {
