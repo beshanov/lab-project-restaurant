@@ -29,7 +29,7 @@ public class MenuController {
     }
 
     @RequestMapping(value = "/dish", method = RequestMethod.POST)
-    @PreAuthorize("!hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ModelAndView addNewDish(@ModelAttribute Dish dish) {
         dishService.insert(dish);
         return new ModelAndView("redirect:/dish");
