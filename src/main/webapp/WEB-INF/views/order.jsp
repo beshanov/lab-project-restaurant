@@ -7,7 +7,6 @@
 <html>
 <head>
     <title><spring:message code="title.order"/></title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/modifyOrder.js"></script>
     <sec:csrfMetaTags/>
 </head>
@@ -98,7 +97,6 @@
             </ul>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

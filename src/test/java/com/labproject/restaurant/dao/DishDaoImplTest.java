@@ -31,7 +31,7 @@ public class DishDaoImplTest {
     public void setUp() {
         when(simpleJdbcInsert
                 .executeAndReturnKey(any(SqlParameterSource.class)))
-                .thenReturn(new Long(1));
+                .thenReturn(1L);
     }
 
     @Test

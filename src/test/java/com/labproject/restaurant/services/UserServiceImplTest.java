@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -62,6 +61,7 @@ public class UserServiceImplTest {
         verify(mockUserDao).getById(anyLong());
         verify(mockUserDao).updateRole(any(User.class));
     }
+
     @Test
     public void testUpdatePassword() {
         User user = new User();

@@ -3,7 +3,6 @@ package com.labproject.restaurant.dao.impl;
 import com.labproject.restaurant.dao.OrderDao;
 import com.labproject.restaurant.dao.mapping.OrderMapper;
 import com.labproject.restaurant.entities.Order;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
-    private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

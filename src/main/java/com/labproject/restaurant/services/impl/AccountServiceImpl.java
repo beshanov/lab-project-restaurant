@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
         User existingUser = userService.getByLogin(user.getLogin());
         Role role = roleService.getRoleByLogin(existingUser.getLogin());
         existingUser.setRole(role);
-        if (existingUser == null || !(StringUtils.equals(existingUser.getPassword(),user.getPassword()))) {
+        if (!StringUtils.equals(existingUser.getPassword(),user.getPassword())) {
             throw new IllegalArgumentException("Login or password is incorrect");
         } else return existingUser;
     }

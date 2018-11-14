@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
-public class OrderController {
+class OrderController {
 
     @Autowired
     private OrderService orderService;
