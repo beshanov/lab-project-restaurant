@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page pageEncoding="utf-8" %>
 
 <html>
@@ -10,50 +11,72 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/cart.js"></script>
     <sec:csrfMetaTags/>
 </head>
-<body>
+<body style="background: url('${pageContext.request.contextPath}/resources/img/background.jpg') no-repeat center center fixed;
+        background-size: cover">
 <jsp:include page="navigate.jsp"/>
-<spring:message code="button.remove" var="removeLabel"/>
-<spring:message code="button.submit" var="submitLabel"/>
-<div class="row container-fluid">
-    <div class="col-lg-2"></div>
-    <div class="d-inline-block col-lg-5">
-        <c:forEach items="${sessionScope.dishMap}" var="entry">
-            <c:set var="totalPrice" value="${totalPrice + entry.key.price * entry.value}"/>
-            <div class="card mb-2">
-                <div class="card-header">
-                        ${entry.key.name}
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                            ${entry.key.description}
-                    </p>
-                    <div class="text-right">
-                        <input type="button" class="btn btn-dark" onclick="deleteFromCart('${entry.key.id}')"
-                               value="${removeLabel}">
+<div class="container-fluid">
+    <div class="container col-lg-6 col-md-10 col-sm-12 h-100 d-flex align-items-center"
+         style="background-color: rgba(0, 0, 0, 0.6)">
+        <div class="container col-lg-8 col-md-8 col-sm-10"
+             style="background-color: rgba(0, 0, 0, 0.8); border-radius: 10px">
+            <c:if test="${fn:length(sessionScope.dishMap) == 0}">
+                <div class="container-fluid">
+                    <div class="row my-5">
+                        <div class="col text-center text-white"><spring:message code="label.cartEmpty"/></div>
+                    </div>
+                    <div class="row my-5">
+                        <div class="col">
+                            <a class="col btn btn-primary" href="${pageContext.request.contextPath}/dish">
+                                <spring:message code="label.menu"/>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer text-right">
-                    <spring:message code="label.amount"/>: ${entry.value}
-                    &nbsp;&nbsp;&nbsp;
-                    <spring:message code="label.price"/>: ${entry.key.price * entry.value}
+            </c:if>
+            <c:if test="${fn:length(sessionScope.dishMap) > 0}">
+                <div class="accordion" id="cartAccordion">
+                    <spring:message code="button.remove" var="removeLabel"/>
+                    <c:forEach items="${sessionScope.dishMap}" var="entry">
+                        <c:set var="orderTotal" value="${orderTotal + entry.key.price * entry.value}"/>
+                        <div class="card my-3 bg-secondary text-white">
+                            <div class="card-header row" id="heading${entry.key.id}">
+                                <button class="btn btn-secondary col-10 text-left" type="button" data-toggle="collapse"
+                                        data-target="#collapse${entry.key.id}" aria-expanded="true"
+                                        aria-controls="collapse${entry.key.id}">
+                                        ${entry.key.name}
+                                    <span class="badge badge-dark badge-pill">${entry.value}</span>
+                                </button>
+                                <div class="col-2">
+                                    <input type="button" class="btn btn-dark"
+                                           onclick="deleteFromCart('${entry.key.id}')"
+                                           value="${removeLabel}">
+                                </div>
+                            </div>
+                            <div id="collapse${entry.key.id}" class="collapse" aria-labelledby="heading${entry.key.id}"
+                                 data-parent="#cartAccordion">
+                                <div class="card-body">
+                                    <a>${entry.key.description}</a>
+                                    <h5 class="text-right">
+                                        <spring:message code="label.total"/>: ${entry.key.price * entry.value}
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
-            </div>
-        </c:forEach>
-    </div>
-    <div class="d-inline-block col-lg-3">
-        <div class="card sticky-top">
-            <div class="card-header">
-                <h3><spring:message code="label.newOrder"/></h3>
-            </div>
-            <div class="card-body">
-                <spring:message code="label.total"/>: ${totalPrice}
-            </div>
-            <div class="card-footer align-content-center">
-                <form action="order" method="post">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <input type="submit" class="btn-lg btn-dark" value="${submitLabel}"/>
-                </form>
-            </div>
+                <div class="container-fluid my-3 bg-transparent">
+                    <h2 class="text-center text-white">
+                        <spring:message code="label.total"/>: ${orderTotal}
+                    </h2>
+                    <form class="form-row" action="order" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <spring:message code="button.submit" var="submitLabel"/>
+                        <div class="col-3"></div>
+                        <input type="submit" class="btn btn-primary col-6" value="${submitLabel}"/>
+                        <div class="col-3"></div>
+                    </form>
+                </div>
+            </c:if>
         </div>
     </div>
 </div>

@@ -50,10 +50,10 @@ public class DishDaoImpl implements DishDao {
     }
 
     @Override
-    public void delete(Dish dish) {
+    public void updateIsDeleted(Dish dish) {
         final String UPDATE = "UPDATE DISH SET IS_DELETED = ? WHERE ID = ?";
         jdbcTemplate.update(UPDATE,
-                true,
+                dish.isDeleted(),
                 dish.getId());
     }
 

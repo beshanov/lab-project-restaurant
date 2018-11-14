@@ -43,10 +43,11 @@ public class MenuController {
 
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @ResponseBody
     public void deleteDish(@PathVariable long dishId) {
-        Dish dish = new Dish();
-        dish.setId(dishId);
-        dishService.delete(dish);
+        Dish dish = dishService.getById(dishId);
+        dishService.updateIsDeleted(dish);
+
     }
 
     @RequestMapping(value = "/dish/create", method = RequestMethod.GET)
