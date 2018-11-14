@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class MenuController {
+class MenuController {
     @Autowired
     private DishService dishService;
 

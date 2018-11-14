@@ -3,7 +3,6 @@ package com.labproject.restaurant.dao.impl;
 import com.labproject.restaurant.dao.RoleDao;
 import com.labproject.restaurant.dao.mapping.RoleMapper;
 import com.labproject.restaurant.entities.Role;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -15,8 +14,6 @@ import java.util.List;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
-
-    private static final Logger LOGGER = Logger.getLogger(RoleDaoImpl.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
