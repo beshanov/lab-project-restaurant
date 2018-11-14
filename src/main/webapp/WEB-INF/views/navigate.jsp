@@ -1,6 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page pageEncoding="utf-8" %>
+
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/css/open-iconic-bootstrap.css" rel="stylesheet"
       type="text/css">
@@ -19,11 +21,16 @@
                     <spring:message code="title.dishes"/>
                 </a>
             </li>
-            <li>
-                <a class="oi oi-cart nav-link" href="${pageContext.request.contextPath}/cart">
-                    <spring:message code="title.cart"/>
-                </a>
-            </li>
+            <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
+                <li>
+                    <a class="oi oi-cart nav-link" href="${pageContext.request.contextPath}/cart">
+                        <spring:message code="title.cart"/>
+                        <span class="badge badge-light badge-pill" id="navBarCartBadgeCounter">
+                                ${fn:length(sessionScope.dishMap)}
+                        </span>
+                    </a>
+                </li>
+            </sec:authorize>
             <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                 <li>
                     <a class="nav-link" href="${pageContext.request.contextPath}/user">
@@ -61,7 +68,7 @@
                     <a class="oi oi-cog nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <spring:message code="label.settings"/>
+                        <sec:authentication property="principal.username"/>
                     </a>
                     <div class="dropdown-menu bg-dark text-white-50" aria-labelledby="settingsDropdown">
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/order">

@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><spring:message code="title.login"/></title>
 </head>
-<body style="background: url('${pageContext.request.contextPath}/resources/img/background.png') no-repeat center center fixed;
+<body style="background: url('${pageContext.request.contextPath}/resources/img/background.jpg') no-repeat center center fixed;
         background-size: cover">
 <jsp:include page="navigate.jsp"/>
 <div class="container-fluid">
@@ -38,14 +38,14 @@
                     </div>
                 </div>
                 <div class="form-row my-3">
-                    <button class="btn btn-dark col" id="loginProcess" name="loginProcess">
+                    <button class="btn btn-primary col" id="loginProcess" name="loginProcess">
                         <spring:message code="button.login"/>
                     </button>
                 </div>
             </form>
             <form action="${pageContext.request.contextPath}/register">
                 <div class="form-row my-3">
-                    <button class="btn btn-primary col" type="submit">
+                    <button class="btn btn-dark col" type="submit">
                         <spring:message code="button.register"/>
                     </button>
                 </div>
