@@ -6,10 +6,7 @@ import com.labproject.restaurant.services.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -32,7 +29,7 @@ public class MenuController {
     }
 
     @RequestMapping(value = "/dish", method = RequestMethod.POST)
-    @PreAuthorize("!hasAuthority('ADMINISTRATOR')")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ModelAndView addNewDish(@ModelAttribute Dish dish) {
         dishService.insert(dish);
         return new ModelAndView("redirect:/dish");
@@ -48,10 +45,11 @@ public class MenuController {
 
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    @ResponseBody
     public void deleteDish(@PathVariable long dishId) {
-        Dish dish = new Dish();
-        dish.setId(dishId);
-        dishService.delete(dish);
+        Dish dish = dishService.getById(dishId);
+        dishService.updateIsDeleted(dish);
+
     }
 
     @RequestMapping(value = "/dish/create", method = RequestMethod.GET)

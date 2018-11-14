@@ -10,7 +10,7 @@ public interface DishDao {
 
     void update(Dish dish);
 
-    void delete(Dish dish);
+    void updateIsDeleted(Dish dish);
 
     List<Dish> getAll();
 

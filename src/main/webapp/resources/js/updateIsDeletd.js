@@ -1,4 +1,4 @@
-function deleteDish(dishId) {
+function updateIsDeleted(dishId, dest) {
     $.ajax({
         beforeSend: function (request) {
             var token = $("meta[name='_csrf']").attr("content");
@@ -7,6 +7,12 @@ function deleteDish(dishId) {
         },
         url: "dish/" + dishId,
         type: "DELETE",
-        success: $("#delete_" + dishId).remove()
+        success: function () {
+            if($("#dish_" + dishId).parent().attr('id') == 'active'){
+                $("#deleted").append($("#dish_" + dishId));
+            }else{
+                $("#active").append($("#dish_" + dishId));
+            }
+        }
     });
 }

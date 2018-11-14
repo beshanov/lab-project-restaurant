@@ -122,7 +122,8 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public void delete(Dish dish) {
-        dishDao.delete(dish);
+    public void updateIsDeleted(Dish dish) {
+        dish.setDeleted(!dish.isDeleted());
+        dishDao.updateIsDeleted(dish);
     }
 }
