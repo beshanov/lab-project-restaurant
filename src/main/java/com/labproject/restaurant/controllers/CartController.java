@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
-class CartController {
+public class CartController {
 
     @Autowired
     private DishService dishService;

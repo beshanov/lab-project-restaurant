@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-class RegistrationController {
+public class RegistrationController {
     @Autowired
     private AccountService accountService;
     @Autowired

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-class UserController {
+public class UserController {
 
     @Autowired
     private UserService userService;

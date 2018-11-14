@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-class ProfileController {
+public class ProfileController {
 
     private static final Logger LOGGER = Logger.getLogger(ProfileController.class);
     @Autowired
