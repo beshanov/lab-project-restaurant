@@ -14,15 +14,15 @@
         background-size: cover;">
 <jsp:include page="navigate.jsp"/>
 <div class="container-fluid">
-    <div class="container col-lg-6 col-md-10 col-sm-12 h-100 d-flex align-items-center"
+    <div class="container col-lg-8 col-md-10 col-sm-12 h-100 d-flex align-items-center"
          style="background-color: rgba(0, 0, 0, 0.6);">
         <div class="container col-lg-4 col-md-6 col-sm-8 text-white"
              style="background-color: rgba(0, 0, 0, 0.8); border-radius: 10px;">
-            <h2 class="text-white text-center my-3"><spring:message code="title.profile"/></h2>
+            <h2 class="text-center my-3"><spring:message code="title.profile"/></h2>
             <form:form id="settingsForm" modelAttribute="user" action="profile" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <div class="form-row my-3">
-                    <span class="text-left col"><spring:message code="label.login"/></span>
+                    <div class="text-left col py-2"><spring:message code="label.login"/></div>
                     <input class="form-control col" name="login" pattern="[\w\d]{3,10}" required="required"
                            value="${user.login}"/>
                 </div>
@@ -30,7 +30,7 @@
                     <form:errors path="login" class="alert alert-danger col"/>
                 </div>
                 <div class="form-row my-3">
-                    <span class="text-left col"><spring:message code="label.firstName"/></span>
+                    <div class="text-left col py-2"><spring:message code="label.firstName"/></div>
                     <input class="form-control col" name="firstname" pattern="[\w\d]{3,10}" required="required"
                            value="${user.firstname}"/>
                 </div>
@@ -38,7 +38,7 @@
                     <form:errors path="firstname" class="alert alert-danger"/>
                 </div>
                 <div class="form-row my-3">
-                    <span><spring:message code="label.lastName"/></span>
+                    <span class="text-left col py-2"><spring:message code="label.lastName"/></span>
                     <input class="form-control col" name="lastname" pattern="[\w\d]{3,10}" required="required"
                            value="${user.lastname}"/>
                 </div>
@@ -47,8 +47,9 @@
                 </div>
                 <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                     <div class="form-row my-3">
-                        <span><spring:message code="label.role"/></span>
-                        <input class="form-control col" readonly="true" value="${user.role.name}"/>
+                        <span class="text-left col py-2"><spring:message code="label.role"/></span>
+                        <input class="form-control col bg-secondary text-dark btn-outline-dark" readonly="true"
+                               value="${user.role.name}"/>
                     </div>
                 </sec:authorize>
                 <div class="form-row my-3">
@@ -72,7 +73,7 @@
 </div>
 
 <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog col-2">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">
@@ -112,9 +113,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" onclick="changePassword()">
+                <div class="col-4"></div>
+                <button type="button" class="btn btn-primary col-4" onclick="changePassword()">
                     <spring:message code="button.apply"/>
                 </button>
+                <div class="col-4"></div>
             </div>
         </div>
     </div>
