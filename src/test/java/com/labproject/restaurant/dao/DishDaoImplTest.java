@@ -48,7 +48,7 @@ public class DishDaoImplTest {
 
     @Test
     public void testDelete() {
-        dishDao.delete(new Dish());
+        dishDao.updateIsDeleted(new Dish());
         verify(mockJdbcTemplate).update(argThat(new StartsWith("UPDATE")), Matchers.<Object>anyVararg());
     }
 

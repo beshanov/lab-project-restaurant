@@ -23,5 +23,5 @@ public interface DishService {
 
     void update(Dish dish);
 
-    void delete(Dish dish);
+    void updateIsDeleted(Dish dish);
 }
