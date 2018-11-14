@@ -7,7 +7,6 @@
 <html>
 <head>
     <title><spring:message code="title.order"/></title>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/modifyOrder.js"></script>
     <sec:csrfMetaTags/>
 </head>
 <body>
