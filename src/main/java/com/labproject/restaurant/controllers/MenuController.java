@@ -21,6 +21,19 @@ public class MenuController {
         return mav;
     }
 
+    @RequestMapping(value = "/dish/page/{page}", method = RequestMethod.GET)
+    public ModelAndView showDishPage(@PathVariable int page,
+                                     @RequestParam(name = "deleted", defaultValue = "false") boolean deleted,
+                                     @RequestParam(name = "countPerPage", defaultValue = "6") int countPerPage) {
+        int maxPage = (int) Math.ceil(dishService.dishesCount(deleted) / (float) countPerPage);
+        ModelAndView mav = new ModelAndView("dishPage");
+        mav.addObject("dishesList", dishService.getPage(page, countPerPage, deleted));
+        mav.addObject("deleted", deleted);
+        mav.addObject("currentPage", page);
+        mav.addObject("maxPage", maxPage);
+        return mav;
+    }
+
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.GET)
     public @ResponseBody Dish showDish(@PathVariable long dishId) {
         return dishService.getById(dishId);
