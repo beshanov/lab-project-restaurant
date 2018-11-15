@@ -55,9 +55,9 @@ public class ProfileController {
                                                  @RequestParam("newPassword") String newPassword) {
         User loggedUser = userService.getLoggedUser();
         if (!userService.isValidOldPasssword(loggedUser, oldPassword)) {
-            return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         userService.updatePassword(loggedUser, newPassword);
-        return new ResponseEntity<String>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

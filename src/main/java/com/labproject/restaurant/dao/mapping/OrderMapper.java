@@ -5,7 +5,6 @@ import com.labproject.restaurant.entities.OrderStatus;
 import com.labproject.restaurant.entities.User;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
