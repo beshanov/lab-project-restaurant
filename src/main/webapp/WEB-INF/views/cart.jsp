@@ -33,6 +33,7 @@
                 </div>
             </c:if>
             <c:if test="${fn:length(sessionScope.dishMap) > 0}">
+                <h2 class="text-center text-white my-3"><spring:message code="label.newOrder"/></h2>
                 <div class="accordion" id="cartAccordion">
                     <spring:message code="button.remove" var="removeLabel"/>
                     <c:forEach items="${sessionScope.dishMap}" var="entry">
