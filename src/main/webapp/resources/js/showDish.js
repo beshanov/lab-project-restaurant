@@ -14,11 +14,8 @@ $(document).ready(function () {
                 var auth = $('meta[name="auth"]').attr("content");
                 if(!(auth.toString() === 'ADMINISTRATOR')) {
                     $('.input_dishName').attr('readonly', 'true');
-                    $('.input_dishDesc').attr('readonly', 'true');
-                    $('.input_dishPrice').attr('readonly', 'true');
-
-                    $('.input_dishDesc').addClass("form-control-plaintext");
-                    $('.input_dishPrice').addClass("form-control-plaintext");
+                    $('.div-description').html(data.description);
+                    $('.div-price').html(data.price + " $");
                 }
                 $('.input_dishId').val(data.id);
                 $('.input_dishName').val(data.name);
@@ -54,4 +51,8 @@ function updateDish() {
             location.reload();
         }
     });
+}
+function addToCartFromModal() {
+    var dishId = $('.input_dishId').val();
+    addToCart(parseInt(dishId, 10));
 }

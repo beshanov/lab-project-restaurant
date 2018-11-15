@@ -17,101 +17,109 @@
 </head>
 <body>
 <jsp:include page="navigate.jsp"/>
-<sec:authorize access="!hasAuthority('ADMINISTRATOR')" var="isAdmin"/>
-<div class="container">
-    <div class="row">
-        <c:forEach var="dish" items="${dishesList}" varStatus="counter">
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="card" id="dish_${dish.id}">
-                    <div class="card-body">
-                        <div class="card-title" class="btn btn-primary" data-toggle="modal"
-                             data-target="#modalPage" data-dish-id="${dish.id}">${dish.name}</div>
-                        <div class="dish_price card-text"><spring:message code="label.price"/>: ${dish.price}</div>
-                        <form class="input-group" id="dishForm_${dish.id}">
-                            <input type="number" min="1" value="1" class="form-control"
-                                   aria-describedby="button-addon"
-                                   name="pieces_${dish.id}">
-                            <div class="input-group-append">
-                                <input type="button" class="btn btn-outline-dark" id="button-addon"
-                                       onclick="addToCart('${dish.id}')"
-                                       value="<spring:message code="button.addToCart"/>">
-                            </div>
-                        </form>
+
+<div class="container pt-5">
+    <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
+        <div class="row">
+            <c:forEach var="dish" items="${dishesList}" varStatus="counter">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="card" id="dish_${dish.id}">
+                        <div class="card-body">
+                            <div class="card-title" class="btn btn-primary" data-toggle="modal"
+                                 data-target="#modalPage" data-dish-id="${dish.id}"
+                                 style='cursor: pointer;'>${dish.name}</div>
+                            <div class="dish_price card-text"><spring:message code="label.price"/>: ${dish.price} $</div>
+                            <form class="input-group" id="dishForm_${dish.id}">
+                                <input type="number" min="1" value="1" class="form-control"
+                                       aria-describedby="button-addon"
+                                       name="pieces_${dish.id}">
+                                <div class="input-group-append">
+                                    <input type="button" class="btn btn-outline-dark" id="button-addon"
+                                           onclick="addToCart('${dish.id}')"
+                                           value="<spring:message code="button.addToCart"/>">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </sec:authorize>
+</div>
+
+<sec:authorize access="hasAuthority('ADMINISTRATOR')">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <a href="/dish/create">
+                    <button class="btn btn-dark"><spring:message code="button.addNew"/></button>
+                </a>
+            </div>
+            <div class="col-10">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#active" data-toggle="tab"><spring:message
+                                code="label.activeDishes"/></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#deleted" data-toggle="tab"><spring:message
+                                code="label.deletedDishes"/></a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="active" class="tab-pane fade active show">
+                        <c:forEach var="dish" items="${dishesList}" varStatus="counter">
+                            <c:if test="${!dish.deleted}">
+                                <div class="card" id="dish_${dish.id}">
+                                    <div class="card-body">
+                                        <div class="card-title" class="btn btn-primary" data-toggle="modal"
+                                             data-target="#modalPage" data-dish-id="${dish.id}"
+                                             style='cursor: pointer;'>${dish.name}</div>
+                                        <div class="card-text"><spring:message code="label.price"/>
+                                            : ${dish.price}
+                                        </div>
+                                        <div class="card-text">
+                                                ${dish.description}
+                                        </div>
+                                        <form class="input-group">
+                                            <input type="button" class="btn btn-dark"
+                                                   onclick="updateIsDeleted('${dish.id}',
+                                                           'deleted')"
+                                                   value="<spring:message code="button.deleteRestore"/>"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                    <div id="deleted" class="tab-pane fade">
+                        <c:forEach var="dish" items="${dishesList}">
+                            <c:if test="${dish.deleted}">
+                                <div class="card" id="dish_${dish.id}">
+                                    <div class="card-body">
+                                        <div class="card-title" class="btn btn-primary" data-toggle="modal"
+                                             data-target="#modalPage" data-dish-id="${dish.id}"
+                                             style='cursor: pointer;'>${dish.name}</div>
+                                        <div class="card-text"><spring:message code="label.price"/>
+                                            : ${dish.price}
+                                        </div>
+                                        <div class="card-text">
+                                                ${dish.description}
+                                        </div>
+                                        <form class="input-group">
+                                            <input id="button_${dish.id}" type="button" class="btn btn-dark"
+                                                   onclick="updateIsDeleted('${dish.id}', 'active')"
+                                                   value="<spring:message code="button.deleteRestore"/>"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
-        </c:forEach>
-    </div>
-</div>
-</sec:authorize>
-
-<sec:authorize access="hasAuthority('ADMINISTRATOR')">
-<div class="container">
-    <div class="row">
-        <div class="col-2">
-            <a href="/dish/create">
-                <button class="btn btn-dark"><spring:message code="button.addNew"/></button>
-            </a>
-        </div>
-        <div class="col-10">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#active" data-toggle="tab"><spring:message
-                            code="label.activeDishes"/></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#deleted" data-toggle="tab"><spring:message
-                            code="label.deletedDishes"/></a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div id="active" class="tab-pane fade active show">
-                    <c:forEach var="dish" items="${dishesList}" varStatus="counter">
-                        <c:if test="${!dish.deleted}">
-                            <div class="card" id="dish_${dish.id}">
-                                <div class="card-body">
-                                    <a class="card-title" href="dish/${dish.id}">${dish.name}</a>
-                                    <div class="card-text"><spring:message code="label.price"/>
-                                        : ${dish.price}
-                                    </div>
-                                    <div class="card-text">
-                                            ${dish.description}
-                                    </div>
-                                    <form class="input-group">
-                                        <input type="button" class="btn btn-dark" onclick="updateIsDeleted('${dish.id}',
-                                                'deleted')" value="<spring:message code="button.deleteRestore"/>"/>
-                                    </form>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-                <div id="deleted" class="tab-pane fade">
-                    <c:forEach var="dish" items="${dishesList}">
-                        <c:if test="${dish.deleted}">
-                            <div class="card" id="dish_${dish.id}">
-                                <div class="card-body">
-                                    <a class="card-title" href="dish/${dish.id}">${dish.name}</a>
-                                    <div class="card-text"><spring:message code="label.price"/>
-                                        : ${dish.price}
-                                    </div>
-                                    <div class="card-text">
-                                            ${dish.description}
-                                    </div>
-                                    <form class="input-group">
-                                        <input id="button_${dish.id}" type="button" class="btn btn-dark"
-                                               onclick="updateIsDeleted('${dish.id}', 'active')"
-                                               value="<spring:message code="button.deleteRestore"/>"/>
-                                    </form>
-                                </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </div>
-            </div>
         </div>
     </div>
-</div>
 </sec:authorize>
 
 <div class="modal fade" id="modalPage" role="dialog">
@@ -127,19 +135,18 @@
             <div class="modal-body">
                 <div class="container-fluid col-sm-7">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <sec:authorize access="hasAuthority('ADMINISTRATOR')">
-                        <div class="form-group">
-                            <label>Id </label>
-                            <input class="input_dishId form-control" disabled="true"/>
-                        </div>
-                    </sec:authorize>
-                    <div class="form-group">
+                    <input type="hidden" class="input_dishId form-control" disabled="true"/>
+                    <div class="form-group div-description">
+                        <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                         <label><spring:message code="label.description"/></label>
-                        <textarea class="input_dishDesc form-control"></textarea>
+                        <textarea class="input_dishDesc form-control" style="resize:none" rows="7"></textarea>
+                        </sec:authorize>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group div-price">
+                        <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                         <label><spring:message code="label.price"/></label>
                         <input class="input_dishPrice form-control"/>
+                        </sec:authorize>
                     </div>
                     <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                         <div class="form-check">
@@ -152,13 +159,18 @@
                     </sec:authorize>
                 </div>
             </div>
-            <sec:authorize access="hasAuthority('ADMINISTRATOR')">
-                <div class="modal-footer">
+            <div class="modal-footer">
+                <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                     <button type="button" class="btn btn-dark" onclick="updateDish()">
                         <spring:message code="button.update"/>
                     </button>
-                </div>
-            </sec:authorize>
+                </sec:authorize>
+                <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
+                    <button type="button" class="btn btn-dark" onclick="addToCartFromModal()">
+                        <spring:message code="button.addToCart"/>
+                    </button>
+                </sec:authorize>
+            </div>
         </div>
     </div>
 </div>
