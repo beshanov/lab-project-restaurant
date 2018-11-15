@@ -22,10 +22,8 @@ public class MenuController {
     }
 
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.GET)
-    public ModelAndView showDish(@PathVariable long dishId) {
-        ModelAndView mav = new ModelAndView("dish");
-        mav.addObject("dish", dishService.getById(dishId));
-        return mav;
+    public @ResponseBody Dish showDish(@PathVariable long dishId) {
+        return dishService.getById(dishId);
     }
 
     @RequestMapping(value = "/dish", method = RequestMethod.POST)
@@ -37,7 +35,7 @@ public class MenuController {
 
     @RequestMapping(value = "/dish/{dishId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public ModelAndView updateDish(@PathVariable long dishId, @ModelAttribute Dish dish) {
+    public ModelAndView updateDish(@PathVariable long dishId, @RequestBody Dish dish) {
         dish.setId(dishId);
         dishService.update(dish);
         return new ModelAndView("redirect:/dish");
