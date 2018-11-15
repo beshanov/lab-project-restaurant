@@ -13,6 +13,8 @@ public interface DishService {
 
     List<Dish> getAll();
 
+    List<Dish> getPage(int page,int countPerPage, boolean deleted);
+
     Map<Dish, Integer> getAllByOrderId(long orderId);
 
     Map<Dish, Integer> addToDishMap(HttpServletRequest request);
@@ -24,4 +26,6 @@ public interface DishService {
     void update(Dish dish);
 
     void updateIsDeleted(Dish dish);
+
+    int dishesCount(boolean deleted);
 }
