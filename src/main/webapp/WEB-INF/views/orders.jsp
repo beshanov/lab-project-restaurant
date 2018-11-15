@@ -2,7 +2,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page pageEncoding="utf-8" %>
 
 <html>
@@ -12,9 +11,9 @@
 <body style="background: url('${pageContext.request.contextPath}/resources/img/background.jpg') no-repeat center center fixed;
         background-size: cover;">
 <jsp:include page="navigate.jsp"/>
-<div class="container-fluid d-flex" style="margin-top: 51px">
-    <div class="container col-lg-8 col-md-10 col-sm-12 d-flex align-items-center"
-         style="background-color: rgba(0, 0, 0, 0.6); min-height: 100%">
+<div class="container-fluid" style="margin-top: 51px">
+    <div class="container col-lg-8 col-md-10 col-sm-12 h-100 d-flex align-items-center"
+         style="background-color: rgba(0, 0, 0, 0.6);">
         <c:if test="${fn:length(orderList) == 0}">
             <div class="container col-lg-4 col-md-10 col-sm-12"
                  style="background-color: rgba(0, 0, 0, 0.8); border-radius: 10px;">
@@ -31,26 +30,31 @@
             </div>
         </c:if>
         <c:if test="${fn:length(orderList) > 0}">
-            <div class="container col-lg-6 col-md-10 col-sm-12 d-flex flex-column"
+            <div class="container col-lg-10 col-md-10 col-sm-12"
                  style="background-color: rgba(0, 0, 0, 0.8); border-radius: 10px;">
-                <h2 class="text-white text-center my-4"><spring:message code="label.orders"/></h2>
-                <div class="list-group w-100 my-3">
-                    <c:forEach items="${orderList}" var="entry">
-                        <a href="${pageContext.request.contextPath}/order/${entry.id}"
-                           class="list-group-item list-group-item-action flex-column align-items-start bg-dark text-white">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">#${entry.id}</h5>
-                                <small><fmt:formatDate type="both" value="${entry.orderDate}"/></small>
-                            </div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <div class="mb-1">
-                                    <spring:message code="label.user"/>: ${entry.user.login}
-                                    (${entry.user.firstname} ${entry.user.lastname})
+                <div class="row my-5 bg-transparent">
+                    <div class="col-4 my-3">
+                        <div class="list-group" id="list-tab" role="tablist">
+                            <c:forEach items="${orderList}" var="entry">
+                                <a class="list-group-item list-group-item-action" id="listEntry${entry.id}"
+                                   data-toggle="list" href="#tabEntry" role="tab" aria-controls="home">
+                                    <div class="row">
+                                        <div class="text-left col-5"><h5>#${entry.id}</h5></div>
+                                        <div class="text-right col-7">${entry.status.name}</div>
+                                    </div>
+                                </a>
+                            </c:forEach>
+                        </div>
+                    </div>
+                    <div class="col-8 my-3">
+                        <div class="tab-content bg-light " id="nav-tabContent">
+                            <div class="tab-pane" id="tabEntry" role="tabpanel">
+                                <div class="container-fluid">
+                                    //order content here
                                 </div>
-                                <div class="mb-1"><spring:message code="label.status"/>: ${entry.status.name}</div>
                             </div>
-                        </a>
-                    </c:forEach>
+                        </div>
+                    </div>
                 </div>
             </div>
         </c:if>
