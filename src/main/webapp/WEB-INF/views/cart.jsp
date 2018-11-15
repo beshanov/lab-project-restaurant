@@ -38,18 +38,17 @@
                     <c:forEach items="${sessionScope.dishMap}" var="entry">
                         <c:set var="orderTotal" value="${orderTotal + entry.key.price * entry.value}"/>
                         <div class="card my-3 bg-secondary text-white">
-                            <div class="card-header row" id="heading${entry.key.id}">
-                                <button class="btn btn-secondary col-10 text-left" type="button" data-toggle="collapse"
+                            <div class="card-header row align-items-end" id="heading${entry.key.id}">
+                                <button class="btn btn-secondary col text-left" type="button" data-toggle="collapse"
                                         data-target="#collapse${entry.key.id}" aria-expanded="true"
-                                        aria-controls="collapse${entry.key.id}">
-                                        ${entry.key.name}
+                                        aria-controls="collapse${entry.key.id}"
+                                        style="overflow: hidden">
                                     <span class="badge badge-dark badge-pill">${entry.value}</span>
+                                        ${entry.key.name}
                                 </button>
-                                <div class="col-2">
-                                    <input type="button" class="btn btn-dark"
-                                           onclick="deleteFromCart('${entry.key.id}')"
-                                           value="${removeLabel}">
-                                </div>
+                                <input type="button" class="btn btn-dark col-lg-3 col-md-4 col-sm-6"
+                                       onclick="deleteFromCart('${entry.key.id}')"
+                                       value="${removeLabel}">
                             </div>
                             <div id="collapse${entry.key.id}" class="collapse" aria-labelledby="heading${entry.key.id}"
                                  data-parent="#cartAccordion">
