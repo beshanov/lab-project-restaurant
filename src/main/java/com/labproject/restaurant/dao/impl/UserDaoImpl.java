@@ -3,7 +3,6 @@ package com.labproject.restaurant.dao.impl;
 import com.labproject.restaurant.dao.UserDao;
 import com.labproject.restaurant.dao.mapping.UserMapper;
 import com.labproject.restaurant.entities.User;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,7 +16,6 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired

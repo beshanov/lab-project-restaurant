@@ -10,6 +10,9 @@ function addToCart(dishId) {
         data: {
             id: dishId,
             count: $('[name = pieces_' + dishId + ']').val()
+        },
+        success: function() {
+            $("#modalPage").modal('hide');
         }
     });
 }

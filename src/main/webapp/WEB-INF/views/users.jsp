@@ -40,8 +40,6 @@
         </div>
     </c:forEach>
 </div>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/users.js"></script>
-
 </body>
 </html>

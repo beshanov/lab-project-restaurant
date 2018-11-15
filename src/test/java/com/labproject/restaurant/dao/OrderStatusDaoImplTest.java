@@ -32,7 +32,7 @@ public class OrderStatusDaoImplTest {
 
     @Before
     public void setUp() {
-        when(mockSimpleJdbcInsert.executeAndReturnKey(any(SqlParameterSource.class))).thenReturn(new Long(1));
+        when(mockSimpleJdbcInsert.executeAndReturnKey(any(SqlParameterSource.class))).thenReturn(1L);
     }
 
     @Test
