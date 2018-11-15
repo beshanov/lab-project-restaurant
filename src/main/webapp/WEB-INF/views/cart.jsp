@@ -14,7 +14,7 @@
 <body style="background: url('${pageContext.request.contextPath}/resources/img/background.jpg') no-repeat center center fixed;
         background-size: cover">
 <jsp:include page="navigate.jsp"/>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 51px">
     <div class="container col-lg-6 col-md-10 col-sm-12 h-100 d-flex align-items-center"
          style="background-color: rgba(0, 0, 0, 0.6)">
         <div class="container col-lg-8 col-md-8 col-sm-10"
