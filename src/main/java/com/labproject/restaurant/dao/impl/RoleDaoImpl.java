@@ -12,6 +12,12 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+/**
+ * Data Access Object class for the {@link Role} objects that implements the
+ * {@link RoleDao} interface
+ *
+ * @author Zhanna Fedorova
+ */
 @Repository
 public class RoleDaoImpl implements RoleDao {
 

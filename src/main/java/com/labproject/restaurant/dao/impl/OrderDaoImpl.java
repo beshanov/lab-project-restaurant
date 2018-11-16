@@ -13,6 +13,12 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+/**
+ * Data Access Object class for the {@link Order} objects that implements the
+ * {@link OrderDao} interface
+ *
+ * @author Zhanna Fedorova
+ */
 @Repository
 public class OrderDaoImpl implements OrderDao {
 

@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Data Access Object class for the {@link OrderStatus} objects that implements the
+ * {@link OrderStatusDao} interface
+ *
+ * @author Zhanna Fedorova
+ */
 @Repository
 public class OrderStatusDaoImpl implements OrderStatusDao {
 
