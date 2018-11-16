@@ -86,6 +86,13 @@ public class DishServiceImpl implements DishService {
             dishMap.put(dish, count);
         }
 
+        if (request.getSession().getAttribute("cartSize") == null) {
+            request.getSession().setAttribute("cartSize", count);
+        } else {
+            int initialCount = (Integer) request.getSession().getAttribute("cartSize");
+            request.getSession().setAttribute("cartSize", initialCount + count);
+        }
+
         return dishMap;
     }
 
@@ -106,6 +113,10 @@ public class DishServiceImpl implements DishService {
         for (Map.Entry<Dish, Integer> entry : dishMap.entrySet()) {
             if (entry.getKey().getId() == dishId) {
                 dishMap.remove(entry.getKey());
+                if (session.getAttribute("cartSize") != null) {
+                    int initialCount = (Integer) session.getAttribute("cartSize");
+                    session.setAttribute("cartSize", initialCount - entry.getValue());
+                }
                 break;
             }
         }

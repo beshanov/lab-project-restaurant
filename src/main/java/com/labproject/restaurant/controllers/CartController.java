@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,17 @@ public class CartController {
     @PreAuthorize("!hasAuthority('ADMINISTRATOR')")
     public ModelAndView displayCart() {
         return new ModelAndView("cart");
+    }
+
+    @RequestMapping(value = "/cart.size", method = RequestMethod.GET)
+    @PreAuthorize("!hasAuthority('ADMINISTRATOR')")
+    @ResponseBody
+    public String getCartSize(HttpSession session) {
+        if (session.getAttribute("cartSize") == null) {
+            session.setAttribute("cartSize", 0);
+            return "0";
+        }
+        return session.getAttribute("cartSize").toString();
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.POST)

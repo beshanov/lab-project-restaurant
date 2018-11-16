@@ -44,6 +44,7 @@ public class OrderController {
         if (session.getAttribute("dishMap") != null) {
             orderService.createOrderWithDishes((Map<Dish, Integer>) session.getAttribute("dishMap"));
             session.removeAttribute("dishMap");
+            session.setAttribute("cartSize", 0);
         }
         return "redirect:/order";
     }

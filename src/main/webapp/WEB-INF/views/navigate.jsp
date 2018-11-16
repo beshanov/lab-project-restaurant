@@ -9,6 +9,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/restaurant.css" rel="stylesheet" type="text/css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/js/restaurant.js" type="text/javascript"></script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavBar"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +27,6 @@
                     <a class="oi oi-cart nav-link" href="${pageContext.request.contextPath}/cart">
                         <spring:message code="title.cart"/>
                         <span class="badge badge-light badge-pill" id="navBarCartBadgeCounter">
-                                ${fn:length(sessionScope.dishMap)}
                         </span>
                     </a>
                 </li>
@@ -65,7 +65,7 @@
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                 <li class="dropdown bg-dark text-white-50">
-                    <a class="oi oi-cog nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button"
+                    <a class="oi oi-cog nav-link dropdown-toggle mr-3" href="#" id="settingsDropdown" role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <sec:authentication property="principal.username"/>
@@ -90,3 +90,4 @@
         </ul>
     </div>
 </nav>
+<script>$(window).on("load", setCartSize('${pageContext.request.contextPath}'));</script>

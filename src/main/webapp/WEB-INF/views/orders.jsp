@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page pageEncoding="utf-8" %>
 
 <html>
@@ -30,15 +31,16 @@
             </div>
         </c:if>
         <c:if test="${fn:length(orderList) > 0}">
-            <div class="container col-lg-6 col-md-10 col-sm-12 d-flex"
+            <div class="container col-lg-6 col-md-10 col-sm-12 d-flex flex-column"
                  style="background-color: rgba(0, 0, 0, 0.8); border-radius: 10px;">
+                <h2 class="text-white text-center my-4"><spring:message code="label.orders"/></h2>
                 <div class="list-group w-100 my-3">
                     <c:forEach items="${orderList}" var="entry">
                         <a href="${pageContext.request.contextPath}/order/${entry.id}"
                            class="list-group-item list-group-item-action flex-column align-items-start bg-dark text-white">
                             <div class="d-flex w-100 justify-content-between">
                                 <h5 class="mb-1">#${entry.id}</h5>
-                                <small>${entry.orderDate}</small>
+                                <small><fmt:formatDate type="both" value="${entry.orderDate}"/></small>
                             </div>
                             <div class="d-flex w-100 justify-content-between">
                                 <div class="mb-1">
