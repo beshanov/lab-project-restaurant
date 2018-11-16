@@ -52,7 +52,8 @@ function updateDish() {
         }
     });
 }
-function addToCartFromModal() {
+
+function addToCartFromModal(contextPath) {
     var dishId = $('.input_dishId').val();
-    addToCart(parseInt(dishId, 10));
+    addToCart(parseInt(dishId, 10), contextPath);
 }

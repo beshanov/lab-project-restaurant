@@ -35,7 +35,7 @@
                                        name="pieces_${dish.id}">
                                 <div class="input-group-append">
                                     <input type="button" class="btn btn-outline-dark" id="button-addon"
-                                           onclick="addToCart('${dish.id}')"
+                                           onclick="addToCart('${dish.id}', '${pageContext.request.contextPath}')"
                                            value="<spring:message code="button.addToCart"/>">
                                 </div>
                             </form>
@@ -166,7 +166,8 @@
                     </button>
                 </sec:authorize>
                 <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
-                    <button type="button" class="btn btn-dark" onclick="addToCartFromModal()">
+                    <button type="button" class="btn btn-dark"
+                            onclick="addToCartFromModal('${pageContext.request.contextPath}')">
                         <spring:message code="button.addToCart"/>
                     </button>
                 </sec:authorize>
