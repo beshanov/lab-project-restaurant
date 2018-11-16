@@ -43,6 +43,11 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    public List<Dish> getPage(int page,int countPerPage, boolean deleted) {
+       return dishDao.getPage(page,countPerPage,deleted);
+    }
+
+    @Override
     public Map<Dish, Integer> getAllByOrderId(long orderId) {
         if (orderId < 1) {
             return new HashMap<>();
@@ -122,5 +127,10 @@ public class DishServiceImpl implements DishService {
     public void updateIsDeleted(Dish dish) {
         dish.setDeleted(!dish.isDeleted());
         dishDao.updateIsDeleted(dish);
+    }
+
+    @Override
+    public int dishesCount(boolean deleted) {
+       return dishDao.dishesCount(deleted);
     }
 }

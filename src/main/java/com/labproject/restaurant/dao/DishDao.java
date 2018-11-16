@@ -17,4 +17,8 @@ public interface DishDao {
     List<Dish> getAvailable();
 
     Dish getById(long id);
+
+    List<Dish> getPage(int page,int countPerPage, boolean deleted);
+
+    int dishesCount(boolean deleted);
 }

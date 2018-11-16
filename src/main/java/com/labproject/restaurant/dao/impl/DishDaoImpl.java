@@ -77,5 +77,18 @@ public class DishDaoImpl implements DishDao {
         return dishList.isEmpty() ? new Dish() : dishList.get(0);
     }
 
+    @Override
+    public List<Dish> getPage(int page,int countPerPage, boolean deleted) {
+        int from = (page - 1) * countPerPage;
+        final String FIND_PAGE = "SELECT * FROM DISH WHERE IS_DELETED = ? LIMIT ?,?";
+        return jdbcTemplate.query(FIND_PAGE, new DishMapper(),deleted,from,countPerPage);
+    }
+
+    @Override
+    public int dishesCount(boolean deleted) {
+        final String DISH_COUNT = "SELECT COUNT(*) FROM DISH WHERE IS_DELETED = ?";
+        return jdbcTemplate.queryForObject(DISH_COUNT,Integer.class,deleted);
+    }
+
 
 }
