@@ -14,8 +14,8 @@
         background-size: cover">
 <jsp:include page="navigate.jsp"/>
 <div class="container-fluid" style="margin-top: 51px">
-    <div class="container col-lg-6 col-md-10 col-sm-12 h-100 d-flex align-items-center"
-         style="background-color: rgba(0, 0, 0, 0.6)">
+    <div class="container col-lg-6 col-md-10 col-sm-12 d-flex align-items-center"
+         style="background-color: rgba(0, 0, 0, 0.6); min-height: 100%">
         <div class="container col-lg-8 col-md-8 col-sm-10"
              style="background-color: rgba(0, 0, 0, 0.8); border-radius: 10px">
             <c:if test="${fn:length(sessionScope.dishMap) == 0}">
@@ -24,11 +24,11 @@
                         <div class="col text-center text-white"><spring:message code="label.cartEmpty"/></div>
                     </div>
                     <div class="row my-5">
-                        <div class="col">
-                            <a class="col btn btn-primary" href="${pageContext.request.contextPath}/dish">
-                                <spring:message code="label.menu"/>
-                            </a>
-                        </div>
+                        <div class="col-3"></div>
+                        <a class="col-6 btn btn-primary" href="${pageContext.request.contextPath}/dish">
+                            <spring:message code="label.menu"/>
+                        </a>
+                        <div class="col-3"></div>
                     </div>
                 </div>
             </c:if>
@@ -56,7 +56,7 @@
                                 <div class="card-body">
                                     <a>${entry.key.description}</a>
                                     <h5 class="text-right">
-                                        <spring:message code="label.total"/>: ${entry.key.price * entry.value}
+                                        <spring:message code="label.total"/>: ${entry.key.price * entry.value}$
                                     </h5>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="container-fluid my-3 bg-transparent">
                     <h2 class="text-center text-white">
-                        <spring:message code="label.total"/>: ${orderTotal}
+                        <spring:message code="label.total"/>: ${orderTotal}$
                     </h2>
                     <form class="form-row" action="order" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
