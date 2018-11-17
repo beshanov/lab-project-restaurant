@@ -67,8 +67,8 @@
                 </li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li class="dropdown bg-dark text-white-50">
-                    <a class="oi oi-cog nav-link dropdown-toggle mr-3" href="#" id="settingsDropdown" role="button"
+                <li class="dropdown bg-dark text-white-50 mr-5">
+                    <a class="oi oi-cog nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <sec:authentication property="principal.username"/>
@@ -90,6 +90,7 @@
                     </div>
                 </li>
             </sec:authorize>
+            <li></li>
         </ul>
     </div>
 </nav>
