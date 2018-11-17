@@ -10,6 +10,9 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/js/restaurant.js" type="text/javascript"></script>
+<sec:authorize access="!hasAuthority('ADMINISTRATOR')">
+    <script>$(window).on("load", setCartSize('${pageContext.request.contextPath}'));</script>
+</sec:authorize>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavBar"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,4 +93,3 @@
         </ul>
     </div>
 </nav>
-<script>$(window).on("load", setCartSize('${pageContext.request.contextPath}'));</script>

@@ -53,13 +53,12 @@
                     </div>
                 </sec:authorize>
                 <div class="form-row my-3">
-                    <button class="btn btn-primary col" id="apply" type="submit">
-                        <spring:message code="button.apply"/>
-                    </button>
-                </div>
-                <div class="form-row my-3">
-                    <button type="button" class="btn btn-secondary col" data-toggle="modal" data-target="#myModal">
+                    <button type="button" class="btn btn-secondary col mx-1 my-1" data-toggle="modal"
+                            data-target="#myModal">
                         <spring:message code="button.change"/>
+                    </button>
+                    <button class="btn btn-primary col mx-1 my-1" id="apply" type="submit">
+                        <spring:message code="button.apply"/>
                     </button>
                 </div>
                 <div class="form-row my-3">
