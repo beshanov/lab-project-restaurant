@@ -103,12 +103,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<User> getAllUsers() {
-        return userDao.getAllUsers(false);
+        long userId = getLoggedUser().getId();
+        return userDao.getAllUsers(false, userId);
     }
 
     @Override
     public List<User> getAllUsers(boolean full) {
-        return userDao.getAllUsers(full);
+        long userId = getLoggedUser().getId();
+        return userDao.getAllUsers(full, userId);
     }
 
     @Override
