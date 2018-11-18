@@ -41,14 +41,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAllUsers(boolean full) {
+    public List<User> getAllUsers(boolean full, long userId) {
         String query;
         if (full) {
-            query = "SELECT * FROM USER LEFT JOIN ROLE ON ROLE_ID = ROLE.ID";
+            query = "SELECT * FROM USER LEFT JOIN ROLE ON (ROLE_ID = ROLE.ID) WHERE USER.ID<>?";
         } else {
-            query = "SELECT * FROM USER";
+            query = "SELECT * FROM USER WHERE ID<>?";
         }
-        return jdbcTemplate.query(query, new UserMapper());
+        return jdbcTemplate.query(query, new UserMapper(), userId);
     }
 
     @Override

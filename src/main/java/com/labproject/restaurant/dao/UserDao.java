@@ -20,5 +20,5 @@ public interface UserDao {
 
     void delete(User user);
 
-    List<User> getAllUsers(boolean full);
+    List<User> getAllUsers(boolean full, long userId);
 }
