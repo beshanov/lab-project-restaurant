@@ -8,6 +8,9 @@ import java.util.List;
  * Data Access Object interface for the {@link Role} objects.
  * Provides CRUD operations with {@link Role} objects.
  *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
  * @author Zhanna Fedorova
  */
 public interface RoleDao {
@@ -18,7 +21,7 @@ public interface RoleDao {
      *
      * @param id a primary key of Role table
      * @return the Role object at the specified id
-     * @see {@link Role}
+     * @see Role
      */
     Role getById(long id);
 
@@ -26,9 +29,9 @@ public interface RoleDao {
      * Returns a {@link Role} object from a data storage
      * by the specified login of {@link Role}
      *
-     * @param login a primary key of Role table
-     * @return the Role object at the specified id
-     * @see {@link Role}
+     * @param login a unique identificator of User
+     * @return the Role object at the specified login
+     * @see Role
      */
     Role getRoleByLogin(String login);
 
@@ -36,7 +39,7 @@ public interface RoleDao {
      * Inserts the {@link Role} object into a data storage
      *
      * @param role the Role entity
-     * @see {@link Role}
+     * @see Role
      */
     void insert(Role role);
 
@@ -44,7 +47,7 @@ public interface RoleDao {
      * Updates the {@link Role} object in a data storage
      *
      * @param role the Role entity
-     * @see {@link Role}
+     * @see Role
      */
     void update(Role role);
 
@@ -53,7 +56,7 @@ public interface RoleDao {
      * by a specified id
      *
      * @param role the Role entity
-     * @see {@link Role}
+     * @see Role
      */
     void delete(Role role);
 
@@ -61,7 +64,7 @@ public interface RoleDao {
      * Returns a List of {@link Role} objects from a data storage
      *
      * @return the list of Role objects
-     * @see {@link Role}
+     * @see Role
      */
     List<Role> getAllRoles();
 }

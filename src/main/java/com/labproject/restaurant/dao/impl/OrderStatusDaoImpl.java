@@ -13,6 +13,9 @@ import java.util.List;
  * Data Access Object class for the {@link OrderStatus} objects that implements the
  * {@link OrderStatusDao} interface
  *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
  * @author Zhanna Fedorova
  */
 @Repository

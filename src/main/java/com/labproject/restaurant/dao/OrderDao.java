@@ -8,6 +8,9 @@ import java.util.List;
  * Data Access Object interface for the {@link Order} objects.
  * Provides CRUD operations with {@link Order} objects.
  *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
  * @author Zhanna Fedorova
  */
 public interface OrderDao {
@@ -26,7 +29,7 @@ public interface OrderDao {
      *
      * @param orderId a primary key of Order table
      * @return the Order object at the specified id
-     * @see {@link Order}
+     * @see Order
      */
     Order getById(long orderId);
 
@@ -34,7 +37,7 @@ public interface OrderDao {
      * Returns a List of {@link Order} objects from a data storage
      *
      * @return the list of Order objects
-     * @see {@link Order}
+     * @see Order
      */
     List<Order> getAll();
 
@@ -44,7 +47,7 @@ public interface OrderDao {
      *
      * @param userId a primary key of User table
      * @return the list of Order objects
-     * @see {@link Order}
+     * @see Order
      */
     List<Order> getAllByUserId(long userId);
 
@@ -52,7 +55,7 @@ public interface OrderDao {
      * Updates the {@link Order} object in a data storage
      *
      * @param order the Order entity
-     * @see {@link Order}
+     * @see Order
      */
     void update(Order order);
 
@@ -61,7 +64,7 @@ public interface OrderDao {
      * by a specified id
      *
      * @param orderId a primary key of Order table
-     * @see {@link Order}
+     * @see Order
      */
     void deleteById(long orderId);
 }

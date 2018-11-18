@@ -9,6 +9,9 @@ import java.util.Map;
  * Data Access Object interface.
  * Provides CRUD operations with {@link Dish} objects.
  *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
  * @author Zhanna Fedorova
  */
 public interface OrderDishDao {
@@ -16,10 +19,10 @@ public interface OrderDishDao {
     /**
      * Inserts the set of {@link Dish} object into a data storage
      *
-     * @param dish the Dish entity
+     * @param dish  the Dish entity
      * @param order the Order entity
      * @param count the number of dish objects
-     * @see {@link Dish}, {@link Order}
+     * @see Dish, Order
      */
     void addDishToOrder(Dish dish, Order order, int count);
 
@@ -29,7 +32,7 @@ public interface OrderDishDao {
      *
      * @param orderId a primary key of Role table
      * @return the Role object at the specified id
-     * @see {@link Dish}
+     * @see Dish
      */
     Map<Dish, Integer> getDishesByOrderId(long orderId);
 

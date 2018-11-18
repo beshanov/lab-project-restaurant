@@ -17,6 +17,9 @@ import java.util.List;
  * Data Access Object class for the {@link User} objects that implements the
  * {@link UserDao} interface
  *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
  * @author Zhanna Fedorova
  */
 @Repository

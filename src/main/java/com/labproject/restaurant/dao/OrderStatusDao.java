@@ -8,6 +8,9 @@ import java.util.List;
  * Data Access Object interface for the {@link OrderStatus} objects.
  * Provides CRUD operations with {@link OrderStatus} objects.
  *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
  * @author Zhanna Fedorova
  */
 public interface OrderStatusDao {
@@ -18,7 +21,7 @@ public interface OrderStatusDao {
      *
      * @param orderStatusId a primary key of OrderStatus table
      * @return the OrderStatus object at the specified id
-     * @see {@link OrderStatus}
+     * @see OrderStatus
      */
     OrderStatus getById(long orderStatusId);
 
@@ -26,7 +29,7 @@ public interface OrderStatusDao {
      * Returns a List of {@link OrderStatus} objects from a data storage
      *
      * @return the list of OrderStatus objects
-     * @see {@link OrderStatus}
+     * @see OrderStatus
      */
     List<OrderStatus> getAll();
 }

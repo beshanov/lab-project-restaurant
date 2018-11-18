@@ -17,6 +17,9 @@ import java.util.List;
  * Data Access Object class for the {@link Order} objects that implements the
  * {@link OrderDao} interface
  *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
  * @author Zhanna Fedorova
  */
 @Repository

@@ -8,6 +8,9 @@ import java.util.List;
  * Data Access Object interface for the {@link Dish} objects.
  * Provides CRUD operations with {@link Dish} objects.
  *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
  * @author Zhanna Fedorova
  */
 public interface DishDao {
@@ -64,7 +67,7 @@ public interface DishDao {
      */
     Dish getById(long id);
 
-    List<Dish> getPage(int page,int countPerPage, boolean deleted);
+    List<Dish> getPage(int page, int countPerPage, boolean deleted);
 
     int dishesCount(boolean deleted);
 }
