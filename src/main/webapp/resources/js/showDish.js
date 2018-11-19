@@ -12,15 +12,16 @@ $(document).ready(function () {
             contentType: "application/json",
             success: function (data) {
                 var auth = $('meta[name="auth"]').attr("content");
-                if(!(auth.toString() === 'ADMINISTRATOR')) {
+                if (!(auth.toString() === 'ADMINISTRATOR')) {
                     $('.input_dishName').attr('readonly', 'true');
                     $('.div-description').html(data.description);
-                    $('.div-price').html(data.price + " $");
+                    $('.div-price').html(data.price + ' &#8381;');
                 }
                 $('.input_dishId').val(data.id);
                 $('.input_dishName').val(data.name);
                 $('.input_dishDesc').val(data.description);
                 $('.input_dishPrice').val(data.price);
+                $('#img').attr("src", "resources/img/dish_" + data.id + ".png");
                 var checked = data.deleted;
                 $('.input_dishDeleted').prop('checked', checked);
             }
@@ -28,6 +29,7 @@ $(document).ready(function () {
     })
 
 });
+
 function updateDish() {
     var dishId = $('.input_dishId').val();
     $.ajax({
@@ -40,11 +42,11 @@ function updateDish() {
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-                id: $('.input_dishId').val(),
-                name: $('.input_dishName').val(),
-                description: $('.input_dishDesc').val(),
-                price: $('.input_dishPrice').val(),
-                deleted: $('.input_dishDeleted').is(':checked')
+            id: $('.input_dishId').val(),
+            name: $('.input_dishName').val(),
+            description: $('.input_dishDesc').val(),
+            price: $('.input_dishPrice').val(),
+            deleted: $('.input_dishDeleted').is(':checked')
         }),
         success: function () {
             $("#modalPage").modal('hide');

@@ -76,8 +76,7 @@
             </div>
             <div class="modal-body p-0">
                 <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
-                    <img src="${pageContext.request.contextPath}/resources/img/test600.png"
-                         style="width: 600px; height: 600px">
+                    <img id="img" style="width: 600px; height: 600px">
                 </sec:authorize>
                 <div class="container-fluid mt-4">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -92,7 +91,7 @@
                     <div class="row my-3 mx-3">
                         <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                             <label><spring:message code="label.price"/></label>
-                            <input class="input_dishPrice form-control"/>
+                            <input class="input_dishPrice form-control" pattern="\d{1,10}(\.\d{1,2})?"/>
                         </sec:authorize>
                         <div class="col-10"></div>
                         <div class="col-2 text-right"><h5 class="div-price"></h5></div>

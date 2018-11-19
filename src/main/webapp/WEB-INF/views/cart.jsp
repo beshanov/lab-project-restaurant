@@ -56,7 +56,7 @@
                                 <div class="card-body">
                                     <a>${entry.key.description}</a>
                                     <h5 class="text-right">
-                                        <spring:message code="label.total"/>: ${entry.key.price * entry.value}$
+                                        <spring:message code="label.total"/>: ${entry.key.price * entry.value} &#8381;
                                     </h5>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="container-fluid my-3 bg-transparent">
                     <h2 class="text-center text-white">
-                        <spring:message code="label.total"/>: ${orderTotal}$
+                        <spring:message code="label.total"/>: ${orderTotal} &#8381;
                     </h2>
                     <form class="form-row" action="order" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
