@@ -13,6 +13,15 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+/**
+ * Data Access Object class for the {@link Dish} objects that implements the
+ * {@link DishDao} interface
+ *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
+ * @author Zhanna Fedorova
+ */
 @Repository
 public class DishDaoImpl implements DishDao {
 
@@ -78,16 +87,16 @@ public class DishDaoImpl implements DishDao {
     }
 
     @Override
-    public List<Dish> getPage(int page,int countPerPage, boolean deleted) {
+    public List<Dish> getPage(int page, int countPerPage, boolean deleted) {
         int from = (page - 1) * countPerPage;
         final String FIND_PAGE = "SELECT * FROM DISH WHERE IS_DELETED = ? LIMIT ?,?";
-        return jdbcTemplate.query(FIND_PAGE, new DishMapper(),deleted,from,countPerPage);
+        return jdbcTemplate.query(FIND_PAGE, new DishMapper(), deleted, from, countPerPage);
     }
 
     @Override
     public int dishesCount(boolean deleted) {
         final String DISH_COUNT = "SELECT COUNT(*) FROM DISH WHERE IS_DELETED = ?";
-        return jdbcTemplate.queryForObject(DISH_COUNT,Integer.class,deleted);
+        return jdbcTemplate.queryForObject(DISH_COUNT, Integer.class, deleted);
     }
 
 

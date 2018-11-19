@@ -21,6 +21,15 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A service layer class for the {@link User} objects that implements the
+ * {@link UserService} interface
+ *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
+ * @author Zhanna Fedorova
+ */
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
