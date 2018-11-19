@@ -10,7 +10,7 @@
     <title><spring:message code="title.orders"/></title>
 </head>
 <body style="background: url('${pageContext.request.contextPath}/resources/img/background.jpg') no-repeat center center fixed;
-        background-size: cover; padding-top: 51px">
+        background-size: cover; padding-top: 48px">
 <jsp:include page="navigate.jsp"/>
 <div class="container-fluid d-flex">
     <div class="container col-lg-8 col-md-10 col-sm-12 d-flex align-items-center"

@@ -15,11 +15,11 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/showDish.js"></script>
 </head>
 <body style="background: url('${pageContext.request.contextPath}/resources/img/background.jpg') no-repeat center center fixed;
-        background-size: cover; padding-top: 51px">
+        background-size: cover; padding-top: 48px">
 <jsp:include page="navigate.jsp"/>
 <div class="container-fluid">
-    <div class="container col-lg-10 col-md-10 col-sm-12 d-flex align-items-center"
-         style="background-color: rgba(0, 0, 0, 0.6); min-height: 100%">
+    <div class="container col-lg-10 col-md-10 col-sm-12 my-5 d-flex align-items-center"
+         style="background-color: min-height: 100%">
         <div class="container col-lg-8 col-md-10 col-sm-12"
              style="background-color: rgba(0, 0, 0, 0.8); border-radius: 10px">
             <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
