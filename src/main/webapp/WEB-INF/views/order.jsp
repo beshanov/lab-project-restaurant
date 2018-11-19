@@ -28,12 +28,12 @@
                                     <h5 class="mb-1" style="overflow: hidden">${entry.key.name}</h5>
                                     <p class="mb-1">${entry.key.description}</p>
                                     <p class="text-right">
-                                        <spring:message code="label.price"/>: ${entry.key.price * entry.value}$
+                                        <spring:message code="label.price"/>: ${entry.key.price * entry.value} &#8381;
                                     </p>
                                 </li>
                             </c:forEach>
                             <li class="list-group-item text-right list-group-item-dark">
-                                <h4><spring:message code="label.total"/>: ${order.amount}$</h4>
+                                <h4><spring:message code="label.total"/>: ${order.amount} &#8381; </h4>
                             </li>
                         </ul>
                     </div>

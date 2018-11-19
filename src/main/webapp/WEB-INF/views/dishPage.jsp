@@ -6,12 +6,12 @@
 <div class="row card-columns my-3">
     <c:forEach var="dish" items="${dishesList}">
         <div class="card my-3 ml-4" id="dish_${dish.id}" style="width: 302px">
-            <img class="card-img-top" src="${pageContext.request.contextPath}/resources/img/test.png"
+            <img class="card-img-top" src="${pageContext.request.contextPath}/resources/img/dish_${dish.id}.png"
                  data-toggle="modal" data-target="#modalPage" data-dish-id="${dish.id}"
                  style="width: 300px; height: 300px; cursor: pointer">
             <div class="card-footer">
                 <h5 class="card-title text-dark" style="overflow: hidden">${dish.name}</h5>
-                <div class="dish_price card-text"><spring:message code="label.price"/>: ${dish.price}$</div>
+                <div class="dish_price card-text"><spring:message code="label.price"/>: ${dish.price} &#8381; </div>
                 <sec:authorize access="hasAuthority('ADMINISTRATOR')">
                     <div class="row">
                         <div class="col-3"></div>
