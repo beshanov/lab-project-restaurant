@@ -67,7 +67,23 @@ public interface DishDao {
      */
     Dish getById(long id);
 
+    /**
+     * Returns a List of {@link Dish} objects from a data storage
+     *
+     * @param page page number
+     * @param countPerPage number of dishes on page
+     * @param deleted is dish deleted
+     * @return the list of Dish objects
+     * @see {@link Dish}
+     */
     List<Dish> getPage(int page, int countPerPage, boolean deleted);
 
+    /**
+     * Returns a number of deleted dishes
+     *
+     * @param deleted is dish deleted
+     * @return a number of deleted dishes
+     * @see {@link Dish}
+     */
     int dishesCount(boolean deleted);
 }
