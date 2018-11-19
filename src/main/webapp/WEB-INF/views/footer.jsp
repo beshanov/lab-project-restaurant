@@ -1,7 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<footer class="text-light" style="background-color: rgba(0, 0, 0, 0.75);">
-    <div class="row mr-0 ml-0">
+<footer class="text-light" style="background-color: rgba(0, 0, 0, 0.6);">
+    <div class="row mr-0 ml-0 pt-5">
         <div class="col-md-3 mx-auto">
             <h5 class="font-weight-bold text-uppercase mt-3 mb-4">
                 <spring:message code="title.location"/></h5>
@@ -15,7 +15,8 @@
                 <sec:authorize access="!hasAuthority('ADMINISTRATOR')">
                     <li>
                         <a class="text-light" href="${pageContext.request.contextPath}/cart">
-                            <spring:message code="title.cart"/></a>
+                            <spring:message code="title.cart"/>
+                        </a>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
