@@ -98,7 +98,7 @@
                         <div class="col-2 text-right"><h5 class="div-price"></h5></div>
                     </div>
                     <sec:authorize access="hasAuthority('ADMINISTRATOR')">
-                        <div class="form-check">
+                        <div class="form-check mx-3">
                             <label class="form-check-label">
                                 <input type="checkbox"
                                        class="input_dishDeleted form-check-input" value=""/>
