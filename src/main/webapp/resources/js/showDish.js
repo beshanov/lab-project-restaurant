@@ -15,7 +15,7 @@ $(document).ready(function () {
                 if (!(auth.toString() === 'ADMINISTRATOR')) {
                     $('.input_dishName').attr('readonly', 'true');
                     $('.div-description').html(data.description);
-                    $('.div-price').html(data.price + '&#8381;');
+                    $('.div-price').html(data.price + ' &#8381;');
                 }
                 $('.input_dishId').val(data.id);
                 $('.input_dishName').val(data.name);
