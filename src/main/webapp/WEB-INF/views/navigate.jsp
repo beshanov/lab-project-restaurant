@@ -6,7 +6,6 @@
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/css/open-iconic-bootstrap.css" rel="stylesheet"
       type="text/css">
-<link href="${pageContext.request.contextPath}/resources/css/restaurant.css" rel="stylesheet" type="text/css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/js/restaurant.js" type="text/javascript"></script>

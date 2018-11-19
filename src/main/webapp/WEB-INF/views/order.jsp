@@ -11,9 +11,9 @@
     <sec:csrfMetaTags/>
 </head>
 <body style="background: url('${pageContext.request.contextPath}/resources/img/background.jpg') no-repeat center center fixed;
-        background-size: cover">
+        background-size: cover; padding-top: 51px">
 <jsp:include page="navigate.jsp"/>
-<div class="container-fluid d-flex" style="margin-top: 51px">
+<div class="container-fluid d-flex">
     <div class="container col-lg-10 col-md-12 col-sm-12 d-flex align-items-center"
          style="background-color: rgba(0, 0, 0, 0.6); min-height: 100%">
         <div class="container col-lg-10 col-md-12 col-sm-12"
