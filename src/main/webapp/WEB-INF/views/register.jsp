@@ -8,12 +8,12 @@
     <title><spring:message code="title.register"/></title>
 </head>
 <body style="background: url('${pageContext.request.contextPath}/resources/img/background.jpg') no-repeat center center fixed;
-        background-size: cover; padding-top: 51px">
+        background-size: cover; padding-top: 48px">
 <jsp:include page="navigate.jsp"/>
-<div class="container-fluid" style="margin-top: 51px">
-    <div class="container col-lg-6 col-md-10 col-sm-12 h-100 d-flex align-items-center"
-         style="background-color: rgba(0, 0, 0, 0.6);">
-        <div class="container col-lg-4 col-md-6 col-sm-8"
+<div class="container-fluid">
+    <div class="container col-lg-6 col-md-10 col-sm-12 d-flex align-items-center"
+         style="background-color: rgba(0, 0, 0, 0.6); min-height: 100%">
+        <div class="container col-lg-4 col-md-6 col-sm-8 my-5"
              style="background-color: rgba(0, 0, 0, 0.8); border-radius: 10px;">
             <form:form id="regForm" modelAttribute="user" action="register" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
