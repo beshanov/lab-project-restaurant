@@ -2,8 +2,8 @@ var currentPageActive = 1;
 var currentPageDeleted = 1;
 
 function loadBothTabs(){
-    getDishes(true,4);
-    getDishes(false,4);
+    getDishes(true, 6);
+    getDishes(false, 6);
 }
 
 function getDishes(deleted,countPerPage) {
@@ -39,7 +39,7 @@ function changeCurrentPage(page, deleted) {
     } else {
         currentPageActive = page;
     }
-    getDishes(deleted,4);
+    getDishes(deleted, 6);
 }
 
 function updateIsDeleted(dishId) {
