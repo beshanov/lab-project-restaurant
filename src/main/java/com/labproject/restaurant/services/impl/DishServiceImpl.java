@@ -15,6 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A service layer class for the {@link Dish} objects that implements the
+ * {@link DishService} interface
+ *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
+ * @author Zhanna Fedorova
+ */
 @Service
 public class DishServiceImpl implements DishService {
 
@@ -43,8 +52,8 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public List<Dish> getPage(int page,int countPerPage, boolean deleted) {
-       return dishDao.getPage(page,countPerPage,deleted);
+    public List<Dish> getPage(int page, int countPerPage, boolean deleted) {
+        return dishDao.getPage(page, countPerPage, deleted);
     }
 
     @Override
@@ -142,6 +151,6 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public int dishesCount(boolean deleted) {
-       return dishDao.dishesCount(deleted);
+        return dishDao.dishesCount(deleted);
     }
 }

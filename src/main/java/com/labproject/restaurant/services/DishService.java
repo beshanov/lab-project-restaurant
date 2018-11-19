@@ -40,27 +40,43 @@ public interface DishService {
     /**
      * Returns a List of {@link Dish} objects from a data storage
      *
-     * @param page page number
+     * @param page         page number
      * @param countPerPage number of dishes on page
-     * @param deleted is dish deleted
+     * @param deleted      is dish deleted
      * @return the list of Dish objects
      * @see {@link Dish}
      */
-    List<Dish> getPage(int page,int countPerPage, boolean deleted);
+    List<Dish> getPage(int page, int countPerPage, boolean deleted);
 
     /**
-     * Returns a List of {@link Dish} objects from a data storage
+     * Returns a Map of {@link Dish} objects from a data storage
+     * by the specified orderId
      *
-     * @param page page number
-     * @param countPerPage number of dishes on page
-     * @param deleted is dish deleted
-     * @return the list of Dish objects
+     * @param orderId is dish deleted
+     * @return the map of Dish objects
      * @see {@link Dish}
      */
     Map<Dish, Integer> getAllByOrderId(long orderId);
 
+    /**
+     * Adds a {@link Dish} object to a {@link Map}
+     * and saves it to the session attribute
+     *
+     * @param request HttpServletRequest
+     * @return the map of Dish objects
+     * @see {@link Dish}
+     */
     Map<Dish, Integer> addToDishMap(HttpServletRequest request);
 
+    /**
+     * Deletes a {@link Dish} object specified by dishId
+     * from the session attribute
+     *
+     * @param session HttpSession
+     * @param dishId  a primary key of Dish table
+     * @return the map of Dish objects
+     * @see {@link Dish}
+     */
     Map<Dish, Integer> deleteFromDishMap(HttpSession session, long dishId);
 
     /**
@@ -71,9 +87,29 @@ public interface DishService {
      */
     void insert(Dish dish);
 
+    /**
+     * Updates the {@link Dish} object in a data storage
+     *
+     * @param dish the Dish entity
+     * @see {@link Dish}
+     */
     void update(Dish dish);
 
+    /**
+     * Updates the isDeleted field in {@link Dish} object
+     * in a data storage, realizes soft delete feature
+     *
+     * @param dish the Dish entity
+     * @see {@link Dish}
+     */
     void updateIsDeleted(Dish dish);
 
+    /**
+     * Returns a number of deleted dishes
+     *
+     * @param deleted is dish deleted
+     * @return a number of deleted dishes
+     * @see {@link Dish}
+     */
     int dishesCount(boolean deleted);
 }
