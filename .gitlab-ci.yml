@@ -1,0 +1,26 @@
+image: gradle:alpine
+
+stages:
+- build
+- test
+
+before_script:
+- export GRADLE_USER_HOME=`pwd`/.gradle
+
+build:
+  stage: build
+  script:
+    gradle --build-cache assemble
+  artifacts:
+    paths:
+    - build/libs/*.war
+    expire_in: 1 week
+
+test:
+  stage: test
+  script:
+    gradle check
+
+
+after_script:
+- echo "End CI

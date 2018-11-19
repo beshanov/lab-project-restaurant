@@ -50,8 +50,9 @@ public class UserDaoImplTest {
 
     @Test
     public void testGetAllUsers() {
-        userDao.getAllUsers(true);
-        verify(jdbcTemplate).query(argThat(new StartsWith("SELECT")), any(RowMapper.class));
+        long id = 1;
+        userDao.getAllUsers(true, id);
+        verify(jdbcTemplate).query(argThat(new StartsWith("SELECT")), any(RowMapper.class), eq(id));
     }
 
     @Test
