@@ -15,6 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Data Access Object class that implements the
+ * {@link OrderDishDao} interface
+ *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
+ * @author Zhanna Fedorova
+ */
 @Repository
 public class OrderDishDaoImpl implements OrderDishDao {
 

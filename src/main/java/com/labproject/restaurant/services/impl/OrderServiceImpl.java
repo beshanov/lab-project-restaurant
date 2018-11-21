@@ -21,6 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A service layer class for the {@link Order} objects that implements the
+ * {@link OrderService} interface
+ *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
+ * @author Zhanna Fedorova
+ */
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);

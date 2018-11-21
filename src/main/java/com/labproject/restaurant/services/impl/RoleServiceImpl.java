@@ -8,6 +8,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * A service layer class for the {@link Role} objects that implements the
+ * {@link RoleService} interface
+ *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
+ * @author Zhanna Fedorova
+ */
 @Service
 public class RoleServiceImpl implements RoleService {
 

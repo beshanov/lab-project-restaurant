@@ -5,8 +5,22 @@ import com.labproject.restaurant.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/**
+ * An implementation of {@link Validator} interface which validates
+ * the various {@link String} properties of a {@link User} instance
+ * for inserting to the data storage
+ *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
+ * @author Zhanna Fedorova
+ * @see Errors
+ * @see ValidationUtils
+ * @see User
+ */
 @Service
 public class UserRegistrationValidator implements Validator {
 

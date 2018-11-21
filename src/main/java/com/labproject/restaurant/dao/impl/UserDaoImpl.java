@@ -13,6 +13,15 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+/**
+ * Data Access Object class for the {@link User} objects that implements the
+ * {@link UserDao} interface
+ *
+ * @author Igor Pevtsov
+ * @author Alexandr Zorin
+ * @author Vsevolod Beshanov
+ * @author Zhanna Fedorova
+ */
 @Repository
 public class UserDaoImpl implements UserDao {
 
