@@ -7,7 +7,7 @@ stages:
 build:
   stage: build
   script:
-    ./gradlew --build-cache assemble
+    ./gradlew assemble
 
 test:
   stage: test
